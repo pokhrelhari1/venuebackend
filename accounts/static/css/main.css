@@ -1,0 +1,18 @@
+img{
+    height: 80px;
+    width: 80px;
+    padding: 2px;
+
+}
+body{
+    background-color: #ebeff5;
+}
+#total-bookings{
+  background-color: #4cb4c7;
+} 
+#register-users {
+    background-color: #7abecc;
+  } 
+  #service-provider{
+    background-color: #7cd1c0;
+  } 
