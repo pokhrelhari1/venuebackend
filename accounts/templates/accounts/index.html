@@ -1,6 +1,7 @@
 {%  extends 'accounts/main.html' %}
 {%  include 'accounts/main.html' %}
 {% block content %}
+{% load static %}
 
 <!doctype html>
 <html lang="en">
@@ -10,7 +11,6 @@
     <meta name="description" content="">
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Jekyll v4.1.1">
-    <title>Album example · Bootstrap</title>
 
     <link rel="canonical" href="https://getbootstrap.com/docs/4.5/examples/album/">
 
@@ -37,118 +37,210 @@
         -ms-user-select: none;
         user-select: none;
       }
-
+      
       @media (min-width: 768px) {
-        .bd-placeholder-img-lg {
-          font-size: 3.5rem;
-        }
+        .col-md-5 {
+        
+        -ms-flex: 0 0 41.666667%;
+       max-width: 100%;
+  
+}
+       @media (min-widtg:768px){
+          .m-md-3 {
+            margin: 0%;
+          }
+       }
+
+      h1{
+        text-align: center;
       }
+      .container1 {
+      border-radius: 5px;
+      background-color: #f2f2f2;
+      width: 60%;
+      float: right;
+      padding: 2%;
+      
+     
+    }
+    iframe{
+      float: left;
+      width: 40%;
+      padding: 2px;
+      
+    
+     
+    }
+
+      
     </style>
     <!-- Custom styles for this template -->
     <link href="album.css" rel="stylesheet">
   </head>
   <body>
-    <header>
-</header>
-<!-- 
-<main role="main">
-  <form action="" method="post" novalidate="novalidate">
-  <section class="jumbotron text-center">
-    <div class="container">
-      <section class="search-sec">
-        <div class="container">
-            <form action="" method="post" novalidate="novalidate">
-                <div class="row">
-                    <div class="col-lg-12">
+    <header class="header">
+    
+    </header>
+
+
+  
+
+
+      <div class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-light">
+        <div class="col-md-5 p-lg-5 mx-auto my-5">
+          <h1 class="display-4 fw-normal">Book your Service Today</h1>
+          <section class="jumbotron text-center">
+          
+              <section class="search-sec">
+                <div class="container">
+                    <form action="" method="post" >
                         <div class="row">
-                            <div class="col-lg-3 col-md-3 col-sm-12 p-0">
-                                <input type="text" class="form-control search-slt" placeholder="Enter venue name">
+                            <div class="col-lg-12">
+                                <div class="row">
+                                    <div class="col-lg-2 col-md-3 col-sm-12 p-0">
+                                        <input type="text" class="form-control search-slt" placeholder="Enter venue name">
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 col-sm-12 p-0"> 
+                                        <input type="date" id="datepicker" class="form-control" placeholder="Select date">                            
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 col-sm-12 p-0">
+                                      <select class="form-control search-slt" id="exampleFormControlSelect1">
+                                          <option>Select Event Shift</option>
+                                          <option>Morning</option>
+                                          <option>Day</option>
+                                          <option>Evening</option>
+                                      </select>
+                                  </div>
+                                    <div class="col-lg-3 col-md-3 col-sm-12 p-0">
+                                        <select class="form-control search-slt" id="exampleFormControlSelect1">
+                                            <option>Select Event Type</option>
+                                            <option>Event one</option>
+                                            <option>Event two</option>
+                                            <option>Event three</option>
+                                            <option>Event four</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-lg-1 col-md-2 col-sm-10 p-0">
+                                        <button type="button" class="btn btn-danger wrn-btn">Search</button>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="col-lg-3 col-md-3 col-sm-12 p-0">
-                                <input type="text" class="form-control search-slt" placeholder="Enter Date">
+                        </div>
+                    </form>
+                </div>
+            </section>
+        
+          </section>
+        
+        </div>
+        <div class="product-device shadow-sm d-none d-md-block"></div>
+        <div class="product-device product-device-2 shadow-sm d-none d-md-block"></div>
+      </div>
+ <div>
+  
+ 
+  <div class="album py-5 bg-light">
+    <h1>Popular venue in town</h1><br>
+    <hr>
+    <div class="container">
+     <div class="row">
+        <div class="col-md-4">
+          <div class="card mb-4 shadow-sm">
+            <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Thumbnail"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
+            <div class="card-body">
+              <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+              <div class="d-flex justify-content-between align-items-center">
+                <div class="btn-group">
+                  <button type="button" class="btn btn-light">View</button>
+                  <button type="button"class="btn btn-primary">Book</button>
+                </div>              
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card mb-4 shadow-sm">
+            <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Thumbnail"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
+            <div class="card-body">
+              <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+              <div class="d-flex justify-content-between align-items-center">
+                <div class="btn-group">
+                  <button type="button" class="btn btn-light">View</button>
+                  <button type="button" class="btn btn-primary">Book</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card mb-4 shadow-sm">
+            <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Thumbnail"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
+            <div class="card-body">
+              <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+              <div class="d-flex justify-content-between align-items-center">
+                <div class="btn-group">
+                  <button type="button" class="btn btn-light">View</button>
+                  <button type="button" class="btn btn-primary">Book</button>
+                </div>              
+              </div>
+            </div>
+          </div>
+        </div>
+        </div>
+    </div>
+  </div> 
+
+
+  <div class="position-relative overflow-hidden p-3 p-md-5 m-md-3 bg-light">
+         
+        <div class="col-md-5 p-lg-5 mx-auto my-5">
+          <h1 class="display-4 fw-normal">Contact Us</h1>
+          <section class="jumbotron jumbotron-fluid">
+               <div class="container1">
+              <form>
+                    <div class='row'>
+                        <div class='col-sm-4'>
+                            <div class='form-group'>
+                                <label for='fname'>First Name</label>
+                                <input type='text' name='fname' class='form-control' />
                             </div>
-                            <div class="col-lg-3 col-md-3 col-sm-12 p-0">
-                              <select class="form-control search-slt" id="exampleFormControlSelect1">
-                                  <option>Select Event Shift</option>
-                                  <option>Morning</option>
-                                  <option>Day</option>
-                                  <option>Evening</option>
-                              </select>
-                          </div>
-                           
-                            <div class="col-lg-3 col-md-3 col-sm-12 p-0">
-                                <select class="form-control search-slt" id="exampleFormControlSelect1">
-                                    <option>Select Event Type</option>
-                                    <option>Event one</option>
-                                    <option>Event two</option>
-                                    <option>Event three</option>
-                                    <option>Event four</option>
-                                </select>
+                            <div class='form-group'>
+                                <label for='lname'>Last Name</label>
+                                <input type='text' name='lname' class='form-control' />
                             </div>
-                            <div class="col-lg-3 col-md-3 col-sm-12 p-0">
-                                <button type="button" class="btn btn-danger wrn-btn">Search</button>
+                            <div class='form-group'>
+                                <label for='email'>Email</label>
+                                <input type='text' name='email' class='form-control' />
+                            </div>
+                            <div class='form-group'>
+                                <label for='Contact'>Contact</label>
+                                <input type='number' name='Contact' class='form-control' />
+                            </div>
+                        </div>
+                        <div class='col-sm-8'>
+                            <div class='form-group'>
+                                <label for='message'>Message</label>
+                                <textarea class='form-control' name='message' rows='10'></textarea>
+                            </div>
+                            <div class='text-right'>
+                                <input type='submit' class='btn btn-primary' value='Submit' />
                             </div>
                         </div>
                     </div>
-                </div>
             </form>
+            
+          </div>  
+          <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d7847.709867172344!2d85.31861026093682!3d27.704951149028698!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39eb19075849239d%3A0x4ddaddd1271c3890!2sBagbazar%2C%20Kathmandu%2044600!5e0!3m2!1sen!2snp!4v1607793674057!5m2!1sen!2snp" width="600" height="450" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>  
+        
+          </section>
+        
         </div>
-    </section>
-    </div>
-  </section> -->
+      
+  </div>
 
-  <div class="album py-5 bg-light">
-    <div class="container">
-
-      <div class="row">
-        <div class="col-md-4">
-          <div class="card mb-4 shadow-sm">
-            <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Thumbnail"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
-            <div class="card-body">
-              <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-              <div class="d-flex justify-content-between align-items-center">
-                <div class="btn-group">
-                  <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
-                  <button type="button" class="btn btn-sm btn-outline-secondary">Book</button>
-                </div>
-                <small class="text-muted">9 mins</small>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="card mb-4 shadow-sm">
-            <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Thumbnail"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
-            <div class="card-body">
-              <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-              <div class="d-flex justify-content-between align-items-center">
-                <div class="btn-group">
-                  <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
-                  <button type="button" class="btn btn-sm btn-outline-secondary">Book</button>
-                </div>
-                <small class="text-muted">9 mins</small>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="card mb-4 shadow-sm">
-            <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Thumbnail"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
-            <div class="card-body">
-              <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-              <div class="d-flex justify-content-between align-items-center">
-                <div class="btn-group">
-                  <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
-                  <button type="button" class="btn btn-sm btn-outline-secondary">Book</button>
-                </div>
-                <small class="text-muted">9 mins</small>
-              </div>
-            </div>
-          </div>
-        </div>
-
-
+  
 </footer>
+
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
       <script>window.jQuery || document.write('<script src="/docs/4.5/assets/js/vendor/jquery.slim.min.js"><\/script>')</script><script src="/docs/4.5/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script></body>
 </html>

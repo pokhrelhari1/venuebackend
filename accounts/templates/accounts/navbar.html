@@ -1,18 +1,45 @@
 {% load static %}
 
 <style>
+  .navbar{ background:#454647;}
+
+    .nav-link , .navbar-brand{ color: #f4f4f4; cursor: pointer;}
+
+    .nav-link{ margin-right: 1em !important;}
+/* 
+    .nav-link:hover{ background: ; } */
+
+    .navbar-collapse{
+       justify-content: flex-end;
+    }
+
+    .navbar-toggler{  background:#fff !important;}
+
+    .navbar-collapse{
+      justify-content: flex-end;
+      }
+
+.bg-dark{
+background-color:#343a40!important
+}
+.bg-primary{
+background-color:#007bff!important
+}
   .hello-msg{
     font: size 18px;
     color: white;
     margin-right: 20px;
   }
   h2{
-    color: white;
+    color: rgb(241, 232, 232);
   }
+
 </style>
   {% load static %}
+ 
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+<!-- 
+  <nav class="navbar navbar-expand-lg fixed-top  navbar-dark bg-dark ">  
  <h2>VenueCate</h2>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -29,10 +56,34 @@
         <a class="nav-item nav-link" href="#">About </a>
       </li>
       <li class="nav-item">
-        <a class="nav-item nav-link " href="#">Profile</a>
+        <a class="nav-item nav-link " href="#">Contact</a>
       </li>
     </ul>
+  </div> -->
+<!-- navbar -->  
+<nav class="navbar navbar-expand-lg fixed-top ">  
+  <h2>VenueCate</h2>
+<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">  
+  <span class="navbar-toggler-icon"></span>
+</button>
+  <div class="collapse navbar-collapse " id="navbarSupportedContent">  
+      <ul class="navbar-nav mr-4">
+        <li class="nav-item active">
+          <a class="nav-item nav-link " href="{% url 'index' %}">Home</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link " data-value="portfolio"href="#">Service</a>    
+          </li>
+          <li class="nav-item"> 
+            <a class="nav-link " data-value="blog" href="#">Contact</a>
+          </li>   
+          <li class="nav-item"> 
+            <a class="nav-link " data-value="contact" href="#">Profile</a>   
+          </li> 
+      </ul> 
   </div>
+
+  
   <span class="hello-msg">Hello, {{request.user}}</span>
   <span ><a  class="hello-msg" href="{% url 'logout' %}">Logout</a></span>
 </nav>
