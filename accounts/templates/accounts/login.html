@@ -1,3 +1,4 @@
+{%  load static %}
 <!DOCTYPE html>
 <html>
     
@@ -10,61 +11,96 @@
 
 	<style>
 		body,
-		html {
-			margin: 0;
-			padding: 0;
-			height: 100%;
-			background: #ADD8E6!important;
-		}
-		.user_card {
-			width: 350px;
-			margin-top: auto;
-			margin-bottom: auto;
-			background: #fff;
-			position: relative;
-			display: flex;
-			justify-content: center;
-			flex-direction: column;
-			padding: 10px;
-			box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-			-webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-			-moz-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-			border-radius: 5px;
+		:root {
+  --input-padding-x: 1.5rem;
+  --input-padding-y: 0.75rem;
+}
 
-		}
+.login,
+.image {
+  min-height: 100vh;
+   
+}
 
-		.form_container {
-			margin-top: 20px;
-		}
+.bg-image {
+  background-image: url('https://images.unsplash.com/photo-1480455454781-1af590be2a58?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80');
+   background-size: cover;
+  background-position: center;
 
-		#form-title{
-			color: rgb(0, 0, 0);
-			
-		}
+    overflow: hidden;
+ 
+}
 
-		.login_btn {
-			width: 100%;
-			background: #1b96be !important;
-			color: white !important;
-		}
-		.login_btn:focus {
-			box-shadow: none !important;
-			outline: 0px !important;
-		}
-		.login_container {
-			padding: 0 2rem;
-		}
-		.input-group-text {
-			background: #f86d1c !important;
-			color: white !important;
-			border: 0 !important;
-			border-radius: 0.25rem 0 0 0.25rem !important;
-		}
-		.input_user,
-		.input_pass:focus {
-			box-shadow: none !important;
-			outline: 0px !important;
-		}
+.login-heading {
+  font-weight: 300;
+}
+
+.btn-login {
+  font-size: 0.9rem;
+  letter-spacing: 0.05rem;
+  padding: 0.75rem 1rem;
+  border-radius: 2rem;
+}
+
+.form-label-group {
+  position: relative;
+  margin-bottom: 1rem;
+}
+
+.form-label-group>input,
+.form-label-group>label {
+  padding: var(--input-padding-y) var(--input-padding-x);
+  height: auto;
+  border-radius: 2rem;
+}
+
+.form-label-group>label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  width: 100%;
+  margin-bottom: 0;
+  /* Override default `<label>` margin */
+  line-height: 1.5;
+  color: #495057;
+  cursor: text;
+  /* Match the input under the label */
+  border: 1px solid transparent;
+  border-radius: .25rem;
+  transition: all .1s ease-in-out;
+}
+
+
+ .field-icon {   /* for visibility of password */
+  float: right;
+  margin-right: 10px;
+  margin-top: -30px;
+  position: relative;
+  z-index: 2;
+}
+
+
+@supports (-ms-ime-align: auto) {
+  .form-label-group>label {
+    display: none;
+  }
+  .form-label-group input::-ms-input-placeholder {
+    color: #777;
+  }
+}
+
+
+@media all and (-ms-high-contrast: none),
+(-ms-high-contrast: active) {
+  .form-label-group>label {
+    display: none;
+  }
+  .form-label-group input:-ms-input-placeholder {
+    color: #777;
+  }
+}
+
 
 		#messages{
 			background-color: grey;
@@ -76,48 +112,61 @@
 
 </head>
 <body>
-	<div class="container h-100">
-		<div class="d-flex justify-content-center h-100">
-			<div class="user_card">
-				<div class="d-flex justify-content-center">
-
-
-					<h3 id="form-title">LOGIN</h3>
-				</div>
-				<div class="d-flex justify-content-center form_container">
-					<form method="POST" action="">{% csrf_token %}
-						<div class="input-group mb-3">
-							<div class="input-group-append">
-								<span class="input-group-text"><i class="fas fa-user"></i></span>
-							</div>
-							<input type="text" name="username" placeholder="Username..." class="form-control">
+	<div class="container-fluid">
+		<div class="row no-gutter">
+			<div class="d-none d-md-flex col-md-4 col-lg-6 bg-image">		 
+			</div>
+			   <div class="col-md-8 col-lg-6">
+				  <div class="login d-flex align-items-center py-5">
+					<div class="container"> 	
+						<div class="d-flex justify-content-center">
+							<h3 id="form-title">LOGIN</h3>
 						</div>
-						<div class="input-group mb-2">
-							<div class="input-group-append">
-								<span class="input-group-text"><i class="fas fa-key"></i></span>
-							</div>
-								<input type="password" name="password" placeholder="Password..." class="form-control" >
+						<div class="d-flex justify-content-center form_container">
+							<form method="POST" action="">{% csrf_token %}
+								<div class="form-label-group">
+									<input type="username" id="username" name="username" class="form-control" placeholder="Username" required >
+									<label for="username"></label>
+								</div>
+
+								<div class="form-label-group">
+									<input id="password-field" type="password" class="form-control" name="password"   placeholder="Password" required>
+									<label for="password"></label>
+									<!-- <span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span> -->
+								</div>
+					
+								
+									<button class="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2" type="submit">Sign in</button>
+									<div class="text-center">
+									  <a class="small" href="#">Forgot password?</a></div>
+							</form>
 						</div>
-
-							<div class="d-flex justify-content-center mt-3 login_container">
-				 				<input class="btn login_btn" type="submit" value="Login">
-				   			</div>
-					</form>
-
-				</div>
-					{% for message in messages %}
-						<p id="messages">{{message}}</p>
-					{% endfor %}			
-  
-				<div class="mt-4">
-					<div class="d-flex justify-content-center links">
-						Don't have an account? <a href="{% url 'register' %}" class="ml-2">Sign Up</a>
+						{% for message in messages %}
+							<p id="messages">{{message}}</p>
+						{% endfor %}			
+							<div class="mt-4">
+							<div class="d-flex justify-content-center links">
+								Don't have an account? <a href="{% url 'register' %}" class="ml-2">Sign Up</a>
+							</div>
+						</div>
 					</div>
-			
 				</div>
 			</div>
 		</div>
 	</div>
 </body>
+<script>
+	// //    for visibility of pasword
+	// $(".toggle-password").click(function() {
+
+	// 	$(this).toggleClass("fa-eye fa-eye-slash");
+	// 	var input = $($(this).attr("toggle"));
+	// 	if (input.attr("type") == "password") {
+	// 	input.attr("type", "text");
+	// 	} else {
+	// 	input.attr("type", "password");
+	// 	}
+	// 	});
+</script>
 
 </html>

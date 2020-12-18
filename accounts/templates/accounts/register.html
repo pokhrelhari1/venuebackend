@@ -1,3 +1,5 @@
+
+{% load static %}
 <!DOCTYPE html>
 <html>
     
@@ -8,159 +10,191 @@
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
 
 	<style>
-		body,
-		html {
-			margin: 0;
-			padding: 0;
-			height: 100%;
-			background: #ADD8E6 !important;
-		}
-		.user_card {
-			
-			width: 55%;
-			height: 90%;
-			
-			margin-top: auto;
-			margin-bottom: auto;
-			background: #fff;
-			/* position: relative; */
-			display: flex;
-			justify-content: center;
-			flex-direction: column;
-		
-			box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-			-webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-			-moz-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-			border-radius: 5px;
+		:root {
+  --input-padding-x: 1.5rem;
+  --input-padding-y: 0.75rem;
+}
 
+.login,
+.image {
+  min-height: 100vh;
+}
+
+.bg-image {
+ background-image: url('https://images.unsplash.com/photo-1480455454781-1af590be2a58?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80');
+ 
+ background-size: cover;
+  background-position: center;
+}
+
+.login-heading {
+  font-weight: 300;
+}
+
+.btn-login {
+  font-size: 0.9rem;
+  letter-spacing: 0.05rem;
+  padding: 0.75rem 1rem;
+  border-radius: 2rem;
+}
+
+.form-label-group {
+  position: relative;
+  margin-bottom: 1rem;
+}
+
+.form-label-group>input,
+.form-label-group>label {
+  padding: var(--input-padding-y) var(--input-padding-x);
+  height: auto;
+  border-radius: 2rem;
+}
+
+.form-label-group>label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  width: 100%;
+  margin-bottom: 0;
+  /* Override default `<label>` margin */
+  line-height: 1.5;
+  color: #495057;
+  cursor: text;
+  /* Match the input under the label */
+  border: 1px solid transparent;
+  border-radius: .25rem;
+  transition: all .1s ease-in-out;
+}
+
+
+h1{
+	text-align: left;
+	font-family:  Helvetica, sans-serif;
+	position: relative;
+	margin-top: 30%;
+	font-size: 60px;
+	margin-left: 20%;
+
+}
+
+#messages{
+			background-color: grey;
+			color: #fff;
+			padding: 10px;
+			margin-top: 10px;
 		}
 
-		.form_container {
-			margin-top: 20px;
-		}
+@supports (-ms-ime-align: auto) {
+  .form-label-group>label {
+    display: none;
+  }
+  .form-label-group input::-ms-input-placeholder {
+    color: #777;
+  }
+}
 
-		#form-title{
-			color:rgb(0, 0, 0);
-		}
-		.login_btn {
-			width: 100%;
-			background: #1b96be !important;
-			color: white !important;
-		}
-		.login_btn:focus {
-			box-shadow: none !important;
-			outline: 0px !important;
-		}
-		.login_container {
-			padding: 0 2rem;
-		}
-		.input-group-text {
-			background: #f86d1c !important;
-			color: white !important;
-			border: 0 !important;
-			border-radius: 0.25rem 0 0 0.25rem !important;
-		}
-		.input_user,
-		.input_pass:focus {
-			box-shadow: none !important;
-			outline: 0px !important;
-		}
 
-	</style>
+@media all and (-ms-high-contrast: none),
+(-ms-high-contrast: active) {
+  .form-label-group>label {
+    display: none;
+  }
+  .form-label-group input:-ms-input-placeholder {
+    color: #777;
+  }
+}
+
+</style>
 
 </head>
 <body>
-	<div class="container h-100">
-		<div class="d-flex justify-content-center h-100">
-			<div class="user_card">
-				<div class="d-flex justify-content-center">
-					<h3 id="form-title">REGISTER ACCOUNT</h3>
-				</div>
-				<div class="d-flex justify-content-center form_container">
-                
-					<form method="POST" action="">{% csrf_token %}
-				
-						<div class="input-group mb-2">
-							<div class="input-group-append">
-								<span class="input-group-text"><i class="fas fa-envelope-square"></i></span>
-							</div>
-                            {{form.first_name}}
-
+	<div class="container-fluid">
+		<div class="row no-gutter">
+			<div class="d-none d-md-flex col-md-4 col-lg-6 bg-image">
+				<!-- <img src="{% static 'images/image1.jpg' %}"> -->
+			
+			</div>
+			   <div class="col-md-8 col-lg-6">
+				  <div class="login d-flex align-items-center py-5">
+					<div class="container"> 	
+						<div class="d-flex justify-content-center">
+							<h3 id="form-title">REGISTER ACCOUNT</h3>
+							<br>
 						</div>
-						<div class="input-group mb-2">
-							<div class="input-group-append">
-								<span class="input-group-text"><i class="fas fa-envelope-square"></i></span>
-							</div>
-                            {{form.last_name}}
-
-						</div>
-						<div class="input-group mb-3">
-							<div class="input-group-append">
-								<span class="input-group-text"><i class="fas fa-user"></i></span>
-							</div>
-                            {{form.username}}
-
-						</div>
-						<div class="input-group mb-2">
-							<div class="input-group-append">
-								<span class="input-group-text"><i class="fas fa-envelope-square"></i></span>
-							</div>
-                            {{form.email}}
-
-						</div>
+						<div class="d-flex justify-content-center form_container">
 						
-						<div class="input-group mb-2">
-							<div class="input-group-append">
-								<span class="input-group-text"><i class="fas fa-map"></i></span>
+							<form method="POST" action="">{% csrf_token %}
+							<div class="form-row">	
+								<div class="form-label-group">
+									<label for="first_name"></label>
+									{{form.first_name}}
+								</div>	
+								<div class="col">
+								<div class="form-label-group">
+									<label for="last_name"></label>
+									{{form.last_name}}
+								</div>
 							</div>
-							{{form.address}}
+							</div>
+								<div class="form-label-group">
+									<label for="username"></label>
+									{{form.username}}
+
+								</div>
+								<div class="form-label-group">
+									<label for="email"></label>
+									{{form.email}}
+
+								</div>
+								
+								<div class="form-label-group">
+									<label for="address"></label>
+									{{form.address}}
+
+								</div>
+
+								<div class= "form-label-group">
+									<label for="Contact"></label>
+									{{form.contact}}
+
+								</div>
+
+						<div class="form-label-group">
+							<label for="password1"></label>
+							   {{form.password1}}
+							
+                         
 
 						</div>
-
-						<div class="input-group mb-2">
-							<div class="input-group-append">
-								<span class="input-group-text"><i class="fas fa-phone"></i></span>
-							</div>
-                            {{form.contact}}
-
-						</div>
-
-						<div class="input-group mb-2">
-							<div class="input-group-append">
-								<span class="input-group-text"><i class="fas fa-key"></i></span>
-							</div>
-                            {{form.password1}}
-
-						</div>
-						<div class="input-group mb-2">
-							<div class="input-group-append">
-								<span class="input-group-text"><i class="fas fa-key"></i></span>
-							</div>
+						<div class="form-label-group">
+							<label for="password2"></label>
+							
                             {{form.password2}}
 
 						</div>
-					
 
-				   		<div class="d-flex justify-content-center mt-3 login_container">
-				 			<input class="btn login_btn" type="submit" value="Register Account">
-				   		</div>
-					</form>
-                </div>
-
-                {{form.errors}}
-		
-				<div class="mt-4">
-					<div class="d-flex justify-content-center links">
-						Already have an account? <a href="{% url 'login' %}" class="ml-2">Login</a>
+								<div class="d-flex justify-content-center mt-3 login_container">
+									<input class="btn login_btn  btn btn-primary" type="submit" value="Register Account">
+								</div>
+							</form>
+						</div>
+						{{form.errors}}
+						<div class="mt-4">
+							<div class="d-flex justify-content-center links">
+								Already have an account? <a href="{% url 'login' %}" class="ml-2">Login</a>
+							</div>
+						</div>
 					</div>
-				</div>
+					</div>
+				</div>	
 			</div>
 		</div>
 	</div>
 	<script>
 	
 
-		//Query All input fields
+		//Query for all input fields
 		var form_fields = document.getElementsByTagName('input')
 		form_fields[1].placeholder='First Name';
 		form_fields[2].placeholder='Last Name';
@@ -176,6 +210,18 @@
 		for (var field in form_fields){	
 			form_fields[field].className += ' form-control'
 		}
+
+			//    for visibility of pasword
+				// 	$(".toggle-password").click(function() {
+
+				// $(this).toggleClass("fa-eye fa-eye-slash");
+				// var input = $($(this).attr("toggle"));
+				// if (input.attr("type") == "password") {
+				// input.attr("type", "text");
+				// } else {
+				// input.attr("type", "password");
+				// }
+				// });
 	</script>
 </body>
 </html>
