@@ -1,6 +1,20 @@
 from django.contrib import admin
 from .models import Profile
-from .models import Venue
+from .models import Venue, venueImage
 
 admin.site.register(Profile)
-admin.site.register(Venue)
+
+#configuring single admin for different model
+class venueImageAdmin(admin.StackedInline):
+    model= venueImage
+
+@admin.register(Venue)
+class VenueAdmin(admin.ModelAdmin):
+    inlines = [venueImageAdmin]
+
+    class Meta:
+        model= Venue
+
+@admin.register(venueImage)
+class venueImageAdmin(admin.ModelAdmin):
+    pass

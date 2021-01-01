@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 
 from pathlib import Path
 
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -63,6 +64,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.media'
             ],
         },
     },
@@ -122,10 +124,22 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
+MEDIA_ROOT= (BASE_DIR / 'media')
+
+
 STATIC_URL = '/static/'
-MEDIA_URL ='/images/'
+MEDIA_URL ='/media/'
 
 STATICFILES_DIRS = [
-    BASE_DIR / 'static'
+    BASE_DIR / 'static',
 
 ]
+
+#SMTP configuration
+
+EMAIL_BACKEND= 'django.core.mail.backends.dummy.EmailBackend'
+EMAIL_HOST="smpt.gmail.com"
+EMAIL_PORT="587"
+EMAIL_USE_TLS= True
+EMAIL_HOST_USER= ""
+EMAIL_HOST_PASSWORD=""

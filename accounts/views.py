@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from django.contrib.auth.forms import UserCreationForm
 from .forms import CreateUserFrom
@@ -75,7 +75,7 @@ def logoutUser(request):
 
 
 def index(request):
-    venue = Venue.objects
+    venue = Venue.objects.all()
     return render(request,'accounts/index.html', {'venue': venue })
 
 @login_required(login_url = 'login')
@@ -83,11 +83,22 @@ def index(request):
 def dashboard(request):
     return render(request, 'accounts/dashboard.html')
 
+
+@login_required(login_url = 'login') 
+def user(request):
+    return render(request,'accounts/user.html')
+
+
 @login_required(login_url = 'login') 
 def customer(request):
     return render(request,'accounts/customer.html')
 
-def viewDetail(request):
-    return render(request,'accounts/viewDetails.html')
-
+def viewDetail(request, id):
+    venue= Venue.objects.get(pk=id)
+    photos = venueImage.objects.filter(venue= venue)
+    context={
+        'venue':venue,
+        'photos':photos
+        }
+    return render(request,'accounts/viewDetail.html',context)
     
