@@ -9,11 +9,14 @@ urlpatterns = [
     path ('login/', views.loginPage, name='login'),
     path ('logout/', views.logoutUser, name='logout'),
     path('',views.index, name='index'),
-    path('user/',views.user, name='user'),
+    
+    path('bookingForm/', views.bookingForm, name= 'bookingForm'),
+   
+    path('userProfile/',views.userProfile, name='userProfile'),
+    path('updateProfile',views.updateProfile, name='updateProfile'),
     path('viewDetail/<str:id>/',views.viewDetail, name='viewDetail'),
   
     # path('venue/id/', views.viewDetails, name='viewDetails'),
-    path('customer/',views.customer),
     path('dashboard/',views.dashboard, name= 'dashboard'),
     path ('reset_password/', auth_views.PasswordResetView.as_view(), name="reset_password"),
     path ('reset_password_sent/', auth_views.PasswordResetDoneView.as_view(),  name="password_reset_done") ,    #render success message to  notify user to cheeck their email

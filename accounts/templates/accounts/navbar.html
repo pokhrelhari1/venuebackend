@@ -1,23 +1,6 @@
 {% load static %}
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <style>
-  .navbar{ background:#454647;}
-
-    .nav-link , .navbar-brand{ color: #f4f4f4; cursor: pointer;}
-
-    .nav-link{ margin-right: 1em !important;}
-/* 
-    .nav-link:hover{ background: ; } */
-
-    .navbar-collapse{
-       justify-content: flex-end;
-    }
-
-    .navbar-toggler{  background:#fff !important;}
-
-    .navbar-collapse{
-      justify-content: flex-end;
-      }
 
 .bg-dark{
 background-color:#343a40!important
@@ -55,7 +38,7 @@ body {
 }
 
 .navbar a:hover, .dropdown:hover .dropbtn {
-  background-color: red;
+  background-color: rgb(0, 183, 255);
 }
 
 .dropdown-content {
@@ -98,6 +81,11 @@ body {
          <li class="nav-item active">
           <a class="nav-item nav-link " href="{% url 'index' %}">Home</a>
         </li>
+       {% if request.user.is_staff %}
+        <li class="nav-item active">
+          <a class="nav-item nav-link " href="{% url 'dashboard' %}">Dashboard</a>
+        </li>
+        {% endif %}
         <li class="nav-item">
             <a class="nav-link " data-value="services"href="#service">Service</a>    
           </li>
@@ -106,7 +94,7 @@ body {
           </li>
           
            <li>    
-            <a class="nav-link " data-value="contact" href="#profile">Profile</a>
+            <a class="nav-link " data-value="contact" href="{% url 'userProfile' %}">Profile</a>
            </li>
          
           <span ><a  class="hello-msg" href="{% url 'logout' %}">Logout</a></span>

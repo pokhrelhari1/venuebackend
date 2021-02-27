@@ -1,6 +1,6 @@
 from django.contrib import admin
 from .models import Profile
-from .models import Venue, venueImage
+from .models import Venue, venueImage, extraService
 
 admin.site.register(Profile)
 
@@ -17,4 +17,9 @@ class VenueAdmin(admin.ModelAdmin):
 
 @admin.register(venueImage)
 class venueImageAdmin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(extraService)
+class extraServiceAdmin(admin.ModelAdmin):
     pass

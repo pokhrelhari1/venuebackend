@@ -79,7 +79,7 @@ WSGI_APPLICATION = 'venueCate.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'mydatabase',
+        'NAME': 'testdatabase',
         'USER': 'root',
         'PASSWORD': 'user',
         'PORT': '3306',
@@ -134,7 +134,7 @@ STATICFILES_DIRS = [
     BASE_DIR / 'static',
 
 ]
-
+MEDIA_ROOT = (BASE_DIR / 'static/image')
 #SMTP configuration
 
 EMAIL_BACKEND= 'django.core.mail.backends.dummy.EmailBackend'

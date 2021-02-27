@@ -1,0 +1,31 @@
+{% extends 'accounts/main.html' %}
+{% block content %}
+
+<style>
+
+</style>
+
+<br>
+<div class="row">
+
+	<div class="col-md-9">
+		<div class="card card-body">
+			
+					
+			<form method="POST" action="">
+				{% csrf_token %}
+				{{ form.as_p }}
+				
+			<input class="btn btn-primary" type="submit" name="Update Information">
+			</form>
+				
+		
+		
+			</form>
+		</div>
+	</div>
+</div>
+
+
+
+{% endblock content %}

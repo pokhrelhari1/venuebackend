@@ -1,0 +1,595 @@
+
+{%  extends 'accounts/main.html' %}
+{%  include 'accounts/main.html' %}
+{% block content %}
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>details</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link href="/docs/4.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <meta name="msapplication-config" content="/docs/4.5/assets/img/favicons/browserconfig.xml">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<!--font-awesome -->
+ <script src="https://kit.fontawesome.com/4efb443ce9.js" crossorigin="anonymous"></script>
+<style>
+  body{
+    font:  "Poppins", sans-serif;
+    color: #000;
+    display: inline-block;
+  
+
+  }
+ .div1 {
+      background-color: #a8a7a7;
+      height: 400px;
+      width: 100%;
+    }
+    .col-sm-6{
+      background-color:rgb(255, 255, 255);
+      padding-top: 0;
+      min-height:200px;
+      min-width:40%;
+      border-radius:0;
+      margin-top: 1%;
+      margin-left: 3%;
+      width: 60%;
+      margin: 2%;
+      padding: 4%;
+     
+    }
+    .col-sm-4 {   
+    background-color:rgb(255, 255, 255);
+    min-height:400px;
+    min-width:40%;
+    border-radius:0;
+    margin-top: 8%;
+    align-items: center;
+    padding: 60px,50px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    height:100%;
+
+    }
+   
+   
+   iframe{
+     height: 350px;
+     width: 550px;
+   }
+   .p-2 img{
+     width: 34px;
+    height: 1px;
+
+   }
+.btn-group{
+  align-items: center;
+  position: center;
+}
+
+.icon-bar {
+  width: 100%;
+  /* background-color: rgb(255, 255, 255); */
+  overflow: auto;
+}
+
+.p-2 {
+  float: left;
+  width: 18%;
+  text-align: center;
+  padding: 12px 0;
+  transition: all 0.3s ease;
+  color: rgb(24, 22, 22);
+  font-size: 30px;
+}
+ label{
+  font:  "Poppins", sans-serif;
+   font-size: 18px;
+ }
+  
+.container img{
+  height: 50vh;
+ 
+  width: 50%;
+  background: no-repeat center center scroll;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+/* location section */
+
+  .bg-grey {
+    background-color: #f6f6f6;
+  }
+ .contact{
+   position: relative;
+   min-width: 100vh;
+   padding: 50px 100px;
+   display: flex;
+   justify-content:center;
+   align-items: center;
+   flex-direction: column;
+   background-color: #32a8a2;
+
+ }
+
+.contact .content{
+  max-width: 800px;
+  text-align:center;
+
+
+}
+.contact .content h2{
+
+  font-size: 36px;
+  font-weight: 500;
+  color: rgb(8, 8, 8);
+  margin-right: 45%;
+
+}
+.container{
+  width: 100%;
+  display: flex;
+  justify-content:center ;
+  align-items: center;
+  margin-top: 30px;
+}
+.container .contactInfo{
+
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+
+}
+
+.contact .contactInfo .box{
+  position: relative;
+  padding: 20px 0;
+  display: flex;
+}
+
+.container .contactInfo .box .icon{
+  
+  min-width: 60px;
+  height: 60px;
+  background:#fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  font-size: 22px;
+ 
+
+  }
+  
+.container .contactInfo .box .text{
+
+  display: flex;
+  margin-left: 20px;
+  font-size: 16px;
+  color: rgba(54, 54, 54, 0.849);
+  flex-direction: column;
+  font-weight: 300;
+
+}
+
+.container .contactInfo .box .text h3{
+
+  font-weight: 500;
+  color: #030303;
+
+
+}
+.content-map{
+  width: 50%;
+  padding: 40px;
+  
+
+}
+
+ .container-fluid img{
+  width: 100%;
+  height: 550px;
+ 
+  
+  background-size: cover;
+  background-position:center center ;
+  display: inline-block
+
+  }
+
+.container img{
+  width: 100%;
+  height: 350px;
+
+}
+.icon-bar{
+
+display: flex;
+flex-direction: row;
+}
+
+@media (max-width: 991px)
+{
+  .contact{
+    padding: 50px;
+
+  }
+  .container{
+    flex-direction: column;
+
+  }
+  .container .contactInfo
+  {
+    margin-bottom: 40px;
+   
+  }
+  .container .contactInfo, iframe
+  {
+    width: 100%;
+   
+  }
+  .icon-bar{
+
+  flex-direction: column;
+  }
+  .col-sm-6 {
+    flex-direction: column;
+    }
+
+  .col-sm-4{
+    flex-direction: column;
+
+    }
+}
+
+
+  
+
+</style>
+
+</head>
+<body>
+
+  <div class="container-fluid" ; >
+      <img src="{{ venue.image.url }}"></img>
+
+  </div>
+  <div class="container-fluid">
+    
+    
+
+  <div class="row">
+      <div class="container-fluid col-sm-6" style="padding: 40px 50px;">
+        <div>
+        <h4 style=" text-transform: uppercase;"> {{ venue.venueName}}</h4>
+        <hr style="border-top: 2px solid rgba(0,0,0,.1)"> 
+        </div>   
+         <!-- <label style="text-transform: uppercase;">About <span style="font:300 22px/26px; color:#32a8a2;";>{{ venue.venueName}} </span></label>
+         <br> -->
+         <br>
+         <p> {{ venue.venueName}} is a fine venue located in {{ venue.address }}.
+           <div id="collapse1" class="collapse">
+          <p style="text-align: justify;">{{ venue.descriptionSummery}}</p>
+         </div>
+          <a data-toggle="collapse" href="#collapse1" style=" color: #ee2e24; font-size: 16px; font-weight: 600; line-height: 1.5;">Read More</a><P>
+         
+      <div>
+        <br>
+      </div>
+
+
+   <div class="conatiner">
+      <p style="text-transform: uppercase;font-size: 18px;">Amenities</p>
+     
+      <div class="icon-bar"><br>
+        <div class="p-2"><i class="fas fa-utensils"></i>
+          <h6>Catering</h6>
+          </div>
+        <div class="p-2"><i class="fas fa-headset"></i>
+          <h6>Host</h6>
+        </div>
+        <div class="p-2"><i class="fas fa-holly-berry"></i>
+          <h6>Decoration</h6>
+          </div>
+        <div class="p-2"><i class="fas fa-music"> 
+        </i><h6>Dance floor<h6></div>
+      </div>
+    </div>
+
+    <br>
+    <!-- section for slideshow -->
+    <label style=" text-transform: uppercase;"><span style="font: 300 22px/26px ">Glimpses of the venue</span></label>
+  
+   
+    <section class="container" style="display: flex;"><br>
+
+      <div id="carousel" class="carousel slide" data-ride="carousel">
+        <!--image slider-->
+        <ol class="carousel-indicators">
+          {% for Image in photos %}
+            <li data-target="#carousel-example-1z" data-slide-to="{{ forloop.counter0 }}" class="{% if forloop.counter0 == 0 %} active {% endif %}"></li>
+          {% endfor %}
+          </ol>
+        <div class="carousel-inner" role="listbox">
+          {% for Image in photos %}
+          <div class="carousel-item {% if forloop.counter0 == 0 %} active {% endif %}">
+            <img class="d-block w-100" src="{{Image.images.url}}"
+              alt="First slide">
+          </div>
+          {% endfor %}
+    
+        </div>
+        <a class="carousel-control-prev" href="#carousel" role="button" data-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+             
+            </a>
+        <a class="carousel-control-next" href="#carousel" role="button" data-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+         
+            </a>
+      </div>
+      
+    </section>
+  
+</div>
+ 
+  
+      <div class="container-fluid col-sm-4 " style="padding: 40px 50px;">
+        <div id="credit-card">
+          <header>
+                  
+          </header>
+       <!-- radio button to select form for venue and catering booking services  -->
+          <section id="bookingForm">
+            <div class="containerFrom">
+              <h4>Booking <span style="color:rgb(255, 153, 0);font-weight:bold">Form</h4> 
+              
+              <p>Select your services Type</p>
+                    
+            <input type="checkbox" id="checkbox1" name="checkboxSwitch" value="checkbox1" checked>
+            <label for="checkbox1">Venue Service</label>
+          
+            <input type="checkbox" id="checkbox3" name="checkboxSwitch"value="checkbox3">
+            <label for="checkbox3">Catering Service</label>
+                  
+          </div>
+          <br>
+          <br>
+              
+              <div class="container">
+                <form method="post" id="venueService">
+                
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label for="evnets">Evnet Type</label><br>
+                          <select name="events" id="events">
+                            <option value="Conference">Conference</option>
+                            <option value="Weeding">Weeding</option>
+                            <option value="Celeberation">Celeberation</option>
+                            <option value="Meeting/Seminar">Meeting/Seminar</option>
+                          </select>
+                      </div>
+                    </div>
+                 
+              
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label >Number of Guest</label>
+                        <input type="number" class="form-control" id="guestNumebr" placeholder="Numeber of Guest">
+                      </div>
+              
+                    </div>
+                  </div>
+                       
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <input type="text" class="form-control" data-bind= "daterangepicker: dateRange"/>
+                    </div>
+                  </div>
+                
+            
+                  <div class="col-md-6">
+            
+                    <div class="form-group">
+                      <label for="phone">Phone Number</label>
+                      <input type="tel" class="form-control" id="phone" placeholder="phone">
+                    </div>
+                  </div>
+                  <!--  col-md-6   -->
+                </div>
+                 
+                  
+                  <label for="contact-preference">Would you like to add extra service</label>
+                  <div class="form-check">
+                    <label class="form-check-label" for="check1">
+                      <input type="checkbox" class="form-check-input" id="check1" name="option1" value="something" checked>Host
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <label class="form-check-label" for="check2">
+                      <input type="checkbox" class="form-check-input" id="check2" name="option2" value="something">Decoration
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <label class="form-check-label">
+                      <input type="checkbox" class="form-check-input" id="check3" name="option3" value="something">Music
+                    </label>
+                  </div>
+                  <label for="newsletter">Would you like to add further services?</label>
+                  <div class="checkbox">
+              
+                    <label>
+                      <input type="checkbox" value="Sure!" id="newsletter"> Sure!
+                    </label>
+                  </div>
+              
+              
+                  <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+              </div>
+          
+            <!-- catering service form -->
+            <div class="container">
+              <form method="post" id="cateringService">
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="first">First Name</label>
+                      <input type="text" class="form-control" placeholder="" id="first">
+                    </div>
+                  </div>
+                  <!--  col-md-6   -->
+            
+            
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="company">Company</label>
+                      <input type="text" class="form-control" placeholder="" id="company">
+                    </div>
+                  </div>
+                
+            
+                  <div class="col-md-6">
+            
+                    <div class="form-group">
+                      <label for="phone">Phone Number</label>
+                      <input type="tel" class="form-control" id="phone" placeholder="phone">
+                    </div>
+                  </div>
+                  <!--  col-md-6   -->
+                </div>
+                <!--  row   -->
+            
+            
+                <div class="row">
+                  <div class="col-md-6">
+            
+                    <div class="form-group">
+                      <label for="email">Email address</label>
+                      <input type="email" class="form-control" id="email" placeholder="email">
+                    </div>
+                  </div>
+                  <!--  col-md-6   -->
+            
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="url">Your Website <small>Please include http://</small></label>
+                      <input type="url" class="form-control" id="url" placeholder="url">
+                    </div>
+            
+                  </div>
+                </div>
+               
+                <label for="contact-preference">When is the best time of day to reach you?</label>
+                <div class="radio">
+                  <label>
+                    <input type="radio" name="contact-preference" id="contact-preference" value="am" checked>Morning
+                  </label>
+                </div>
+                <div class="radio">
+                  <label>
+                    <input type="radio" name="contact-preference" id="contact-preference" value="pm" checked>Evening
+                  </label>
+                </div>
+            
+                <label for="newsletter">Would you like to recieve our email newsletter?</label>
+                <div class="checkbox">
+            
+                  <label>
+                    <input type="checkbox" value="Sure!" id="newsletter"> Sure!
+                  </label>
+                </div>
+            
+            
+                <button type="submit" class="btn btn-primary">Submit</button>
+              </form>
+            </div>
+          
+          </section>
+                         
+        </div>
+    
+      </div>
+  </div>  
+  </div>
+
+  <section class="contact" style="background-color:#4dd6b8;">
+  <div class="container">
+    <div class="contactInfo">
+      <div class="content">
+     <h2 style="text-transform: uppercase; margin-right: 45%;">Contact Info</h2>
+     <p style="text-transform: uppercase; margin-right: 35%;">{{ venue.venueName }}</p>
+   </div>
+        <div class="box">
+          <div class="icon"><i class="fas fa-map-marker-alt"></i> </div>
+            <div class="text">
+              <h3>Address</h3>
+              <p>{{ venue.address }}</p>
+            </div>
+        </div>
+
+        <div class="box">
+          <div class="icon"><i class="fas fa-phone-alt"></i></div>
+            <div class="text">
+              <h3>Contact</h3>
+              <p>{{ venue.contact }}</p>
+            </div>
+        
+        </div>
+        <div class="box">
+          <div class="icon"><i class="far fa-envelope"></i></div>
+            <div class="text">
+              <h3>Website</h3>
+              <a href="venue.website }}"></a>
+            </div>
+        </div>
+    </div>
+ 
+      <div class="content-map">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d56516.316259520936!2d85.29111316929098!3d27.70895594439081!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39eb198a307baabf%3A0xb5137c1bf18db1ea!2sKathmandu%2044600!5e0!3m2!1sen!2snp!4v1609524519710!5m2!1sen!2snp" width="600" height="450" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
+      </div>
+   
+
+  </div>
+
+  </section>
+  
+<script>
+  var checkboxSwitch = document.getElementsByName("checkboxSwitch");
+var venueService =  document.getElementById("venueService");
+var cateringService =  document.getElementById("cateringService");
+venueService.style.display = 'block';   // show
+cateringService.style.display = 'none';// hide
+for(var i = 0; i < checkboxSwitch.length; i++) {
+    checkboxSwitch[i].onclick = function() {
+        var val = this.value;
+        if(val == 'checkbox1' || val == 'checkbox2'){
+          venueService.style.display = 'block';
+            cateringService.style.display = 'none';
+        }
+        else if(val == 'checkbox3'){
+          venueService.style.display = 'none';
+             cateringService.style.display = 'block';
+        }    
+            
+    }
+}
+
+
+</script>
+</body>
+</html>
+
+{% endblock %}
