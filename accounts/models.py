@@ -3,7 +3,8 @@ from django.contrib.auth.models import User
 from django.contrib.auth.models import AbstractUser
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-
+from django.utils import timezone
+from datetime import datetime
 
 
 # model for userdetail.
@@ -27,11 +28,27 @@ def update_profile_signal(sender, instance, created, **kwargs):
     instance.profile.save()
 
 
+    
+
+
+#model for catering
+class Catering(models.Model):
+    foodType= models.CharField(max_length=200, blank= True)
+    foodItems= models.CharField(max_length=200, blank= True)
+    is_available=models.BooleanField( null= False, blank= False)
+    price= models.IntegerField(null= True, blank= True)
+
+
+    def __str__(self):
+        return self.foodType
+
+   
 
 #model for extra sevice
 class extraService(models.Model):
     serviceName= models.CharField(max_length= 200, blank=True)
     servicePrice= models.IntegerField(null=False, blank= False)
+    catering= models.ForeignKey(Catering, on_delete= models.CASCADE)
 
 # model for venue details
 class Venue(models.Model):
@@ -63,10 +80,33 @@ class venueImage(models.Model):
     def __str__(self):
         return self.venue.venueName
 
-# #model for menu 
-# class Menu(models.Model):
-#     foodItems= models.CharField(max_length= 1000, blank=True)
-#     foodPrice= IntegerField(null=True, blank=True)
+
+
+# model for booking 
+class Booking(models.Model):
+    bookingdate = models.DateTimeField(default=datetime.now(), blank=True)
+    eventStartDate= models.DateTimeField(auto_now_add=False)
+    eventEndDate= models.DateTimeField(auto_now_add=False)
+    eventType= models.CharField(max_length=500, blank=True)
+    venue= models.ForeignKey(Venue, on_delete=models.CASCADE)
+    catering= models.ForeignKey(Catering, on_delete= models.CASCADE)
+    customer= models.ForeignKey(Profile,on_delete= models.CASCADE)
+
+    
+     
+#model for payment 
+class Payment(models.Model):
+    paymentDate= models.DateTimeField(default=datetime.now(), blank=True)
+    amount= models.IntegerField(null=True, blank=True)
+    booking= models.ForeignKey(Booking, on_delete= models.CASCADE)
+
+
+#model for feedback 
+class Feedback(models.Model):
+    feedback=models.CharField(max_length=1000, blank=True)
+    feedbackDate= models.DateTimeField(default=datetime.now(), blank=True)
+    customer= models.ForeignKey(Profile, on_delete= models.CASCADE)
+
     
 #     def __str__(self):
 #         return self.foodItems

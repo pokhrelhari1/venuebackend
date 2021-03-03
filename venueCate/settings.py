@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'accounts',
+    'django_filters'
 ]
 
 MIDDLEWARE = [
@@ -79,7 +80,7 @@ WSGI_APPLICATION = 'venueCate.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'testdatabase',
+        'NAME': 'testdatabase1',
         'USER': 'root',
         'PASSWORD': 'user',
         'PORT': '3306',
@@ -137,9 +138,10 @@ STATICFILES_DIRS = [
 MEDIA_ROOT = (BASE_DIR / 'static/image')
 #SMTP configuration
 
-EMAIL_BACKEND= 'django.core.mail.backends.dummy.EmailBackend'
-EMAIL_HOST="smpt.gmail.com"
-EMAIL_PORT="587"
+
+EMAIL_BACKEND= 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST="smtp.gmail.com"
+EMAIL_PORT=587
 EMAIL_USE_TLS= True
 EMAIL_HOST_USER= ""
 EMAIL_HOST_PASSWORD=""

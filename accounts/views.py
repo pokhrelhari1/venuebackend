@@ -8,7 +8,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from .models import *
 from .decorators import unauthenticated_user,allowed_users,admin_only
-
+from .filters import locationFilter
 
 @unauthenticated_user
 def registerPage(request):
@@ -83,7 +83,9 @@ def logoutUser(request):
 
 def index(request):
     venue = Venue.objects.all()
-    return render(request,'accounts/index.html', {'venue': venue })
+    myFilter= locationFilter( request.GET, queryset= venue)
+    venue = myFilter.queryset
+    return render(request,'accounts/index.html', {'venue': venue ,'myFilter':myFilter})
 
 @login_required(login_url = 'login')
 @admin_only #calling the decoratior  for page permission
@@ -94,13 +96,31 @@ def dashboard(request):
 #function for user profile
 @login_required(login_url='login')
 def userProfile(request):
-    return render(request,'accounts/userProfile.html')
+    user = request.user
+    profile = Profile.objects.get(user = user)
+    form = CustomerForm(instance= profile)
+    context= {'form':form}
+    return render(request,'accounts/userProfile.html',context)
 
 #fuction to update user profile
 @login_required(login_url='login')
 def updateProfile(request):
-     return render(request,'accounts/updateProfile.html')
-
+    user = request.user
+    profile = get_object_or_404(Profile, user = user)
+    form = CustomerForm(instance = profile)
+    if request.method == 'POST':
+        form = CustomerForm(request.POST, request.FILES)
+        if form.is_valid():
+            profile.first_name = form.cleaned_data.get('first_name')
+            profile.last_name = form.cleaned_data.get('last_name')
+            profile.email = form.cleaned_data.get('email')
+            profile.contact = form.cleaned_data.get('contact')
+            profile.profile_picture = request.FILES['profile_picture']
+            profile.save()
+            return redirect('userProfile')
+    context = {'form':form}
+    return render(request,'accounts/updateProfile.html', context)
+   
 #function to render venue details.
 @login_required(login_url='login')
 def viewDetail(request, id):
