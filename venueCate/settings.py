@@ -39,7 +39,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'accounts',
-    'django_filters'
+    'django_filters',
+    'rest_framework',
+  
+
 ]
 
 MIDDLEWARE = [
@@ -145,3 +148,18 @@ EMAIL_PORT=587
 EMAIL_USE_TLS= True
 EMAIL_HOST_USER= ""
 EMAIL_HOST_PASSWORD=""
+
+
+#Restful API
+
+
+# REST_FRAMEWORK ={
+
+#     'DEFAULT_PERMISSION_CLASSES' :[
+
+#         'rest_framework.permissions.DjangoModelsPermissionOrAnonReadOnly',
+#          'rest_framework.permissions.IsAuthenticated'
+#     ]
+
+
+# }

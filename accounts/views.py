@@ -10,6 +10,10 @@ from .models import *
 from .decorators import unauthenticated_user,allowed_users,admin_only
 from .filters import locationFilter
 
+from rest_framework import viewsets
+from .serializer import VenueSerializer, CateringSerializer, PaymentSerializer, FeedbackSerializer, extraServiceSerializer, BookingSerializer, UserSerializer
+
+
 @unauthenticated_user
 def registerPage(request):
     if request.method == "POST":
@@ -116,7 +120,11 @@ def updateProfile(request):
             profile.email = form.cleaned_data.get('email')
             profile.contact = form.cleaned_data.get('contact')
             profile.profile_picture = request.FILES['profile_picture']
+            user.first_name = form.cleaned_data.get('first_name')
+            user.last_name = form.cleaned_data.get('last_name')
+            user.email = form.cleaned_data.get('email')
             profile.save()
+            user.save()
             return redirect('userProfile')
     context = {'form':form}
     return render(request,'accounts/updateProfile.html', context)
@@ -134,3 +142,33 @@ def viewDetail(request, id):
     
 def bookingForm(request):
     return render(request, 'accounts/bookingForm.html')
+
+
+#viewset for api
+class ProfileView(viewsets.ModelViewSet):
+    queryset = Profile.objects.all()
+    serializer_class = UserSerializer
+
+class VenueView(viewsets.ModelViewSet):
+    queryset= Venue.objects.all()
+    serializer_class = VenueSerializer
+
+class PaymentView(viewsets.ModelViewSet):
+    queryset= Payment.objects.all()
+    serializer_class= PaymentSerializer
+
+class FeedbackView(viewsets.ModelViewSet):
+    queryset = Feedback.objects.all()
+    serializer_class = FeedbackSerializer
+
+class CateringView(viewsets.ModelViewSet):
+    queryset = Catering.objects.all()
+    serializer_class = CateringSerializer
+
+class BookingView(viewsets.ModelViewSet):
+    queryset = Booking.objects.all()
+    serializer_class = BookingSerializer
+
+class extraServiceView(viewsets.ModelViewSet):
+    queryset = extraService.objects.all()
+    serializer_class = extraServiceSerializer

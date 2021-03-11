@@ -5,6 +5,7 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.utils import timezone
 from datetime import datetime
+from django.core.exceptions import FieldDoesNotExist
 
 
 # model for userdetail.
@@ -42,13 +43,18 @@ class Catering(models.Model):
     def __str__(self):
         return self.foodType
 
-   
 
+   
 #model for extra sevice
 class extraService(models.Model):
     serviceName= models.CharField(max_length= 200, blank=True)
     servicePrice= models.IntegerField(null=False, blank= False)
-    catering= models.ForeignKey(Catering, on_delete= models.CASCADE)
+    catering= models.ForeignKey(Catering, on_delete= models.CASCADE, blank= True)
+
+    
+    def __str__(self):
+        return self.serviceName
+
 
 # model for venue details
 class Venue(models.Model):
@@ -63,8 +69,8 @@ class Venue(models.Model):
     website = models.URLField(max_length= 1000, blank=True )
     openTime = models.TimeField(null=True, blank=True)
     closingTime = models.TimeField(null=True, blank=True)
-    addService= models.ForeignKey(extraService, on_delete= models.CASCADE)
-    
+    addService= models.ManyToManyField(extraService)
+    #many to many  
 
     def descriptionSummery(self):
         return self.description
@@ -83,6 +89,7 @@ class venueImage(models.Model):
 
 
 # model for booking 
+
 class Booking(models.Model):
     bookingdate = models.DateTimeField(default=datetime.now(), blank=True)
     eventStartDate= models.DateTimeField(auto_now_add=False)
