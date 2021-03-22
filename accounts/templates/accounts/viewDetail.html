@@ -180,6 +180,11 @@
   font-weight: 300;
 
 }
+button{
+  width: 100%;
+ 
+}
+
 
 .container .contactInfo .box .text h3{
 
@@ -306,7 +311,18 @@ flex-direction: row;
     </div>
 
     <br>
-    <!-- section for slideshow -->
+    
+  
+</div>
+ 
+  
+      <div class="container-fluid col-sm-4 " style="padding: 20px 20px;">
+        <div id="credit-card">
+          <header>
+                  
+          </header>
+       <!-- radio button to select form for venue and catering booking services  -->
+         <!-- section for slideshow -->
     <label style=" text-transform: uppercase;"><span style="font: 300 22px/26px ">Glimpses of the venue</span></label>
   
    
@@ -337,100 +353,22 @@ flex-direction: row;
          
             </a>
       </div>
+      <br>
+
+     
       
     </section>
-  
-</div>
- 
-  
-      <div class="container-fluid col-sm-4 " style="padding: 40px 50px;">
-        <div id="credit-card">
-          <header>
-                  
-          </header>
-       <!-- radio button to select form for venue and catering booking services  -->
-          <section id="bookingForm">
-            <div class="containerFrom">
-              <h4>Booking <span style="color:rgb(255, 153, 0);font-weight:bold">Form</h4> 
-              
-              <p>Select your services Type</p>
-                    
-            <input type="radio" id="checkbox1" name="checkboxSwitch" value="checkbox1" checked>
-            <label for="checkbox1">Venue Service</label>
-          
-            <input type="radio" id="checkbox3" name="checkboxSwitch"value="checkbox3">
-            <label for="checkbox3">Catering Service</label>
-                  
-          </div>
-              <div class="container">
-                <form method="post" id="venueService">
-                    <div class="form-row">
-                      <div class="form-group col-md-6">
-                        <label for="eventto">Event TO</label>
-                        <input type="date" class="form-control" id="eventto" placeholder="">
-                      </div>
-                      <div class="form-group col-md-6">
-                        <label for="eventfrom">Event From</label>
-                        <input type="date" class="form-control" id="eventfrom" placeholder="">
-                      </div>
-                    </div>
-                    <br>
-                    <div class="form-group">
-                      <label for="inputAddress">Extra Service</label><br>
-                       
-                        <input type="checkbox" id="service1" name="service1" value="500"> 
-                        <label for= service1>Catering</label><br>
-                        <input type="checkbox" id="service2" name="serice2" value="500">
-                        <label for="service3"> Decoration</label><br>
-                        <input type="checkbox" id="service3" name="service3" value="500">
-                        <label for="service3">Host</label><br><br>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Proceed to pay</button>
-               
-                </form>
-              </div>
-            <!-- catering service form -->
-            <div class="container">
-              <form method="post" id="cateringService">
-                <div class="form-row">
-                  <div class="form-group col-md-6">
-                    <label for="eventto">Event TO</label>
-                    <input type="date" class="form-control" id="eventto" placeholder="">
-                  </div>
-                  <div class="form-group col-md-6">
-                    <label for="eventfrom">Event From</label>
-                    <input type="date" class="form-control" id="eventfrom" placeholder="">
-                  </div>
-                </div>
-                <br>
-                
-            <label for="shift">Catering Shift: </label>
-            <select name="shift" id="Shift">
-              <option value="Morning">Morning</option>
-              <option value="Day">Day</option>
-              <option value="Evening">Evening</option>
-            
-            </select>
-                <div class="form-group">
-                  <label for="inputAddress">Food type</label><br>
-                   
-                    <input type="checkbox" id="service1" name="service1" value="500"> 
-                    <label for= service1>Veg</label><br>
-                    <input type="checkbox" id="service2" name="serice2" value="500">
-                    <label for="service3"> Non-veg</label><br>
-                  
-                </div>
-                <button type="submit" class="btn btn-primary">Proceed to pay</button>
-              </form>
-            </div>
-          
-          </section>
+   
+    <a class="btn btn-warning" href="{% url 'bookingForm' venue.id  %}" style="width: 100%;">Book the service </a>
+    
+
                          
         </div>
     
       </div>
   </div>  
   </div>
+  <br>
 
   <section class="contact" style="background-color:#4dd6b8;">
   <div class="container">
@@ -473,14 +411,19 @@ flex-direction: row;
 
   </section>
   
+<link href="{% static 'js/jquery-ui-1.12.1/jquery-ui.min.css' %}" rel="stylesheet">
+<link href="{% static 'js/jquery-ui-1.12.1/jquery-ui.structure.min.css' %}" rel="stylesheet">
+<link href="{% static 'js/jquery-ui-1.12.1/jquery-ui.theme.min.css' %}" rel="stylesheet">
+      
 <script>
-  var checkboxSwitch = document.getElementsByName("checkboxSwitch");
+ 
+var checkboxSwitch = document.getElementsByName("checkboxSwitch");
 var venueService =  document.getElementById("venueService");
 var cateringService =  document.getElementById("cateringService");
 venueService.style.display = 'block';   // show
 cateringService.style.display = 'none';// hide
 for(var i = 0; i < checkboxSwitch.length; i++) {
-    checkboxSwitch[i].onclick = function() {
+  checkboxSwitch[i].onclick = function() {
         var val = this.value;
         if(val == 'checkbox1' || val == 'checkbox2'){
           venueService.style.display = 'block';
@@ -493,14 +436,128 @@ for(var i = 0; i < checkboxSwitch.length; i++) {
             
     }
 }
+var cake_prices = new Array();
+cake_prices["Round6"]=20;
+cake_prices["Round8"]=25;
+cake_prices["Round10"]=35;
+cake_prices["Round12"]=75;
 
-$(function() {
-  $('input[name="daterange"]').daterangepicker({
-    opens: 'left'
-  }, function(start, end, label) {
-    console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
-  });
-});
+// var filling_prices= new Array();
+// filling_prices["None"]=0;
+// filling_prices["Lemon"]=5;
+// filling_prices["Custed"]=5;
+// filling_prices["Fudge"]=7;
+// filling_prices["Mocha"]=8;
+
+var tenAnchorPrice=2;
+var Anchor_Quantity=new Array();
+Anchor_Quantity["0"]=0;
+Anchor_Quantity["1"]=1;
+Anchor_Quantity["2"]=2;
+Anchor_Quantity["3"]=3;
+Anchor_Quantity["4"]=4;
+Anchor_Quantity["5"]=5;
+Anchor_Quantity["6"]=6;
+Anchor_Quantity["7"]=7;
+Anchor_Quantity["8"]=8;
+Anchor_Quantity["9"]=9;
+Anchor_Quantity["10"]=10;
+
+function getCakeSizePrice()
+{
+	var cakeSizePrice=0;
+	var theForm = document.forms["cakeform"];
+	var selectedCake = theForm.elements["selectedcake"] 
+	for (var i = 0; i < selectedCake.length; i++)
+	{
+		if (selectedCake[i].checked) 
+			{
+				cakeSizePrice = cake_prices[selectedCake[i].value];
+				break;
+			}
+	}
+	return cakeSizePrice;
+}
+
+// function getFillingPrice()
+// {
+// 	var cakeFillingPrice=0;
+// 	var theForm= document.forms["cakeform"];
+// 	var selectedFilling= theForm.elements["filling"];
+
+// 	cakeFillingPrice = filling_prices[selectedFilling.value];
+// 	return cakeFillingPrice;
+// }
+
+//tttttttttttttttttttttttttt test tttttttttttttttttttttt
+/*
+function AnchorsPrice()
+{   
+	var AnchorPrice=0;
+	var theForm = document.forms["cakeform"];
+	var includeAnchorPrice= theForm.elements["tenAnchorPrice"];
+
+	if (includeAnchorPrice.checked==true) {
+		AnchorPrice=4.25;
+	};
+	return AnchorPrice;
+}*/
+
+function getAnchorQuantity()
+{   
+	var AnchorQuantity=0;
+	var theForm= document.forms["cakeform"];
+	var selectedAnchor= theForm.elements["quantity"];
+
+	AnchorQuantity = Anchor_Quantity[selectedAnchor.value];
+	return AnchorQuantity;
+}
+//tttttttttttttttttttttttttt test tttttttttttttttttttttt
+
+
+
+function candlesPrice()
+{   
+	var candlePrice=0;
+	var theForm = document.forms["cakeform"];
+	var includeCandles= theForm.elements["includecandles"];
+
+	if (includeCandles.checked==true) {
+		candlePrice=5;
+	};
+	return candlePrice;
+}
+
+
+function insciptionPrice()
+{
+	var inscriptionPrice= 0;
+	var theForm= document.forms["cakeform"];
+	var includeInscription= theForm.elements["includeinscription"];
+
+	if (includeInscription.checked==true) {
+		inscriptionPrice=20;
+	};
+	return inscriptionPrice;
+}
+
+
+function calculateTotal()
+{
+// var cakePrice= getCakeSizePrice() + getFillingPrice() + candlesPrice() + insciptionPrice() ;
+var cakePrice=getCakeSizePrice()  + candlesPrice() + insciptionPrice() + tenAnchorPrice * getAnchorQuantity() ;
+  
+    var divobj = document.getElementById('totalPrice');
+    divobj.style.display='block';
+    divobj.innerHTML = "Total Price for the Cake $"+ cakePrice;
+}
+
+function hideTotal()
+{
+	var divobj= document.getElementById('totalPrice');
+	divobj.style.display='none';
+}
+
 
 
 </script>

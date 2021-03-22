@@ -7,26 +7,13 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link href="daterangepicker.css" rel="stylesheet"/>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<!-- <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script> -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.1/umd/popper.min.js"></script>
-<script src="moment.min.js"></script>
-<script src="daterangepicker.js"></script>
-
-<!-- <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 
 <link href="{% static 'js/jquery-ui-1.12.1/jquery-ui.min.css' %}" rel="stylesheet">
 <link href="{% static 'js/jquery-ui-1.12.1/jquery-ui.structure.min.css' %}" rel="stylesheet">
 <link href="{% static 'js/jquery-ui-1.12.1/jquery-ui.theme.min.css' %}" rel="stylesheet">
-          -->
-
          
+
 <style>
   
   * {
@@ -68,57 +55,88 @@ input[type=submit]:hover {
 </style>
 
 <body >
-
+<br>
+<br>
+<form method="POST">
+  {% csrf_token %}
   <div class="container"><h3>Select your services Type</h3>
               
     <input type="radio" id="checkbox1" name="checkboxSwitch" value="checkbox1" checked>
     <label for="radio1">Venue Service</label>
   
     <input type="radio" id="checkbox3" name="checkboxSwitch"value="checkbox3">
-    <label for="checkbox3">Catering Service</label>
+    <label for="ra">Catering Service</label>
           
       </div>   <br>
 <div class="container">
   <div onload='hideTotal()'>
   <div id="wrap">
     <div id="venueService">
-      <form action="" method="POST" id="cakeform" onsubmit="return false;">
-     
-          <div class="cont_order">
-            <input type="text" id= "picker" class="form-contro;">
-            
+
               <fieldset>
-               
+                <div class="cont_order">
+                  <label>Event On:</label>
+                  <input type="date" id= "startDate" max ="" name ="eventStartDate" >
+
+                  <label>Event Until </label>
+                  <input type="date" id="endDate" min="" name="eventEndDate" >
+
+                  
+                  
+                    <fieldset>
+                     
+                   
+                      <br>
+                      <label for="cars">Choose your event type:</label>
+      
+                        <select id="event" name="eventType">
+                          <option value="Wedding">Wedding</option>
+                          <option value="Corporate">Corporate Events</option>
+                          <option value="Birthday">Birthday Party</option>
+                        
+                        </select>
+               <br>
              
-                <br>
-              
-                  <label for="">Size of the cake</label> <br>
-                  <label for="" class="radiolabel">
-                      <input type="radio" name="selectedcake" value="Round6" onclick="calculateTotal() ">Round cake 6"- service 8 people ($20)
-                  </label>  <br>
-                  <label for="" class="radiolabel">
-                      <input type="radio" name="selectedcake" value="Round8" onclick="calculateTotal()"> Round cake 8" - service 12 people ($25)
-                  </label> <br>
-                  <label for="" class="radiolabel">
-                      <input type="radio" name="selectedcake" value="Round10" onclick="calculateTotal()"> Round cake 10" - service 16 people ($35)
-                  </label> <br>
-                  <label for="" class="radiolabel">
-                      <input type="radio" name="selectedcake" value="Round12" onclick="calculateTotal()"> Round cake 12" - service 30 people ($75)
-                  </label> <br> 
-                  <br>
-                  <label for="">Filling</label>
-  
-                  <select name="filling" id="filling" onchange="calculateTotal()">
-                      <option value="None"> Select Filling</option>
-                      <option value="Lemon">Lemon($5)</option>
-                      <option value="Custed">Custed($5)</option>
-                      <option value="Fudge">Fudge($7)</option>
-                      <option value="Mocha">Mocha($8)</option>
-                  </select>  <br>  <br>
+               <br>
+               <p>
+                <label>Select your prefered services for the event</lable><br>
+                 
+                  
+                  <!-- collapse for catering -->
+                 <div class="conatiner" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                 1. Catering
+                </div>
+                {{ form.catering }}
+              </p>
+
+                  <!-- collapse for decoration -->
+                    <div class="conatiner" data-toggle="collapse" href="#collapse" role="button" aria-expanded="false" aria-controls="collapseExample">
+                     2. Ertra Service
+                     {{form.extraService}}
+                    </div> 
+                    <p> 
+                  </div>
                 
-                  <label for="">Anchor price: Tk 4.50 </label>
-                  <select name="quantity" id="quantity" onchange="calculateTotal()">
-                      <option value="0">Qnty</option>
+
+                <!-- collapse for extraService -->
+                <!-- <div class="conatiner" data-toggle="collapse" href="#collapse2" role="button" aria-expanded="false" aria-controls="collapseExample">
+                  3. Music and dance
+                 </div> 
+                </p>
+                 <div class="collapse" id="collapse2">
+                  <div class="card card-body">
+                    <p>
+                      <label for="includeinscription">Music and dance floor($20)</label>
+                      <input type="checkbox" id="includeinscription" name="includeinscription" onclick="calculateTotal()">
+                  </p>
+                  <br>
+                </div>
+              </div> -->
+     
+                   <label for="">Select Number of Guest </label>
+                   <input type = "text" name ="guestNumber">
+                  <!-- <select name="quantity" id="quantity" onchange="calculateTotal()">
+                      <option value="0"> Number of guest</option>
                       <option value="1">1</option>
                       <option value="2">2</option>
                       <option value="3">3</option>
@@ -129,47 +147,79 @@ input[type=submit]:hover {
                       <option value="8">8</option>
                       <option value="9">9</option>
                       <option value="10">10</option>
-                  </select>
+                  </select> -->
                   <br> 
-                  <p>
+                  <br>
   
-                      <label for="includecandles" class="inlinelabel"> Include Candles ($5)</label>
-                      <input type="checkbox" id="includecandles" name="includecandles" onclick="calculateTotal()"/>
-  
-                  </p>
-  
-                  <p>
-                      <label for="includeinscription">Include Inscription($20)</label>
-                      <input type="checkbox" id="includeinscription" name="includeinscription" onclick="calculateTotal()">
-                  </p>
+                  <input type="submit" id="submit" value="Submit" onclick="calculateTotal()" style="margin-top: 5px;">
                   <div id="totalPrice" style="background:rgb(0, 162, 255);"></div>
               </fieldset>
           </div>
-          <input type="submit" id="submit" value="Submit" onclick="calculateTotal()" style="margin-top: 5px;">
+         
       </form>
   </div>
 </div>
+</div>
   <div class="container">
     <form method="post" id="cateringService">
+      {% csrf_token %}
       <h1>catering</h1>
-      <form>
+      <div class="container">
+        <label><input type="radio" name="colorRadio" value="red"> Veg foods</label>
+        <label><input type="radio" name="colorRadio" value="green"> Non-veg foods</label>
+        <div class="red box" style="background-color: white;">
+          <input type="checkbox" id="food1" name="food1" value="food1">
+            <label for="food1"> </label>Paneer chilli<br>
+            <input type="checkbox" id="food2" name="food1" value="food2">
+            <label for="food2">Aaloo pakoda </label><br>
+            <input type="checkbox" id="food3" name="food2" value="food3">
+            <label for="food3"> Peanut sadheko</label><br>
+            <input type="checkbox" id="food4" name="food4" value="food4">
+            <label for="food4"> Veg momo</label><br>
+            <input type="checkbox" id="food5" name="food5" value="food5">
+            <label for="food5">Mashroom </label><br>
+        </div>
+        <div class="green box" style="background-color: white;">
+          <input type="checkbox" id="food1" name="food1" value="food1">
+          <label for="food1"> </label> Chicken chilli<br>
+          <input type="checkbox" id="food2" name="food1" value="food2">
+          <label for="food2">Mutton pakoda </label><br>
+          <input type="checkbox" id="food3" name="food2" value="food3">
+          <label for="food3"> Chicken sadheko</label><br>
+          <input type="checkbox" id="food4" name="food4" value="food4">
+          <label for="food4"> Chicken momo</label><br>
+          <input type="checkbox" id="food5" name="food5" value="food5">
+          <label for="food5">Chicken masala </label><br>
+        </div>
+        <input type="submit" id="submit" value="Submit" onclick="calculateTotal()" style="margin-top: 5px;">
+      </form>
+  </div>
 
-
-
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>       
+ 
 <script type="text/javascript">  
 
+  var startDate;
+  $('#startDate').on('change', function(){
+    startDate = $(this).val();
+    $('#endDate').prop('min', function(){
+      return startDate;
+    })
+  })
+
+  var endDate;
+  $('#endDate').on('change', function(){
+    endDate = $(this).val();
+    $('#startDate').prop('max', function(){
+      return endDate;
+    })
 
 
-$('#picker').daterangepicker({
-  singleDatePicker:True,
-  showDropdowns:true,
-  open:'right',
-  drop: 'down',
+
+  })
 
 
-
-})
-// radio button function to swithch forms
+// form switch for catering and venue
 var checkboxSwitch = document.getElementsByName("checkboxSwitch");
 var venueService =  document.getElementById("venueService");
 var cateringService =  document.getElementById("cateringService");
@@ -190,6 +240,15 @@ for(var i = 0; i < checkboxSwitch.length; i++) {
     }
 }
 
+// form switch function for catering food list
+$(document).ready(function(){
+    $('input[type="radio"]').click(function(){
+        var inputValue = $(this).attr("value");
+        var targetBox = $("." + inputValue);
+        $(".box").not(targetBox).hide();
+        $(targetBox).show();
+    });
+});
 
 var cake_prices = new Array();
 cake_prices["Round6"]=20;
@@ -197,14 +256,8 @@ cake_prices["Round8"]=25;
 cake_prices["Round10"]=35;
 cake_prices["Round12"]=75;
 
-var filling_prices= new Array();
-filling_prices["None"]=0;
-filling_prices["Lemon"]=5;
-filling_prices["Custed"]=5;
-filling_prices["Fudge"]=7;
-filling_prices["Mocha"]=8;
 
-var tenAnchorPrice=4.50;
+var tenAnchorPrice=2;
 var Anchor_Quantity=new Array();
 Anchor_Quantity["0"]=0;
 Anchor_Quantity["1"]=1;
@@ -234,15 +287,6 @@ function getCakeSizePrice()
 	return cakeSizePrice;
 }
 
-function getFillingPrice()
-{
-	var cakeFillingPrice=0;
-	var theForm= document.forms["cakeform"];
-	var selectedFilling= theForm.elements["filling"];
-
-	cakeFillingPrice = filling_prices[selectedFilling.value];
-	return cakeFillingPrice;
-}
 
 //tttttttttttttttttttttttttt test tttttttttttttttttttttt
 /*
@@ -268,6 +312,8 @@ function getAnchorQuantity()
 	return AnchorQuantity;
 }
 //tttttttttttttttttttttttttt test tttttttttttttttttttttt
+
+
 
 function candlesPrice()
 {   
@@ -298,7 +344,7 @@ function insciptionPrice()
 function calculateTotal()
 {
 // var cakePrice= getCakeSizePrice() + getFillingPrice() + candlesPrice() + insciptionPrice() ;
-var cakePrice=getCakeSizePrice() + getFillingPrice() + candlesPrice() + insciptionPrice() + tenAnchorPrice * getAnchorQuantity() ;
+var cakePrice=getCakeSizePrice()  + candlesPrice() + insciptionPrice() + tenAnchorPrice * getAnchorQuantity() ;
   
     var divobj = document.getElementById('totalPrice');
     divobj.style.display='block';

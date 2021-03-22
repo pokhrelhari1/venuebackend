@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from django.contrib.auth.forms import UserCreationForm
-from .forms import CreateUserFrom, CustomerForm
+from .forms import CreateUserFrom, CustomerForm, bookingForm
 from django.contrib.auth.models import Group
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
@@ -91,6 +91,15 @@ def index(request):
     venue = myFilter.queryset
     return render(request,'accounts/index.html', {'venue': venue ,'myFilter':myFilter})
 
+
+
+# def index(request):
+#     catering = Catering.objects.all()
+#     myFilter= locationFilter( request.GET, queryset= cateirng)
+#     catering = myFilter.queryset
+#     return render(request,'accounts/index.html', {'catering': catering ,'myFilter':myFilter})
+
+
 @login_required(login_url = 'login')
 @admin_only #calling the decoratior  for page permission
 def dashboard(request):
@@ -103,8 +112,19 @@ def userProfile(request):
     user = request.user
     profile = Profile.objects.get(user = user)
     form = CustomerForm(instance= profile)
-    context= {'form':form}
+    # booking = user.book_set.all()
+    booking_done = Booking.objects.filter(customer= request.user.profile)
+    context= {'form':form, 'booking_done': booking_done}
     return render(request,'accounts/userProfile.html',context)
+
+
+#function to delete booking history for user
+def deleteBooking(request, id):
+    booking = Booking.objects.get(pk=id)
+    if request.method == "POST":
+        booking.delete()
+        return redirect('userProfile')
+    return render(request, 'accounts/deleteBooking.html')
 
 #fuction to update user profile
 @login_required(login_url='login')
@@ -140,9 +160,33 @@ def viewDetail(request, id):
         }
     return render(request,'accounts/viewDetail.html',context)
     
-def bookingForm(request):
-    return render(request, 'accounts/bookingForm.html')
+def booking(request, id):
+    if request.method== 'POST':
+        form  =  bookingForm(request.POST)
+        print(form.errors)
+        if form.is_valid():
+            book = form.save(commit=False)
+            book.customer = request.user.profile
+            book.venue = Venue.objects.get(id=id)
+            # book.catering = Catering.objects.get(id=id)
+            book.save()
+          
+          
+            redirect('/bookingForm/')
+    else:
+        form = bookingForm()
+    return render(request, 'accounts/bookingForm.html', {'form':form})
 
+
+# def catering(request,id):
+#     if request.method== "POST":
+#         try:
+#             catering= catering.objects.get(id=id)
+#             savedata= request.POST.get('checked_values')
+#             savedata.save()
+#             request render(request,'bookingForm')
+#         except:
+#             savedata= check_done()
 
 #viewset for api
 class ProfileView(viewsets.ModelViewSet):

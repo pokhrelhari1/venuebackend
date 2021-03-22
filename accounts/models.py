@@ -91,13 +91,16 @@ class venueImage(models.Model):
 # model for booking 
 
 class Booking(models.Model):
-    bookingdate = models.DateTimeField(default=datetime.now(), blank=True)
-    eventStartDate= models.DateTimeField(auto_now_add=False)
-    eventEndDate= models.DateTimeField(auto_now_add=False)
+    serviceType = models.CharField(max_length=500, blank= True)
+    bookingdate = models.DateField(auto_now_add=True, blank=True)
+    guestNumber = models.IntegerField(blank=True)
+    eventStartDate= models.DateField(auto_now_add=False)
+    eventEndDate= models.DateField(auto_now_add=False)
     eventType= models.CharField(max_length=500, blank=True)
     venue= models.ForeignKey(Venue, on_delete=models.CASCADE)
     catering= models.ForeignKey(Catering, on_delete= models.CASCADE)
     customer= models.ForeignKey(Profile,on_delete= models.CASCADE)
+    extraService= models.ForeignKey(extraService, null = True, on_delete= models.CASCADE)
 
     
      
@@ -114,7 +117,7 @@ class Feedback(models.Model):
     feedbackDate= models.DateTimeField(default=datetime.now(), blank=True)
     customer= models.ForeignKey(Profile, on_delete= models.CASCADE)
 
-    
+  
 #     def __str__(self):
 #         return self.foodItems
 

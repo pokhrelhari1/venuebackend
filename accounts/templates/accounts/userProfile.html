@@ -175,6 +175,49 @@ body{
           </div>
         </div>
     </div>
+</div>
+
+<div class="row">
+	<div class="col-md">
+		<div class="card card-body">
+			<table class="table table-sm">
+				<tr>
+					<th>BookingDate</th>
+          <th>Venue name</th>
+					<th>Guest Number</th>
+					<th>Event Start</th>
+          <th>Event End</th>
+          <th>Food Type<th>
+          <th>Extra Service<th>
+				
+					<th>Remove</th>
+				</tr>
+
+{% for book in booking_done %}
+			
+       
+					<td>{{book.BookingDate}}</td>
+					<td>{{book.venue}}</td>
+          <td>{{book.guestNumber}}</td>
+    
+          <td>
+					<td>{{book.eventStartDate}}</td>
+          <tb>{{book.eventEndDate}}</tb>
+          <td>{{book.catering}}</td>
+          <td></td>
+          <td>{{book.extraService}}</td>
+          <td>
+  	
+					<td><a class="btn btn-sm btn-danger" href="{% url 'deleteBooking' book.id %}">Remove</a></td> 
+				</tr>
+
+{% endfor %}
+			</table>
+		</div>
+	</div>
+</div>
+
+</div>
 {% load static %}
 {% endblock %}
   </body>

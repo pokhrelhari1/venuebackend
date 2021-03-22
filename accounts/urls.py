@@ -21,12 +21,14 @@ urlpatterns = [
     path ('logout/', views.logoutUser, name='logout'),
     path('',views.index, name='index'),
     
-    path('bookingForm/', views.bookingForm, name= 'bookingForm'),
+    path('<int:id>/bookingForm/', views.booking, name= 'bookingForm'),
    
     path('userProfile/',views.userProfile, name='userProfile'),
     path('updateProfile',views.updateProfile, name='updateProfile'),
     path('viewDetail/<str:id>/',views.viewDetail, name='viewDetail'),
-  
+    path('<int:id>/deleteBooking/',views.deleteBooking, name='deleteBooking'),
+   
+
     # path('venue/id/', views.viewDetails, name='viewDetails'),
     path('dashboard/',views.dashboard, name= 'dashboard'),
     path ('reset_password/', auth_views.PasswordResetView.as_view(), name="reset_password"),
