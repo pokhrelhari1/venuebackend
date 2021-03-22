@@ -1,0 +1,15 @@
+{% extends 'accounts/main.html' %}
+{% load static %}
+{% block content %}
+
+<p>Are you sure you want to delete "{{venue}}"?</p>
+<form method="POST">
+    {% csrf_token %}
+    <a href="{% url 'userProfile' %}">Cancel</a>
+    <input type= "submit" name="Confirm ">
+
+
+</form>
+
+
+{% endblock%}
