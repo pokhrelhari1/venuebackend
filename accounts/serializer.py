@@ -27,6 +27,7 @@ class CateringSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model= Catering
         fields= ['foodType','url','foodItems', 'is_available','price']
+        
 
 class extraServiceSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:

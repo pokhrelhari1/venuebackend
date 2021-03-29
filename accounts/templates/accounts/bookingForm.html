@@ -43,6 +43,9 @@ input[type=submit] {
   float: right;
 }
 
+.card{
+  margin: 25px;
+}
 input[type=submit]:hover {
   background-color: #45a049;
 }
@@ -59,15 +62,9 @@ input[type=submit]:hover {
 <br>
 <form method="POST">
   {% csrf_token %}
-  <div class="container"><h3>Select your services Type</h3>
-              
-    <input type="radio" id="checkbox1" name="checkboxSwitch" value="checkbox1" checked>
-    <label for="radio1">Venue Service</label>
+  <div class="container"><h3>Book your services </h3>
+        
   
-    <input type="radio" id="checkbox3" name="checkboxSwitch"value="checkbox3">
-    <label for="ra">Catering Service</label>
-          
-      </div>   <br>
 <div class="container">
   <div onload='hideTotal()'>
   <div id="wrap">
@@ -101,21 +98,77 @@ input[type=submit]:hover {
                <p>
                 <label>Select your prefered services for the event</lable><br>
                  
+          {{ form.catering }}
+          {{ form.extraService }}        
                   
                   <!-- collapse for catering -->
-                 <div class="conatiner" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
-                 1. Catering
+
+                  <label  data-toggle="collapse" href="#collapse" role="button" aria-expanded="false" aria-controls="collapse">
+                   1. Catering
+
+                  
+                  </label>
+                <div class="collapse" id="collapse">
+                  <div class="container-fluid" >
+                   
+                    <div class="row">
+                      <div class="col-sm-3 col-md-6 col-lg-4" style="background-color:rgb(248, 248, 248);padding: 2%;">
+                        <img class="card-img-top" src="https://images.unsplash.com/photo-1547496502-affa22d38842?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=884&q=80" alt="Card image cap" style="height: 15rem;">
+                      </div>
+                      <div class="col-sm-9 col-md-6 col-lg-8" style="background-color:rgb(248, 248, 248); padding: 2%;">
+
+                          {% for catering in caterings %}
+                       
+                                  <input type="checkbox" id="myCheck" name="package"  value="{{ catering.id }}" onclick="myFunction()">  
+                                    <label style="font-size: large;" for="myCheck"></label>package1 <br>
+                                    <label style="font-style: italic; font-size: 15px;">Price:{{ catering.price }}/pax</label>
+                                  <a href="{% url 'catering' catering.id %}" id="text" style="display:none">Click to customize your menu</a>
+                          {% endfor %}
+
+                     </div>
+                    </div>
+                  </div>
+                      
+                
                 </div>
-                {{ form.catering }}
+               
               </p>
 
                   <!-- collapse for decoration -->
-                    <div class="conatiner" data-toggle="collapse" href="#collapse" role="button" aria-expanded="false" aria-controls="collapseExample">
+                  <div class="conatiner-fluid">
+
+                  <label  data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                    1. Extra Service
+                   </label>
+                 <div class="collapse" id="collapseExample">
+                   <div class="container-fluid" >
+                    <div class="row">
+                      <div class="card" style="width: 20rem;">
+                        <img class="card-img-top" src="https://images.unsplash.com/photo-1581548708095-7158f2e63857?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80" alt="Card image cap" style="height: 15rem;">
+                        <div class="card-body" >
+                          <label><input type="checkbox" name="c{{extraService.id}}" value="host"> Host</label>
+                        </div>
+                      </div>
+                              
+                      
+                      <div class="card" style="width: 20rem;">
+                        <img class="card-img-top" src="https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80" alt="Card image cap" style="height: 15rem;">
+                        <div class="card-body" >
+                          <label><input type="checkbox" name="c{{extraService.id}}" value="muisc">Music</label>
+                        </div>
+                      </div>
+                             
+                      </div>
+                   </div>
+                  </div>  
+                 
+                 </div>
+                    <!-- <div class="conatiner" data-toggle="collapse" href="#collapse" role="button" aria-expanded="false" aria-controls="collapseExample">
                      2. Ertra Service
                      {{form.extraService}}
                     </div> 
                     <p> 
-                  </div>
+                  </div> -->
                 
 
                 <!-- collapse for extraService -->
@@ -151,7 +204,7 @@ input[type=submit]:hover {
                   <br> 
                   <br>
   
-                  <input type="submit" id="submit" value="Submit" onclick="calculateTotal()" style="margin-top: 5px;">
+                  <input type="submit" id="submit" name="save" value="Submit" onclick="calculateTotal()" style="margin-top: 5px;">
                   <div id="totalPrice" style="background:rgb(0, 162, 255);"></div>
               </fieldset>
           </div>
@@ -165,9 +218,54 @@ input[type=submit]:hover {
       {% csrf_token %}
       <h1>catering</h1>
       <div class="container">
-        <label><input type="radio" name="colorRadio" value="red"> Veg foods</label>
-        <label><input type="radio" name="colorRadio" value="green"> Non-veg foods</label>
-        <div class="red box" style="background-color: white;">
+
+        <label for="event">Choose your event type:</label>
+      
+        <select id="event" name="eventType">
+          <option value="Wedding">Wedding</option>
+          <option value="Corporate">Corporate Events</option>
+          <option value="Birthday">Birthday Party</option>
+        
+        </select>
+        <br>
+
+        <label for="">Select Number of Guest </label>
+        <input type = "text" name ="guestNumber">
+
+        <label>Event On:</label>
+        <input type="date" id= "startDate1" max ="" name ="eventStartDate1" >
+
+        <label>Event Until </label>
+        <input type="date" id="endDate1" min="" name="eventEndDate1" >
+ <br>
+<br>
+
+<div class="row">
+<div class="card" style="width: 20rem;">
+  <img class="card-img-top" src="https://images.unsplash.com/photo-1547496502-affa22d38842?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=884&q=80" alt="Card image cap" style="height: 15rem;">
+  <div class="card-body" >
+    <label><input type="radio" name="colorRadio" value="red"> Veg foods</label>
+  </div>
+</div>
+        
+
+<div class="card" style="width: 20rem;">
+  <img class="card-img-top" src="https://images.unsplash.com/photo-1515669097368-22e68427d265?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80" alt="Card image cap" style="height: 15rem;">
+  <div class="card-body" >
+    <label><input type="radio" name="colorRadio" value="green"> Non-veg foods</label>
+  </div>
+</div>
+       
+</div>
+
+        
+        <br>
+
+    <div class="red box";> 
+       
+          <div class="card card-body">
+    
+ 
           <input type="checkbox" id="food1" name="food1" value="food1">
             <label for="food1"> </label>Paneer chilli<br>
             <input type="checkbox" id="food2" name="food1" value="food2">
@@ -178,6 +276,8 @@ input[type=submit]:hover {
             <label for="food4"> Veg momo</label><br>
             <input type="checkbox" id="food5" name="food5" value="food5">
             <label for="food5">Mashroom </label><br>
+        </div>
+
         </div>
         <div class="green box" style="background-color: white;">
           <input type="checkbox" id="food1" name="food1" value="food1">
@@ -191,6 +291,9 @@ input[type=submit]:hover {
           <input type="checkbox" id="food5" name="food5" value="food5">
           <label for="food5">Chicken masala </label><br>
         </div>
+<br>
+
+      
         <input type="submit" id="submit" value="Submit" onclick="calculateTotal()" style="margin-top: 5px;">
       </form>
   </div>
@@ -198,6 +301,16 @@ input[type=submit]:hover {
 <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>       
  
 <script type="text/javascript">  
+
+function myFunction() {
+  var checkBox = document.getElementById("myCheck");
+  var text = document.getElementById("text");
+  if (checkBox.checked == true){
+    text.style.display = "block";
+  } else {
+     text.style.display = "none";
+  }
+}
 
   var startDate;
   $('#startDate').on('change', function(){
@@ -217,6 +330,27 @@ input[type=submit]:hover {
 
 
   })
+
+// catering datetime range
+  var startDate1;
+  $('#startDate1').on('change', function(){
+    startDate1 = $(this).val();
+    $('#endDate1').prop('min', function(){
+      return startDate1;
+    })
+  })
+
+  var endDate1;
+  $('#endDate1').on('change', function(){
+    endDate1 = $(this).val();
+    $('#startDate1').prop('max', function(){
+      return endDate1;
+    })
+
+
+
+  })
+
 
 
 // form switch for catering and venue

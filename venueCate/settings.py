@@ -83,7 +83,7 @@ WSGI_APPLICATION = 'venueCate.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'testdatabase1',
+        'NAME': 'testdatabase2',
         'USER': 'root',
         'PASSWORD': 'user',
         'PORT': '3306',

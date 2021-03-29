@@ -23,6 +23,9 @@ body{
 .card {
     box-shadow: 0 1px 3px 0 rgba(0,0,0,.1), 0 1px 2px 0 rgba(0,0,0,.06);
 }
+.table{
+  background-color: white;
+}
 
 .card {
     position: relative;
@@ -177,45 +180,45 @@ body{
     </div>
 </div>
 
-<div class="row">
-	<div class="col-md">
-		<div class="card card-body">
-			<table class="table table-sm">
-				<tr>
-					<th>BookingDate</th>
-          <th>Venue name</th>
-					<th>Guest Number</th>
-					<th>Event Start</th>
-          <th>Event End</th>
-          <th>Food Type<th>
-          <th>Extra Service<th>
-				
-					<th>Remove</th>
-				</tr>
-
-{% for book in booking_done %}
-			
+<div class="container-fluid">
+<table class="table table-bordered">
+  <thead class="thead-dark">
+ 
+    <tr>
+     
+      <th scope="col">Venue name</th>
+      <th scope="col"> Guest Number</th>
+      <th scope="col">Event Start</th>
+      <th scope="col">Event End</th>
+      <th scope="col">Food Type</th>
+      <th scope="col">Extra Service</th>
+      <th scope="col">Remove</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for book in booking_done %}
+			<tr>
        
-					<td>{{book.BookingDate}}</td>
+				
 					<td>{{book.venue}}</td>
           <td>{{book.guestNumber}}</td>
-    
-          <td>
 					<td>{{book.eventStartDate}}</td>
-          <tb>{{book.eventEndDate}}</tb>
+          <td>{{book.eventEndDate}}</tb>
           <td>{{book.catering}}</td>
-          <td></td>
           <td>{{book.extraService}}</td>
-          <td>
-  	
+       
 					<td><a class="btn btn-sm btn-danger" href="{% url 'deleteBooking' book.id %}">Remove</a></td> 
 				</tr>
 
 {% endfor %}
+ 
+  </tbody>
+</table>
+
+
+
 			</table>
 		</div>
-	</div>
-</div>
 
 </div>
 {% load static %}

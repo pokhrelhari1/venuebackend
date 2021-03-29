@@ -28,3 +28,9 @@ class bookingForm(ModelForm):
     class Meta:
         model = Booking
         fields= [ 'guestNumber' ,'eventStartDate','eventEndDate','eventType','catering', 'extraService']
+
+
+
+
+  
+

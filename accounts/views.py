@@ -9,6 +9,8 @@ from django.contrib.auth.decorators import login_required
 from .models import *
 from .decorators import unauthenticated_user,allowed_users,admin_only
 from .filters import locationFilter
+from django.views import View
+from django.db import models
 
 from rest_framework import viewsets
 from .serializer import VenueSerializer, CateringSerializer, PaymentSerializer, FeedbackSerializer, extraServiceSerializer, BookingSerializer, UserSerializer
@@ -86,7 +88,7 @@ def logoutUser(request):
 
 
 def index(request):
-    venue = Venue.objects.all()
+    venue = Venue.objects.all() 
     myFilter= locationFilter( request.GET, queryset= venue)
     venue = myFilter.queryset
     return render(request,'accounts/index.html', {'venue': venue ,'myFilter':myFilter})
@@ -161,6 +163,9 @@ def viewDetail(request, id):
     return render(request,'accounts/viewDetail.html',context)
     
 def booking(request, id):
+
+    # caterings = Catering.objects.all()
+
     if request.method== 'POST':
         form  =  bookingForm(request.POST)
         print(form.errors)
@@ -168,25 +173,89 @@ def booking(request, id):
             book = form.save(commit=False)
             book.customer = request.user.profile
             book.venue = Venue.objects.get(id=id)
+
+            # package = request.POST.getlist('package')    
+         
+            # host = request.POST.getlist('host')
+            # music = request.POST.getlist('music')
+            # if response.POST.get('submit'):
+            #     for item in item_set.all():
+            #         if response.POST.get("package1" + str(item.id))=="clicked":
+            #             item.complete = True
+            #         else: 
+            #             item.complete = False
+            #         item.save()
             # book.catering = Catering.objects.get(id=id)
             book.save()
-          
-          
+           
             redirect('/bookingForm/')
+         
+
+           
     else:
+        
         form = bookingForm()
     return render(request, 'accounts/bookingForm.html', {'form':form})
 
 
-# def catering(request,id):
-#     if request.method== "POST":
-#         try:
-#             catering= catering.objects.get(id=id)
-#             savedata= request.POST.get('checked_values')
-#             savedata.save()
-#             request render(request,'bookingForm')
-#         except:
-#             savedata= check_done()
+class catering(View):
+    def get(self,request, *args, **kwargs):
+        appetizers = MenuItems.objects.filter(category__name__contains='Appetizers')
+        mainCourse = MenuItems.objects.filter(category__name__contains='MainCourse')
+        dessert = MenuItems.objects.filter(category__name__contains='Dessert')
+        drink = MenuItems.objects.filter(category__name__contains='Drink')
+
+        #pass into context
+
+        context ={
+            'appetizers': appetizers,
+            'mainCourse':mainCourse,
+            'dessert': dessert,
+            'drink': drink,
+
+        }
+
+        return render(request,'accounts/catering.html', context)
+
+    def post(self, request, *args, **kwargs):
+        catering_items={
+            'items': []
+        }
+        
+        items = request.POST.getlist('items')
+
+        for item in items:
+            print("Im a item")
+            menu_item = MenuItems.objects.get(id= int(item))
+            item_data = {
+                'id': menu_item.pk,
+                'name': menu_item.name,
+               
+
+            }
+            catering_items['items'].append(item_data)
+
+        # price = 0
+        # item_ids =[]
+
+        # for item in catering_items['items']:
+        #     price += item['price']
+        #     item_ids.append(item['id'])
+
+        # catering = Catering.objects.create(price= price)
+        # catering.items.add(*item_ids)
+        # catering.save()
+
+        # context ={
+        #     'items': catering_items['items'],
+        #     'price': price
+
+        # }
+
+        return render(request,'accounts/bookingForm.html')
+
+
+
 
 #viewset for api
 class ProfileView(viewsets.ModelViewSet):

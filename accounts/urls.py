@@ -6,6 +6,8 @@ from django.conf.urls.static import static
 from rest_framework import routers
 from .import views
 
+
+
 router = routers.DefaultRouter()
 router.register('accounts', views.VenueView)
 router.register('catering', views.CateringView)
@@ -22,6 +24,7 @@ urlpatterns = [
     path('',views.index, name='index'),
     
     path('<int:id>/bookingForm/', views.booking, name= 'bookingForm'),
+    path ('catering/<int:id>', views.catering.as_view(), name= 'catering'),
    
     path('userProfile/',views.userProfile, name='userProfile'),
     path('updateProfile',views.updateProfile, name='updateProfile'),

@@ -28,27 +28,47 @@ def update_profile_signal(sender, instance, created, **kwargs):
         Profile.objects.create(user=instance)
     instance.profile.save()
 
-
-    
-
-
-#model for catering
-class Catering(models.Model):
-    foodType= models.CharField(max_length=200, blank= True)
-    foodItems= models.CharField(max_length=200, blank= True)
-    is_available=models.BooleanField( null= False, blank= False)
-    price= models.IntegerField(null= True, blank= True)
+class Category(models.Model):
+    name= models.CharField(max_length=100)
 
 
     def __str__(self):
-        return self.foodType
+        return self.name
+
+    
+class MenuItems(models.Model):
+    name= models.CharField(max_length= 100)
+    category = models.ManyToManyField('Category', related_name='item')
+    
+    def __str__(self):
+        return self.name
+
+class foodPackage(models.Model):
+    packageName= models.CharField(max_length= 100)
+    price = models.IntegerField(null="False", blank= False)
+    MenuItems = models.ManyToManyField('MenuItems', related_name='MenuIems')
+
+
+
+#model for catering  
+class Catering(models.Model):
+    created_on= models.DateTimeField(auto_now_add=True)
+    price = models.IntegerField(null=True, blank=False) 
+    packageType = models.ManyToManyField('foodPackage', related_name='foodPackage' ,blank=False)
+
+
+    def __str__(self):
+        return f'Catering:{self.created_on.strftime("%b %d %I: %M %p")}'
+   
+    # def __str__(self):
+    #     return self.items
 
 
    
 #model for extra sevice
 class extraService(models.Model):
     serviceName= models.CharField(max_length= 200, blank=True)
-    servicePrice= models.IntegerField(null=False, blank= False)
+    servicePrice= models.IntegerField(null=True, blank= False)
     catering= models.ForeignKey(Catering, on_delete= models.CASCADE, blank= True)
 
     
@@ -91,8 +111,8 @@ class venueImage(models.Model):
 # model for booking 
 
 class Booking(models.Model):
-    serviceType = models.CharField(max_length=500, blank= True)
-    bookingdate = models.DateField(auto_now_add=True, blank=True)
+   
+    bookingdate = models.DateField(auto_now_add=True)
     guestNumber = models.IntegerField(blank=True)
     eventStartDate= models.DateField(auto_now_add=False)
     eventEndDate= models.DateField(auto_now_add=False)
