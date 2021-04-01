@@ -36,17 +36,29 @@ class Category(models.Model):
         return self.name
 
     
-class MenuItems(models.Model):
+class Menu_Items(models.Model):
     name= models.CharField(max_length= 100)
     category = models.ManyToManyField('Category', related_name='item')
     
     def __str__(self):
         return self.name
 
-class foodPackage(models.Model):
+class food_Package(models.Model):
     packageName= models.CharField(max_length= 100)
     price = models.IntegerField(null="False", blank= False)
-    MenuItems = models.ManyToManyField('MenuItems', related_name='MenuIems')
+    Menu_Items = models.ManyToManyField('Menu_Items', related_name='Menu_Items')
+
+    def __str__(self):
+        return self.packageName
+
+
+class OrderedFoodPackage(models.Model):
+    packageName= models.CharField(max_length= 100)
+    price = models.IntegerField(null="False", blank= False)
+    Menu_Items = models.ManyToManyField('Menu_Items')
+
+    def __str__(self):
+        return self.packageName
 
 
 
@@ -54,7 +66,7 @@ class foodPackage(models.Model):
 class Catering(models.Model):
     created_on= models.DateTimeField(auto_now_add=True)
     price = models.IntegerField(null=True, blank=False) 
-    packageType = models.ManyToManyField('foodPackage', related_name='foodPackage' ,blank=False)
+    packageType = models.ManyToManyField('food_Package', related_name='food_Package' ,blank=False)
 
 
     def __str__(self):
@@ -121,6 +133,7 @@ class Booking(models.Model):
     catering= models.ForeignKey(Catering, on_delete= models.CASCADE)
     customer= models.ForeignKey(Profile,on_delete= models.CASCADE)
     extraService= models.ForeignKey(extraService, null = True, on_delete= models.CASCADE)
+    foodpackage = models.ForeignKey(OrderedFoodPackage, on_delete=models.CASCADE, null=True)    #change null=False
 
     
      

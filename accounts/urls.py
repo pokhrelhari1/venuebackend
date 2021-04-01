@@ -10,11 +10,17 @@ from .import views
 
 router = routers.DefaultRouter()
 router.register('accounts', views.VenueView)
+
 router.register('catering', views.CateringView)
 router.register('feedback', views.FeedbackView)
+router.register('venueImage', views.venueImageView)
 router.register('profile', views.ProfileView, basename="profile")
 router.register('booking', views.BookingView)
 router.register('payment', views.PaymentView)
+router.register('food_package', views.food_PackageView)
+router.register('Menu_Items', views.Menu_ItemsView)
+router.register('Catogery', views.CategoryView)
+
 
 
 urlpatterns = [
@@ -24,7 +30,8 @@ urlpatterns = [
     path('',views.index, name='index'),
     
     path('<int:id>/bookingForm/', views.booking, name= 'bookingForm'),
-    path ('catering/<int:id>', views.catering.as_view(), name= 'catering'),
+    path ('catering/<int:id>/', views.catering.as_view(), name= 'catering'),
+    path('foodpackage/<int:id>/', views.food_package_menu, name='foodpackage'),
    
     path('userProfile/',views.userProfile, name='userProfile'),
     path('updateProfile',views.updateProfile, name='updateProfile'),
@@ -33,7 +40,8 @@ urlpatterns = [
    
 
     # path('venue/id/', views.viewDetails, name='viewDetails'),
-    path('dashboard/',views.dashboard, name= 'dashboard'),
+    path('adminDashboard/',views.adminDashboard, name= 'adminDashboard'),
+    path('userDashboard/',views.userDashboard, name= 'userDashboard'),
     path ('reset_password/', auth_views.PasswordResetView.as_view(), name="reset_password"),
     path ('reset_password_sent/', auth_views.PasswordResetDoneView.as_view(),  name="password_reset_done") ,    #render success message to  notify user to cheeck their email
     path ('reset/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(), name= "password_reset_confirm"),     

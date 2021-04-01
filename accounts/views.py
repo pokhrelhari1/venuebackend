@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from django.contrib.auth.forms import UserCreationForm
-from .forms import CreateUserFrom, CustomerForm, bookingForm
+from .forms import CreateUserFrom, CustomerForm, bookingForm,cateringForm
 from django.contrib.auth.models import Group
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
@@ -13,7 +13,7 @@ from django.views import View
 from django.db import models
 
 from rest_framework import viewsets
-from .serializer import VenueSerializer, CateringSerializer, PaymentSerializer, FeedbackSerializer, extraServiceSerializer, BookingSerializer, UserSerializer
+from .serializer import VenueSerializer, CateringSerializer, PaymentSerializer, FeedbackSerializer, extraServiceSerializer, BookingSerializer, UserSerializer, food_PackageSerializer, Menu_ItemsSerializer, CatogerySerializer, venueImageSerializer
 
 
 @unauthenticated_user
@@ -104,8 +104,8 @@ def index(request):
 
 @login_required(login_url = 'login')
 @admin_only #calling the decoratior  for page permission
-def dashboard(request):
-    return render(request, 'accounts/dashboard.html')
+def adminDashboard(request):
+    return render(request, 'accounts/adminDashboard.html')
 
 
 #function for user profile
@@ -118,6 +118,18 @@ def userProfile(request):
     booking_done = Booking.objects.filter(customer= request.user.profile)
     context= {'form':form, 'booking_done': booking_done}
     return render(request,'accounts/userProfile.html',context)
+
+
+@login_required(login_url='login')
+
+def userDashboard(request):
+    user = request.user
+    profile = Profile.objects.get(user = user)
+    form = CustomerForm(instance= profile)
+    # booking = user.book_set.all()
+    booking_done = Booking.objects.filter(customer= request.user.profile)
+    context= {'form':form, 'booking_done': booking_done}
+    return render(request,'accounts/userDashboard.html',context)
 
 
 #function to delete booking history for user
@@ -165,6 +177,8 @@ def viewDetail(request, id):
 def booking(request, id):
 
     # caterings = Catering.objects.all()
+    # food_packages = food_Package.objects.all()
+    categories = Category.objects.all()
 
     if request.method== 'POST':
         form  =  bookingForm(request.POST)
@@ -173,6 +187,7 @@ def booking(request, id):
             book = form.save(commit=False)
             book.customer = request.user.profile
             book.venue = Venue.objects.get(id=id)
+            book.foodpackage = OrderedFoodPackage.objects.get(packageName=request.user.username)
 
             # package = request.POST.getlist('package')    
          
@@ -195,15 +210,46 @@ def booking(request, id):
     else:
         
         form = bookingForm()
-    return render(request, 'accounts/bookingForm.html', {'form':form})
+    return render(request, 'accounts/bookingForm.html', {'form':form,'categories':categories})
+
+
+# def cateirng(request):
+#     if request.method =='POST':
+#         form= cateringForm(request.POST)
+#         if form.is_valid():
+#             catering = form.cleaned_data.get('catering')
+#     else:
+#         form = cateirng
+#     return render('accounts/bookingForm.html', {'form': form})     #render_to_response le k garxa?s
+
+
+def food_package_menu(request, id):
+    all_items = Menu_Items.objects.filter(category__id=id)
+
+    if request.method == "POST":
+        selected_items = request.POST.getlist('items')
+        orderedpackage = OrderedFoodPackage()
+        orderedpackage.packageName=request.user.username
+        orderedpackage.price=100          #do something for calculating price, maybe adding price to menu_list table will work
+        orderedpackage.save()
+        # for item in selected_items:
+        #     menu_item = Menu_Items.objects.filter(id=item)
+        orderedpackage.Menu_Items.set(selected_items)
+        
+        return HttpResponse("You can now close this tab")
+
+
+    return render(request,'accounts/foodordermenu.html',{'items':all_items})
+
 
 
 class catering(View):
     def get(self,request, *args, **kwargs):
-        appetizers = MenuItems.objects.filter(category__name__contains='Appetizers')
-        mainCourse = MenuItems.objects.filter(category__name__contains='MainCourse')
-        dessert = MenuItems.objects.filter(category__name__contains='Dessert')
-        drink = MenuItems.objects.filter(category__name__contains='Drink')
+        appetizers = Menu_Items.objects.filter(category__name__contains='Appetizers')
+        print(appetizers)
+        mainCourse = Menu_Items.objects.filter(category__name__contains='MainCourse')
+        dessert = Menu_Items.objects.filter(category__name__contains='Dessert')
+        drink = Menu_Items.objects.filter(category__name__contains='Drink')
 
         #pass into context
 
@@ -226,7 +272,7 @@ class catering(View):
 
         for item in items:
             print("Im a item")
-            menu_item = MenuItems.objects.get(id= int(item))
+            menu_item = Menu_Items.objects.get(id= int(item))
             item_data = {
                 'id': menu_item.pk,
                 'name': menu_item.name,
@@ -266,6 +312,10 @@ class VenueView(viewsets.ModelViewSet):
     queryset= Venue.objects.all()
     serializer_class = VenueSerializer
 
+class venueImageView(viewsets.ModelViewSet):
+    queryset= venueImage.objects.all()
+    serializer_class = venueImageSerializer
+
 class PaymentView(viewsets.ModelViewSet):
     queryset= Payment.objects.all()
     serializer_class= PaymentSerializer
@@ -285,3 +335,21 @@ class BookingView(viewsets.ModelViewSet):
 class extraServiceView(viewsets.ModelViewSet):
     queryset = extraService.objects.all()
     serializer_class = extraServiceSerializer
+
+class food_PackageView(viewsets.ModelViewSet):
+    queryset = food_Package.objects.all()
+    serializer_class = food_PackageSerializer
+
+
+
+class Menu_ItemsView(viewsets.ModelViewSet):
+    queryset = Menu_Items.objects.all()
+    serializer_class = Menu_ItemsSerializer
+
+
+class CategoryView(viewsets.ModelViewSet):
+    queryset = Category.objects.all()
+    serializer_class = CatogerySerializer
+
+
+

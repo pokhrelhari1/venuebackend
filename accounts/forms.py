@@ -30,7 +30,12 @@ class bookingForm(ModelForm):
         fields= [ 'guestNumber' ,'eventStartDate','eventEndDate','eventType','catering', 'extraService']
 
 
+class cateringForm( forms.Form):
+    OPTIONS=(
+        ("package1"),
 
-
+    )
+    catering = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple,
+                                          choices=OPTIONS)
   
 

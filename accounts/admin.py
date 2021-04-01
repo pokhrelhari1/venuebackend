@@ -1,6 +1,6 @@
 from django.contrib import admin
 from .models import Profile
-from .models import Venue, venueImage, extraService, Booking, Payment, Catering, Feedback, MenuItems, Category, foodPackage
+from .models import Venue, venueImage, extraService, Booking, Payment, Catering, Feedback, Menu_Items, Category, food_Package, OrderedFoodPackage
 
 admin.site.register(Profile)
 
@@ -41,7 +41,7 @@ class Feedback(admin.ModelAdmin):
 class CateringAdmin(admin.ModelAdmin):
     pass
 
-@admin.register(MenuItems)
+@admin.register(Menu_Items)
 class MenuItemsAdmin(admin.ModelAdmin):
     pass
 
@@ -51,7 +51,10 @@ class CategoryAdmin(admin.ModelAdmin):
     pass
 
 
-@admin.register(foodPackage)
-class foodPackageAdmin(admin.ModelAdmin):
+@admin.register(food_Package)
+class food_PackageAdmin(admin.ModelAdmin):
     pass
 
+
+
+admin.site.register(OrderedFoodPackage)

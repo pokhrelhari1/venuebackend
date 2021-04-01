@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     'accounts',
     'django_filters',
     'rest_framework',
-  
+   
 
 ]
 
@@ -83,7 +83,7 @@ WSGI_APPLICATION = 'venueCate.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'testdatabase2',
+        'NAME': 'testdatabase4',
         'USER': 'root',
         'PASSWORD': 'user',
         'PORT': '3306',

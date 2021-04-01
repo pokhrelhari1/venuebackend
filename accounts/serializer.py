@@ -11,6 +11,11 @@ class VenueSerializer(serializers.ModelSerializer):
         model = Venue 
         fields = ['id', 'url','venueName','image', 'address','min_guestCapacity','max_guestCapacity','price', 'contact','description', 'website', 'openTime','closingTime','addService' ]
 
+class venueImageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = venueImage
+        fields = ['url', 'venue', 'images']
+
 
 class PaymentSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
@@ -26,7 +31,29 @@ class FeedbackSerializer(serializers.HyperlinkedModelSerializer):
 class CateringSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model= Catering
-        fields= ['foodType','url','foodItems', 'is_available','price']
+        fields= ['packageType','created_on','price']            
+
+
+class food_PackageSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model= food_Package
+        lookup_filed = 'packageName'
+        fields= ['packageName','price','Menu_Items']
+
+
+    
+class Menu_ItemsSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model= Menu_Items
+        lookup_filed = 'name'
+        fields= ['name','category']
+
+    
+class CatogerySerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model= Category
+        lookup_filed = 'name'
+        fields= ['name']
         
 
 class extraServiceSerializer(serializers.HyperlinkedModelSerializer):
