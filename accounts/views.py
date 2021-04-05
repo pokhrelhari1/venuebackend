@@ -13,8 +13,10 @@ from django.views import View
 from django.db import models
 
 from rest_framework import viewsets
-from .serializer import VenueSerializer, CateringSerializer, PaymentSerializer, FeedbackSerializer, extraServiceSerializer, BookingSerializer, UserSerializer, food_PackageSerializer, Menu_ItemsSerializer, CatogerySerializer, venueImageSerializer
+from .serializer import VenueSerializer, CateringSerializer, PaymentSerializer, FeedbackSerializer, extraServiceSerializer, BookingSerializer, UserSerializer, food_PackageSerializer, Menu_ItemsSerializer, CatogerySerializer, venueImageSerializer, VendorRequestSerializer
 
+import requests
+import json
 
 @unauthenticated_user
 def registerPage(request):
@@ -69,8 +71,8 @@ def loginPage(request):
     if request.method =="POST":
         username= request.POST.get('username')
         password= request.POST.get('password')
-        print(username)
-        print(password)
+        # print(username)
+        # print(password)
 
         user = authenticate(request, username= username, password= password)
 
@@ -90,9 +92,21 @@ def logoutUser(request):
 def index(request):
     venue = Venue.objects.all() 
     myFilter= locationFilter( request.GET, queryset= venue)
+    venue= myFilter.qs
     venue = myFilter.queryset
     return render(request,'accounts/index.html', {'venue': venue ,'myFilter':myFilter})
 
+
+#search bar functions
+# def searchbar(request):
+  
+#     return render(request, 'accounts/searchBAR.html')
+
+
+    # if request.method== 'GET':
+    #     search = request.GET.get('search')
+    #     venue = Venue.objects.all().filter(address=search)
+    #     return render(request,'searchbar.html', { 'venue':venue})
 
 
 # def index(request):
@@ -105,7 +119,24 @@ def index(request):
 @login_required(login_url = 'login')
 @admin_only #calling the decoratior  for page permission
 def adminDashboard(request):
-    return render(request, 'accounts/adminDashboard.html')
+    
+    vendor_request_data = requests.get("http://127.0.0.1:8000/vendor-request/").content
+    vendor_request_data = json.loads(vendor_request_data)
+    if request.method == 'GET':
+        print("vendor requests", type(vendor_request_data), vendor_request_data)
+        return render(request, 'accounts/adminDashboard.html', context = {'vendor_request': vendor_request_data})
+    if request.method == 'POST':
+        
+        # send email to user that your request has been accepted
+        print("request approved", request.POST.get('hidden-id'))
+        request_id = request.POST.get('hidden-id')
+        vend_req = VendorRequest.objects.get(id = request_id)
+        vend_req.is_accepted = True
+        vend_req.save()
+        vendor_request_data = requests.get("http://127.0.0.1:8000/vendor-request/").content
+        vendor_request_data = json.loads(vendor_request_data)
+        print("vendor req data", vendor_request_data)
+        return render(request, 'accounts/adminDashboard.html', context = {'vendor_request': vendor_request_data})
 
 
 #function for user profile
@@ -121,7 +152,6 @@ def userProfile(request):
 
 
 @login_required(login_url='login')
-
 def userDashboard(request):
     user = request.user
     profile = Profile.objects.get(user = user)
@@ -131,7 +161,17 @@ def userDashboard(request):
     context= {'form':form, 'booking_done': booking_done}
     return render(request,'accounts/userDashboard.html',context)
 
+@login_required(login_url='login')
+def viewBookingDetails(request):
+    user = request.user
+    profile = Profile.objects.get(user = user)
+    form = CustomerForm(instance= profile)
+    # booking = user.book_set.all()
+    booking_done = Booking.objects.filter(customer= request.user.profile)
+    context= {'form':form, 'booking_done': booking_done}
+    return render(request,'accounts/viewBookingDetails.html',context)
 
+    
 #function to delete booking history for user
 def deleteBooking(request, id):
     booking = Booking.objects.get(pk=id)
@@ -162,6 +202,48 @@ def updateProfile(request):
             return redirect('userProfile')
     context = {'form':form}
     return render(request,'accounts/updateProfile.html', context)
+
+# def searchbar(request):
+#     venue_list= Venue.objects.all()
+#     locationFilter = location_filter(request.GET, queryset= venue_list) 
+#     return render(request,'accounts/searchbar.html')
+
+def searchbar(request):
+    return render(request,'accounts/searchbar.html')
+    
+
+#use dropdown for district and filter the place with autocomplete
+def searchLocation(request):
+    if request.method == 'POST':
+        input_data = request.POST
+        print("Input data", input_data)
+        input_address = input_data['search-address']
+        input_district = input_data['search-district']
+        print("input", input_address, input_district)
+
+        data = Venue.objects.filter(address = input_address).filter(district = input_district)
+        if Venue.objects.filter(address = input_address).filter(district = input_district).exists():
+            print("location filter", input_data)
+
+    return render(request, 'accounts/searchbar.html', context = {'data': data})
+
+
+def filter_venue(request):
+    price= request.GET.getlist('price')
+    max_guestCapacity= request.GET.getlist('max_guestCapacity')
+    filterVenue = Venue.objects.filter(
+        # price__id__in= price,
+        # max_guestCapacity__id__in= max_guestCapacity,
+        price = price,
+        max_guestCapacity= max_guestCapacity,
+    )
+    # return HttpResponse(filterVenue.query)
+    return render(request,'accounts/filter_venue.html', context= {'filterVenue':filterVenue})
+
+
+
+def add_venue(request):
+    return render(request, 'accounts/add_venue.html')
    
 #function to render venue details.
 @login_required(login_url='login')
@@ -173,6 +255,14 @@ def viewDetail(request, id):
         'photos':photos 
         }
     return render(request,'accounts/viewDetail.html',context)
+
+
+def tables(request):
+    return render(request,'accounts/tables.html')
+
+def vendorRequest(request):
+    return render(request,'accounts/vendorRequest.html')
+
     
 def booking(request, id):
 
@@ -187,7 +277,8 @@ def booking(request, id):
             book = form.save(commit=False)
             book.customer = request.user.profile
             book.venue = Venue.objects.get(id=id)
-            book.foodpackage = OrderedFoodPackage.objects.get(packageName=request.user.username)
+            book.foodpackage = OrderedFoodPackage.objects.get(packageName=str(request.user.id))
+
 
             # package = request.POST.getlist('package')    
          
@@ -204,6 +295,7 @@ def booking(request, id):
             book.save()
            
             redirect('/bookingForm/')
+            
          
 
            
@@ -222,24 +314,31 @@ def booking(request, id):
 #         form = cateirng
 #     return render('accounts/bookingForm.html', {'form': form})     #render_to_response le k garxa?s
 
-
+# use model panel for food selection
 def food_package_menu(request, id):
     all_items = Menu_Items.objects.filter(category__id=id)
 
     if request.method == "POST":
         selected_items = request.POST.getlist('items')
         orderedpackage = OrderedFoodPackage()
-        orderedpackage.packageName=request.user.username
-        orderedpackage.price=100          #do something for calculating price, maybe adding price to menu_list table will work
+        orderedpackage.packageName=str(request.user.id)
+        orderedpackage.price=100          #adding price to menu_list table 
         orderedpackage.save()
         # for item in selected_items:
         #     menu_item = Menu_Items.objects.filter(id=item)
         orderedpackage.Menu_Items.set(selected_items)
         
-        return HttpResponse("You can now close this tab")
+        return render(request,'accounts/bookingForm.html')
 
 
     return render(request,'accounts/foodordermenu.html',{'items':all_items})
+
+
+# def filter_data(request):
+#     all_data = data.objects.filter(price=id)
+#     price1= request.GET.getlist('price1')
+#     price2= request.GET.getlist('price2')
+#     price3= request.GET.getlist('price3')
 
 
 
@@ -303,6 +402,7 @@ class catering(View):
 
 
 
+
 #viewset for api
 class ProfileView(viewsets.ModelViewSet):
     queryset = Profile.objects.all()
@@ -350,6 +450,11 @@ class Menu_ItemsView(viewsets.ModelViewSet):
 class CategoryView(viewsets.ModelViewSet):
     queryset = Category.objects.all()
     serializer_class = CatogerySerializer
+
+
+class VendorRequestViewset(viewsets.ModelViewSet):
+    queryset = VendorRequest.objects.all()
+    serializer_class = VendorRequestSerializer
 
 
 

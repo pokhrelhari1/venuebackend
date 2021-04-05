@@ -9,7 +9,8 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
 class VenueSerializer(serializers.ModelSerializer):
     class Meta:
         model = Venue 
-        fields = ['id', 'url','venueName','image', 'address','min_guestCapacity','max_guestCapacity','price', 'contact','description', 'website', 'openTime','closingTime','addService' ]
+        lookup_fileds = ('price','max_guestCapacity')
+        fields = ['id', 'url','venueName','image', 'address', 'district','min_guestCapacity','max_guestCapacity','price', 'contact','description', 'website', 'openTime','closingTime','addService' ]
 
 class venueImageSerializer(serializers.ModelSerializer):
     class Meta:
@@ -67,3 +68,8 @@ class BookingSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Booking
         fields= ['bookingdate', 'eventStartDate', 'eventEndDate', 'eventType', 'venue', 'catering', 'customer']
+
+class VendorRequestSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = VendorRequest
+        fields = '__all__'

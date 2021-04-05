@@ -290,33 +290,41 @@ footer a:hover {
           <section class="conatiner text-center">
               <section class="search-sec" >
                 <div class="container">
-                    <form action="" method="post" >
+                    <form action="searchLocation" method="post" >
                         <div class="row">
                             <div class="col-lg-12">
                                 <div class="row">
+                                  <form action="#" method="GET">
                                     
-                                    <div class="col-lg-3 col-md-3 col-sm-12 p-0"> 
-                                        <input type="text" id="location" class="form-control" placeholder="Location">                            
-                                    </div>
-                                    <div class="col-lg-3 col-md-3 col-sm-12 p-0"> 
-                                      <input type="text" id="guestNumber" class="form-control" placeholder="Number of guest">                            
+                                    <div class="search" style="width: 40%;"> 
+                                      {{ filter.form.as_p }}
+                                     
+                                      {% csrf_token %}
+                                        <input type="text" id="location" class="form-control" placeholder="Address" name="search-address">
+                                      
+                                    
+                                      </div>
+                                     <div class="col-lg-3 col-md-3 col-sm-12 p-0"> 
+                                      <input type="text" id="district" class="form-control"placeholder="District" name="search-district">                            
                                   </div>
-                                    <div class="col-lg-3 col-md-3 col-sm-12 p-0">
+                                    <!-- <div class="col-lg-3 col-md-3 col-sm-12 p-0">
                                         <select class="form-control search-slt" id="eventType">
                                             <option>Select Event Type</option>
                                             <option>Wedding Party</option>
                                             <option>Corporate Events</option>
                                             <option>Birthday Party</option>
                                             
-                                        </select>
+                                        </select> -->
 
                                         <!-- <form>
                                           {{myFilter.form}}
                                         </form> -->
-                                    </div>
+                                    <!-- </div> --> 
                                     <div class="">
-                                        <button type="button" class="btn btn-danger wrn-btn"  style="width: 180px;">Search</button>
+                                        <button type="submit" class="btn btn-danger wrn-btn"  style="width: 180px;">Search</button>
                                     </div>
+                                  </form>
+                                
                                 </div>
                             </div>
                         </div>

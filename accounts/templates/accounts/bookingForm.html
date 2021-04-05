@@ -110,9 +110,9 @@ input[type=submit]:hover {
 
                   
                   </label>
-                <div class="collapse" id="collapse">
+                <!-- <div class="collapse" id="collapse">
                   <div class="container-fluid" >
-                   
+                    -->
                     <div class="row">
                       <div class="col-sm-3 col-md-6 col-lg-4" style="background-color:rgb(248, 248, 248);padding: 2%;">
                         <img class="card-img-top" src="https://images.unsplash.com/photo-1547496502-affa22d38842?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=884&q=80" alt="Card image cap" style="height: 15rem;">
@@ -142,13 +142,18 @@ input[type=submit]:hover {
                   <label  data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
                     1. Extra Service
                    </label>
-                 <div class="collapse" id="collapseExample">
+
+                   {{ form.extraService }}
+                 <!-- <div class="collapse" id="collapseExample">
                    <div class="container-fluid" >
                     <div class="row">
                       <div class="card" style="width: 20rem;">
                         <img class="card-img-top" src="https://images.unsplash.com/photo-1581548708095-7158f2e63857?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80" alt="Card image cap" style="height: 15rem;">
                         <div class="card-body" >
-                          <label><input type="checkbox" name="c{{extraService.id}}" value="host"> Host</label>
+                          <label><input type="checkbox" name="{{form.extraService}}" value="host"> Host</label>
+                          <input type="checkbox" id="myCheck" name=""  value="{{ extraService.id }}">{{ extraService.serviceName }}  
+                          
+
                         </div>
                       </div>
                               
@@ -162,7 +167,7 @@ input[type=submit]:hover {
                              
                       </div>
                    </div>
-                  </div>  
+                  </div>   -->
                  
                  </div>
                     <!-- <div class="conatiner" data-toggle="collapse" href="#collapse" role="button" aria-expanded="false" aria-controls="collapseExample">
@@ -215,87 +220,8 @@ input[type=submit]:hover {
   </div>
 </div>
 </div>
-  <div class="container">
-    <form method="post" id="cateringService">
-      {% csrf_token %}
-      <h1>catering</h1>
-      <div class="container">
+  
 
-        <label for="event">Choose your event type:</label>
-      
-        <select id="event" name="eventType">
-          <option value="Wedding">Wedding</option>
-          <option value="Corporate">Corporate Events</option>
-          <option value="Birthday">Birthday Party</option>
-        
-        </select>
-        <br>
-
-        <label for="">Select Number of Guest </label>
-        <input type = "text" name ="guestNumber">
-
-        <label>Event On:</label>
-        <input type="date" id= "startDate1" max ="" name ="eventStartDate1" >
-
-        <label>Event Until </label>
-        <input type="date" id="endDate1" min="" name="eventEndDate1" >
- <br>
-<br>
-
-<div class="row">
-<div class="card" style="width: 20rem;">
-  <img class="card-img-top" src="https://images.unsplash.com/photo-1547496502-affa22d38842?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=884&q=80" alt="Card image cap" style="height: 15rem;">
-  <div class="card-body" >
-    <label><input type="radio" name="colorRadio" value="red"> Veg foods</label>
-  </div>
-</div>
-        
-
-<div class="card" style="width: 20rem;">
-  <img class="card-img-top" src="https://images.unsplash.com/photo-1515669097368-22e68427d265?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80" alt="Card image cap" style="height: 15rem;">
-  <div class="card-body" >
-    <label><input type="radio" name="colorRadio" value="green"> Non-veg foods</label>
-  </div>
-</div>
-       
-</div>
-
-        
-        <br>
-
-    <div class="red box";> 
-       
-          <div class="card card-body">
-    
- 
-          <input type="checkbox" id="food1" name="food1" value="food1">
-            <label for="food1"> </label>Paneer chilli<br>
-            <input type="checkbox" id="food2" name="food1" value="food2">
-            <label for="food2">Aaloo pakoda </label><br>
-            <input type="checkbox" id="food3" name="food2" value="food3">
-            <label for="food3"> Peanut sadheko</label><br>
-            <input type="checkbox" id="food4" name="food4" value="food4">
-            <label for="food4"> Veg momo</label><br>
-            <input type="checkbox" id="food5" name="food5" value="food5">
-            <label for="food5">Mashroom </label><br>
-        </div>
-
-        </div>
-        <div class="green box" style="background-color: white;">
-          <input type="checkbox" id="food1" name="food1" value="food1">
-          <label for="food1"> </label> Chicken chilli<br>
-          <input type="checkbox" id="food2" name="food1" value="food2">
-          <label for="food2">Mutton pakoda </label><br>
-          <input type="checkbox" id="food3" name="food2" value="food3">
-          <label for="food3"> Chicken sadheko</label><br>
-          <input type="checkbox" id="food4" name="food4" value="food4">
-          <label for="food4"> Chicken momo</label><br>
-          <input type="checkbox" id="food5" name="food5" value="food5">
-          <label for="food5">Chicken masala </label><br>
-        </div>
-<br>
-
-      
         <input type="submit" id="submit" value="Submit" onclick="calculateTotal()" style="margin-top: 5px;">
       </form>
   </div>

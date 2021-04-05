@@ -93,6 +93,7 @@ class Venue(models.Model):
     venueName= models.CharField(max_length= 100, blank=True )
     image= models.ImageField(upload_to = 'images/')
     address= models.CharField(max_length= 100, blank=True )
+    district = models.CharField(max_length = 50, blank = True, null = True)
     min_guestCapacity= models.IntegerField(null= True, blank= True )
     max_guestCapacity= models.IntegerField(null= True, blank= True )
     price = models.IntegerField(null= True, blank= True )
@@ -130,7 +131,7 @@ class Booking(models.Model):
     eventEndDate= models.DateField(auto_now_add=False)
     eventType= models.CharField(max_length=500, blank=True)
     venue= models.ForeignKey(Venue, on_delete=models.CASCADE)
-    catering= models.ForeignKey(Catering, on_delete= models.CASCADE)
+    # catering= models.ForeignKey(Catering, on_delete= models.CASCADE, null=True)                 #remove this field ig
     customer= models.ForeignKey(Profile,on_delete= models.CASCADE)
     extraService= models.ForeignKey(extraService, null = True, on_delete= models.CASCADE)
     foodpackage = models.ForeignKey(OrderedFoodPackage, on_delete=models.CASCADE, null=True)    #change null=False
@@ -172,4 +173,11 @@ class Feedback(models.Model):
 
 #     def __str__(self):
 #         return self.Service.I
+
+class VendorRequest(models.Model):
+    venue_name = models.CharField(max_length = 100, null = True, blank = True)
     
+    request_description = models.CharField(max_length = 500, null = True, blank = True)
+    phone_number = models.CharField(max_length = 20, blank = True, null = True)
+    req_from = models.ForeignKey(User, on_delete = models.SET_NULL, null = True, blank = True)
+    is_accepted = models.BooleanField(default = False)

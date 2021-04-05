@@ -9,12 +9,46 @@
 		margin: 0 auto;
 		border-radius: 50%;
 	}
+.container{
+	padding: 2%;
+        
+        background-color:rgb(255, 255, 255);
+    min-height:400px;
+    min-width:40%;
+    border-radius:0;
+    margin-top: 8%;
+    align-items: center;
+    padding: 60px,50px;
+    overflow: hidden;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
+    height:100%;
+}
+
+element.style {
+}
+button, input {
+    overflow: visible;
+}
+button, input, optgroup, select, textarea {
+    margin: 0;
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+}
+*, ::after, ::before {
+    box-sizing: border-box;
+}
+user agent stylesheet
+input[type="text" i] {
+    padding: 1px 2px;
+}
+
+
 </style>
 
 <br>
 <br>
-<div class="row">
-	<div class="col-md-3">
+<div class="container">
 		<div class="card card-body">
 			<a class="btn btn-warning" href="{% url 'userProfile' %}"> &#8592; Back to Profile</a>
 			<hr>
@@ -23,11 +57,13 @@
 			<!-- <img class="profile-pic" src="{{ request.user..profile.customer.profile_picture.url}}" > -->
 		
 		</div>
-	</div>
+	
 	<div class="col-md-9">
 		<div class="card card-body">
+
 			
 			<form method="POST" action="" enctype="multipart/form-data">
+			
 				{% csrf_token %}
 				{{form.as_p}}
 		
@@ -36,7 +72,7 @@
 		</div>
 	</div>
 </div>
-
+</div>
 
 
 

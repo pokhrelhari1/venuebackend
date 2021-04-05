@@ -27,7 +27,7 @@ class CustomerForm(ModelForm):
 class bookingForm(ModelForm):
     class Meta:
         model = Booking
-        fields= [ 'guestNumber' ,'eventStartDate','eventEndDate','eventType','catering', 'extraService']
+        fields= [ 'guestNumber' ,'eventStartDate','eventEndDate','eventType', 'extraService']
 
 
 class cateringForm( forms.Form):
