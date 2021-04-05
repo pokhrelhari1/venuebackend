@@ -1,0 +1,176 @@
+ {% load static %}
+ {% include 'accounts/main.html' %}
+<!-- 
+{% block content %}
+  <form method="get">
+    {{ filter.form.as_p }}
+    <button type="submit">Search</button>
+  </form>
+  <ul>
+  {% for venue in filter.qs %}
+    <li>{{ venue.venueName }}</li>
+  {% endfor %}
+  </ul>
+{% endblock %} --> 
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link href="/docs/4.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<meta name="msapplication-config" content="/docs/4.5/assets/img/favicons/browserconfig.xml">
+<!--font-awesome -->
+<script src="https://kit.fontawesome.com/4efb443ce9.js" crossorigin="anonymous"></script>
+
+<style>
+body {
+  font-family: Arial;
+  color: white;
+}
+
+.split {
+  height: 100%;
+  width: 80%;
+  position: fixed;
+
+ 
+  overflow-x: hidden;
+  padding-top: 15px;
+}
+
+.left {
+  left: 0;
+width: 20%;
+  background-color: #111;
+  padding: 2%;
+}
+
+.right {
+  right: 0;
+  background-color: rgb(236, 236, 236);
+}
+
+
+
+.centered img {
+  width: 150px;
+  border-radius: 50%;
+}
+
+/* Create two equal columns that floats next to each other */
+.column {
+
+  float: left;
+  width: 50%;
+  padding: 20px;
+  height: 300px; /* Should be removed. Only for demonstration */
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+img{
+  width: 60%;
+  height: 60%;
+
+}
+/* Responsive layout - makes the two columns stack on top of each other instead of next to each other */
+@media screen and (max-width: 600px) {
+  .column {
+    width: 100%;
+  }
+}
+</style>
+</head>
+<body>
+
+<div class="split left">
+  <br>
+  <br>
+ <!-- <h3 style="color: rgb(241, 241, 241);">Filters</h3> 
+     
+   
+      <br> <label>Filter by price:</label>
+      <br>
+     
+        <input type="checkbox" id="price" name="price1" value="price1">
+        <label for="price1"> 1000-5000</label><br>
+        <input type="checkbox" id="price" name="price2" value="price2">
+        <label for="price2">5000-10000</label><br>
+        <input type="checkbox" id="price" name="price3" value="price3">
+        <label for="price3"> 10000-20000</label><br>
+        
+   
+    <br>
+      <label>Filter by Guest Number:</label>
+       <br>
+      <input type="checkbox" id="guest" name="guest1" value="guest1">
+      <label for="vehicle1"> 100-200</label><br>
+      <input type="checkbox" id="guest" name="guest2" value="guest2">
+      <label for="vehicle2">200-500</label><br>
+      <input type="checkbox" id="guest" name="guest3" value="guest3">
+      <label for="vehicle3"> 500-1000</label><br>
+      <input type="checkbox" id="guest" name="guest4" value="guest4">
+      <label for="vehicle3"> 1000-1500</label><br>
+      <input type="checkbox" id="gues" name="guest5" value="guest">
+      <label for="vehicle3"> 1500-2000</label><br>
+
+    <br> -->
+    
+      </div>
+    
+
+
+<div class="split right">
+  <div class="container-fluid" style="padding: 3%;">
+    <div>
+      <br>
+      <br>
+
+      <h3 style="color: black;">Search found</h3> 
+{% for dt in  data %}
+
+<div class="row">
+  <div class="column" style="background-color:rgb(255, 255, 255); color: black;">
+    <h2 style="color: black;">{{dt.venueName}}</h2>
+    <i class="fas fa-map-marker-alt" style="font-size:18px; padding: 2%"> </i>  Address {{dt.address}}<br>
+    <img src="{{ dt.image.url }}"></img>
+    <br>
+    
+  
+ 
+  </div>
+
+  <div class="column" style="background-color:#bbb; color: black;">
+    <label style="color: black; font-size: 20px;"> Guest Capacity: </label> {{dt.min_guestCapacity}}-{{dt.max_guestCapacity}}
+    </i><br>
+  
+    <label style="color: black; font-size: 20px;">  Price:</label> {{dt.price}}
+     <br>
+  <br>
+
+  <a href="#">   <button type="button" class="btn btn-primary">view Details</button>
+   </a>
+
+   
+  </div>
+</div>
+
+   <br>
+   {% endfor %}
+       </div>
+  </div>
+</div>
+     
+</body>
+</html> 
+

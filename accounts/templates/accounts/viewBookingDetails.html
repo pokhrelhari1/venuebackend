@@ -1,0 +1,66 @@
+{% load static %}
+{%  include 'accounts/main.html' %}
+
+<style>
+
+body{
+  background: -webkit-linear-gradient(left, #cccccc, #25b7c4);
+  background: linear-gradient(to right, #cccccc, #25b7c4);
+  font-family: 'Roboto', sans-serif;
+}
+    .container{
+        background-color:rgb(255, 255, 255);
+    min-height:400px;
+    min-width:40%;
+    border-radius:0;
+    margin-top: 8%;
+    align-items: center;
+    padding: 60px,50px;
+    overflow: hidden;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
+    height:100%;
+
+    }
+   
+
+h3{
+    font-size: 39px;
+    color: rgb(236, 17, 17);
+}
+
+h2{
+    font-size: 20px;
+    color: rgb(0, 0, 0);
+}
+</style>
+
+<div class="container " style="padding: 20px 20px;">
+    <div class="mt-3">
+        <h3>Booking Details</h3>
+        <hr>
+        {% for book in booking_done %}
+        <tr>
+         
+            <label>{{book.venue}}</label>
+
+            <br>
+            <label>Booking By:</label>   {{   user.profile.first_name  }}
+            <br>
+           <label>Guest Number:</label>{{book.guestNumber}}
+           <label>Event Start Date:</label>{{book.eventStartDate}}<br>
+           <label>Event End Date:</label>{{book.eventEndDate}}<br>
+         
+
+<br>
+        <h2>Extra Service Detail</h2>
+        <hr>
+        <label>{{book.extraService}}</label><br>
+        <br>
+        <br>
+        <h2>Payment Details</h2>
+           
+
+              
+                {% endfor %}
+      </div>
+</div>

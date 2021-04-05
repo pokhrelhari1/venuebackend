@@ -1,0 +1,14 @@
+{% load static %}
+
+
+<div class="card md-4">
+    <h6 class="card-headeer">Price</h6>
+    <div class = "list-group list-group-flush">
+        {% for price in prices %}
+
+        <li class="list-group-items">
+            <input class="filter-checkbox" data-filter="price" value="{{ price.price__id}}" type="checkbox">
+        </li>
+        {% endfor %}
+    </div>
+</div>
