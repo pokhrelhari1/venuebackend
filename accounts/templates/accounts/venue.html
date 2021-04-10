@@ -1,0 +1,177 @@
+
+{% block content %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% include 'accounts/sideNav.html' %}
+<!DOCTYPE html>
+<html lang="en">
+
+
+<head>
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  </head>
+  <style>
+  /* Toggle Styles */
+    
+
+  .xyz{
+      min-width: 360px;
+      position: center;
+      margin-left: 20%;
+
+  }
+ 
+
+  </style>
+
+
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Simple Sidebar - Start Bootstrap Template</title>
+    <!-- Latest compiled and minified CSS -->
+
+<body>
+ 
+       <!-- /#sidebar-wrapper -->
+        <!-- Page Content -->
+      <div id="page-content-wrapper"> 
+             <div class="container-fluid xyz">
+              <div class="container"> 
+       <div class="col-md-10 offset-md-1 mt-5">
+               
+                    <form class="cotainer"  action="" method="POST" >
+                    {% csrf_token %}
+                <div class="form-row">
+                  <div class="form-group col-md-6">
+                    {{ venue_form.venueName|as_crispy_field }}
+                  </div>
+                  
+                  <div class="form-group col-md-6">
+                    {{ venue_form.address|as_crispy_field }}
+                   </div>
+                   <!-- added district -->
+                   <div class="form-group col-md-6">
+                    {{ venue_form.district|as_crispy_field }}
+                  </div>
+                </div>
+                <br> 
+                <div class="form-row">
+                  <div class="form-group col-md-6">
+                    {{ venue_form.website|as_crispy_field }}
+                  </div>
+                  <div class="form-group col-md-6">
+                    {{ venue_form.contact|as_crispy_field }}
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="form-group col-md-6">
+                    {{ venue_form.min_guestCapacity|as_crispy_field }}
+                      </div>
+                  <div class="form-group col-md-6">
+                    <label for="max_guestCapacit">Max guestCapacit</label>
+                    <input type="number"  name ="max_guestCapacit"  class="form-control" id="max_guestCapacit" placeholder="Max guestCapacit">
+                  </div>
+                </div>
+                <br>
+               
+               
+              <div class="form-row">
+                  <div class="form-group col-md-6">
+                    {{ venue_form.description|as_crispy_field }}
+                  </div>
+                  <div class="form-group col-md-2">
+                    {{ venue_form.price|as_crispy_field }}
+                  </div>
+        
+
+                <div class="form-group col-md-2">
+                  {{ extraService_form.serviceName|as_crispy_field }}
+                </div>
+
+                
+ </div>  
+
+             <div class="form-row">
+                  <div class="form-group col-md-6">
+                    {{ venue_form.openTime|as_crispy_field }} 
+                  </div>
+                  <div class="form-group col-md-6">
+                    {{ venue_form.closingTime|as_crispy_field }}
+                  </div>
+              </div>
+            
+              <div class="form-row"> -->
+               <div class="form-group col-md-6">
+                {{ venue_form.image|as_crispy_field }}
+                </div>
+                <div class="form-group col-md-6">
+                  {{ venueImage_form.images|as_crispy_field }}
+                </div>
+            </div>
+                
+
+
+            <button type="submit" class="btn btn-primary"  onclick="return alert('Request Sent successfully')"  style="float: left;">Submit</button> 
+                 
+          </form>
+    <!--  General -->
+    
+            </div>
+        
+            
+        <!-- /#page-content-wrapper -->
+    </div>
+  </div>
+    <!-- /#wrapper -->
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+    <!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+</body>
+
+
+<script>
+  $("#menu-toggle").click(function(e) {
+        e.preventDefault();
+        $("#wrapper").toggleClass("toggled");
+    });
+     $("#menu-toggle-2").click(function(e) {
+        e.preventDefault();
+        $("#wrapper").toggleClass("toggled-2");
+        $('#menu ul').hide();
+    });
+ 
+     function initMenu() {
+      $('#menu ul').hide();
+      $('#menu ul').children('.current').parent().show();
+      //$('#menu ul:first').show();
+      $('#menu li a').click(
+        function() {
+          var checkElement = $(this).next();
+          if((checkElement.is('ul')) && (checkElement.is(':visible'))) {
+            return false;
+            }
+          if((checkElement.is('ul')) && (!checkElement.is(':visible'))) {
+            $('#menu ul:visible').slideUp('normal');
+            checkElement.slideDown('normal');
+            return false;
+            }
+          }
+        );
+      }
+    $(document).ready(function() {initMenu();});
+</script>
+
+</html>
+{% endblock %}

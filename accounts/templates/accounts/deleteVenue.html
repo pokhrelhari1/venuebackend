@@ -1,0 +1,13 @@
+{% extends 'accounts/main.html' %}
+{% load static %}
+{% block content %}
+
+<p>Are you sure you want to delete "{{venue.venueName}}"?</p>
+<form method="POST">
+    {% csrf_token %}
+    <a href="{% url 'venueTable' %}">Cancel</a>
+    <input type="submit" name="Confirm">
+ 
+</form>
+
+{% endblock %}

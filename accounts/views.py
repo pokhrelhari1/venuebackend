@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from django.contrib.auth.forms import UserCreationForm
-from .forms import CreateUserFrom, CustomerForm, bookingForm,cateringForm
+from .forms import CreateUserFrom, CustomerForm, bookingForm,cateringForm, venueForm, venueImageForm, extraServiceForm
 from django.contrib.auth.models import Group
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
@@ -11,6 +11,9 @@ from .decorators import unauthenticated_user,allowed_users,admin_only
 from .filters import locationFilter
 from django.views import View
 from django.db import models
+from django.forms import ModelForm
+
+from django.http import QueryDict
 
 from rest_framework import viewsets
 from .serializer import VenueSerializer, CateringSerializer, PaymentSerializer, FeedbackSerializer, extraServiceSerializer, BookingSerializer, UserSerializer, food_PackageSerializer, Menu_ItemsSerializer, CatogerySerializer, venueImageSerializer, VendorRequestSerializer
@@ -76,7 +79,7 @@ def loginPage(request):
 
         user = authenticate(request, username= username, password= password)
 
-        if user is not None:
+        if user is not None: 
             login(request, user)
             return redirect('index')
         else:   
@@ -117,6 +120,27 @@ def index(request):
 
 
 @login_required(login_url = 'login')
+def vendorRequest(request):
+    if request.method=="POST":
+        venue_name = request.POST.get('venue_name')
+        request_description = request.POST.get('request_description')
+        email = request.POST.get('email')
+        req_from= request.POST.get('req_from')
+        user_name = request.POST.get('user_name')
+        data= data={'venue_name':venue_name, 'request_description': request_description, 'email': email, 'req_from':req_from, 'user_name': user_name}
+        headers= {'Content-Type': 'application/json'}
+        print("vendor request-------------", data)
+        read= requests.post('http://127.0.0.1:8000/vendor-request/', json=data, headers=headers)
+        return render(request, 'accounts/vendorRequest.html')
+       
+    else:
+        return render(request,'accounts/vendorRequest.html')
+        
+  
+
+
+
+@login_required(login_url = 'login')
 @admin_only #calling the decoratior  for page permission
 def adminDashboard(request):
     
@@ -137,6 +161,22 @@ def adminDashboard(request):
         vendor_request_data = json.loads(vendor_request_data)
         print("vendor req data", vendor_request_data)
         return render(request, 'accounts/adminDashboard.html', context = {'vendor_request': vendor_request_data})
+
+def status(request):
+    user_count= User.objects.count()
+    venue_count= Venue.objects.count()
+    vendorRequest_count= VendorRequest.objects.count()
+    booking_count= Booking.objects.count()
+    
+    return render(request,'accounts/adminDashboard.html',{
+         'user_count':user_count,
+         'venue_count':venue_count,
+         'vendorRequest_count':vendorRequest_count, 
+         'booking_count':booking_count, 
+         
+     })
+
+   
 
 
 #function for user profile
@@ -180,6 +220,14 @@ def deleteBooking(request, id):
         return redirect('userProfile')
     return render(request, 'accounts/deleteBooking.html')
 
+#function to delete venue
+def deleteVenue(request,id):
+    venue = Venue.objects.get(pk=id)
+    if request.method == "POST":
+        venue.delete()
+        return redirect('venueTable')
+    return render(request, "accounts/deleteVenue.html")
+
 #fuction to update user profile
 @login_required(login_url='login')
 def updateProfile(request):
@@ -209,11 +257,13 @@ def updateProfile(request):
 #     return render(request,'accounts/searchbar.html')
 
 def searchbar(request):
-    return render(request,'accounts/searchbar.html')
+    venue= Venue.objects.all()
+    return render(request,'accounts/searchbar.html', {'venue':venue})
     
 
 #use dropdown for district and filter the place with autocomplete
 def searchLocation(request):
+   
     if request.method == 'POST':
         input_data = request.POST
         print("Input data", input_data)
@@ -225,7 +275,7 @@ def searchLocation(request):
         if Venue.objects.filter(address = input_address).filter(district = input_district).exists():
             print("location filter", input_data)
 
-    return render(request, 'accounts/searchbar.html', context = {'data': data})
+    return render(request, 'accounts/searchbar.html', context = {'data': data, 'venue':venue})
 
 
 def filter_venue(request):
@@ -240,10 +290,6 @@ def filter_venue(request):
     # return HttpResponse(filterVenue.query)
     return render(request,'accounts/filter_venue.html', context= {'filterVenue':filterVenue})
 
-
-
-def add_venue(request):
-    return render(request, 'accounts/add_venue.html')
    
 #function to render venue details.
 @login_required(login_url='login')
@@ -260,8 +306,8 @@ def viewDetail(request, id):
 def tables(request):
     return render(request,'accounts/tables.html')
 
-def vendorRequest(request):
-    return render(request,'accounts/vendorRequest.html')
+# def vendorRequest(request):
+#     return render(request,'accounts/vendorRequest.html')
 
     
 def booking(request, id):
@@ -277,32 +323,163 @@ def booking(request, id):
             book = form.save(commit=False)
             book.customer = request.user.profile
             book.venue = Venue.objects.get(id=id)
-            book.foodpackage = OrderedFoodPackage.objects.get(packageName=str(request.user.id))
-
-
-            # package = request.POST.getlist('package')    
-         
-            # host = request.POST.getlist('host')
-            # music = request.POST.getlist('music')
-            # if response.POST.get('submit'):
-            #     for item in item_set.all():
-            #         if response.POST.get("package1" + str(item.id))=="clicked":
-            #             item.complete = True
-            #         else: 
-            #             item.complete = False
-            #         item.save()
-            # book.catering = Catering.objects.get(id=id)
+            book.foodpackage = OrderedFoodPackage.objects.filter(packageName=str(request.user.id))[0]
             book.save()
            
             redirect('/bookingForm/')
-            
-         
-
-           
     else:
         
         form = bookingForm()
     return render(request, 'accounts/bookingForm.html', {'form':form,'categories':categories})
+
+
+# function to add venue
+# def add_venue(request):
+#     if request.method=='GET':
+#         form = add_venueForm()
+#         return render(request,'accounts/add_venue.html',{'form':form})
+#     else:
+#         form = add_venueForm(request.POST)
+#         if form.is_valid():
+#             form.save()
+#         return redirect('/add_venue/')
+         
+    # else:
+    #     form  = add_venueForm()
+    # return render(request,'accounts/add_venue.html',{'form' : form})
+
+def venue(request):
+
+    venue_form = venueForm()
+    venueImage_form = venueImageForm()
+    extraService_form = extraServiceForm()
+    if request.method == 'POST':  
+        # form fields
+        extra_service_fields = ['serviceName']
+        venue_fields = ['venueName','image', 'address', 'district', 'min_guestCapacity', 'max_guestCapacity', 'price', 'contact', 'description', 'website', 'openTime', 'closingTime']
+        venue_image_fields = ['images']
+        
+        print("post data", request.POST, type(request.POST))
+
+        # for extras
+        extras_inputs = {}
+        for key in extra_service_fields:
+            extras_inputs[key] = request.POST.get(key)
+        print("extras inputs", extras_inputs, type(extras_inputs))
+        query_dict1 = QueryDict('', mutable=True)
+        query_dict1.update(extras_inputs)
+        extraService_form = extraServiceForm(**query_dict1)
+        # print("extras form", extraService_form)
+
+        # for venue image
+        venue_image = {}
+        for key in venue_image_fields:
+            venue_image[key] = request.POST.get(key)
+        query_dict2 = QueryDict('', mutable=True)
+        query_dict2.update(venue_image)
+        venueImage_form = venueImageForm(**query_dict2)
+        # print("image form", venueImage_form)
+
+        # for venue
+        venue = {}
+        for key in venue_fields:
+            venue[key] = request.POST.get(key)
+        query_dict3 = QueryDict('', mutable=True)
+        query_dict3.update(venue)
+        venue_form = venueForm(**query_dict3)
+        # print("venue form", venue_form)
+                
+        print("request data", request.POST)
+        # print("venue image errors", venueImage_form.errors)
+        # print("venue extra service form errors", extraService_form.errors)
+        # print("venue form errors", venue_form.errors)
+
+        if venue_form.is_valid() and extraService_form.is_valid() and venueImage_form.is_valid():
+
+            venue.save()
+            extraService=extraService_form.save(commit=False)
+            extraService.venue = venue
+            extraService.save()
+            venueImage = veneuImage_form.save(commit= False)
+            veneuImage.venue = venue
+            venueImage.save()
+            print(venue)
+
+    context = {'venue_form':venue_form, 'extraService_form':extraService_form, 'venueImage_form':venueImage_form,}
+    return render(request, "accounts/venue.html", context)
+
+    # if request.method=='POST':
+    #    venue_form = venueForm(request.POST)
+    #    extraService_form = extraServiceForm(request.POST)
+    #    venueImage_form = venueImageForm(request.POST)
+       
+    #    if venue_form.is_valid() and extraServiceForm.is_valid() and venue_form.is_valid():
+    #        venue= venue_form.save(commit=False)
+    #        extraService= extraService_form.save(commit=False)
+    #        extraService.venue = venue
+    #        venue.save()
+    #        venueImage= venueImage_form.save()
+    #        venueImage.venue= venue
+    #        venue.save()
+    
+    # venue_form= forms.venueForm()
+    # extraService_form= forms.extraServiceForm()
+    # venueImage_form= forms.venueImageForm()
+
+    # context= {'venue_form':venue_form, 'extraService_form':extraService_form, 'venueImage_form':venueImage_form}
+    # return render(request, 'accounts/venue.html')
+
+
+
+
+
+
+    # if request.method == 'GET':
+    #     form = venueForm()
+    #     return render(request,"accounts/venue.html",{'form':form})
+    # else:
+    #     form = venueForm(data = request.POST)
+    #     print(request.POST)
+    #     if form.is_valid():
+    #         print("form valid-----")
+    #         form.save()
+    #     else:
+    #         print("Form invalid---------------")
+        # return redirect('/accounts/venue.html/')
+
+    # if request.method == 'POST':
+    #     print(request.POST)
+    #     form  =  venueForm(request.POST)
+    #     if form.is_valid():
+    #         add = form.save(commit=False)
+    #         add.venueName= request.POST.get('venueName')
+    #         add.address=request.POST.get('address')
+    #         add.district=request.POST.get('district')
+    #         add.min_guestCapacity= request.POST.get('min_guestCapacity')
+    #         add.max_guestCapacity= request.POST.get('max_guestCapacity')
+    #         add.price= request.POST.get('price')
+    #         add.contact=request.POST.get('contact')
+    #         add.description= request.POST.get('description')
+    #         add.website=request.POST.get('website')
+    #         add.addService= request.POST.get('addService')
+    #         add.openTime= request.POST.get('openTime')
+    #         add.closingTime= request.POST.get('closingTime')
+    #         # add.addService= request.POST.get('addService')
+    #         # addService= AddService.objects.create(
+    #         #     'serviceName':serviceName,
+    #         #     'servicePrice':servicePrice,
+    #         # )
+    #         # addService.save()
+            
+    #         add.save()
+    #         return HttpResponse('/Venue is added successfully/')
+    # else:
+    #     form = venueForm()
+    # return render(request, 'accounts/venue.html', {'form':form})
+
+
+       
+    
 
 
 # def cateirng(request):
@@ -312,7 +489,7 @@ def booking(request, id):
 #             catering = form.cleaned_data.get('catering')
 #     else:
 #         form = cateirng
-#     return render('accounts/bookingForm.html', {'form': form})     #render_to_response le k garxa?s
+#     return render('accounts/bookingForm.html', {'form': form})     #render_to_response
 
 # use model panel for food selection
 def food_package_menu(request, id):
@@ -333,13 +510,17 @@ def food_package_menu(request, id):
 
     return render(request,'accounts/foodordermenu.html',{'items':all_items})
 
+def userTable(request):
+    profile = Profile.objects.all()
+    return render(request,'accounts/userTable.html', {'profile':profile})
+   
+def bookingTable(request):
+    booking= Booking.objects.all()
+    return render(request,'accounts/bookingTable.html' ,{'booking':booking})
 
-# def filter_data(request):
-#     all_data = data.objects.filter(price=id)
-#     price1= request.GET.getlist('price1')
-#     price2= request.GET.getlist('price2')
-#     price3= request.GET.getlist('price3')
-
+def venueTable(request):
+    venue = Venue.objects.all()
+    return render(request,'accounts/venueTable.html', {'venue':venue} )
 
 
 class catering(View):

@@ -38,15 +38,19 @@ urlpatterns = [
 
     # url(r'^search/$', views.searchbar, name='searchbar'),
 
-   
+  
     path('userProfile/',views.userProfile, name='userProfile'),
-    
-    path('add_venue/',views.add_venue, name='add_venue'),
+    path('userTable/',views.userTable, name='userTable'),
+    path('venueTable/',views.venueTable, name='venueTable'),
+    path('bookingTable/',views.bookingTable, name='bookingTable'),
+    # path('contact/', contact, name='contact'),
+    path('venue/',views.venue, name='venue'),
     path('updateProfile',views.updateProfile, name='updateProfile'),
     path('searchbar',views.searchbar, name='searchbar'),
     path('viewDetail/<str:id>/',views.viewDetail, name='viewDetail'),
     path('tables/',views.tables, name='tables'),
     path('<int:id>/deleteBooking/',views.deleteBooking, name='deleteBooking'),
+    path('deleteVenue/<str:id>/',views.deleteVenue, name='deleteVenue'),
    
     #  url(r'^search/$', views.search, name='search'),
 
@@ -68,7 +72,7 @@ urlpatterns = [
     path('searchLocation', views.searchLocation),
     path('filter_venue/', views.filter_venue, name="filter_venue"),
 
-    #  path('', include(router.urls)),
+     path('', include(router.urls)),
 
      path('viewBookingDetails/', views.viewBookingDetails, name="viewBookingDetails")
 

@@ -6,7 +6,7 @@ from django.dispatch import receiver
 from django.utils import timezone
 from datetime import datetime
 from django.core.exceptions import FieldDoesNotExist
-
+from django import forms
 
 # model for userdetail.
 class Profile(models.Model):
@@ -80,8 +80,8 @@ class Catering(models.Model):
 #model for extra sevice
 class extraService(models.Model):
     serviceName= models.CharField(max_length= 200, blank=True)
-    servicePrice= models.IntegerField(null=True, blank= False)
-    catering= models.ForeignKey(Catering, on_delete= models.CASCADE, blank= True)
+    servicePrice= models.IntegerField(null=True, blank= True)
+    catering= models.ForeignKey(Catering, on_delete= models.SET_NULL, blank= True, null=True)
 
     
     def __str__(self):
@@ -104,7 +104,8 @@ class Venue(models.Model):
     closingTime = models.TimeField(null=True, blank=True)
     addService= models.ManyToManyField(extraService)
     #many to many  
-
+    
+        
     def descriptionSummery(self):
         return self.description
     
@@ -113,7 +114,7 @@ class Venue(models.Model):
 
 #model for multiple image 
 class venueImage(models.Model):
-    venue = models.ForeignKey(Venue, default=None, on_delete=models.CASCADE)
+    venue = models.ForeignKey(Venue, default=None, on_delete=models.SET_NULL, null = True)
     images= models.FileField(upload_to='images/')
 
     def __str__(self):
@@ -128,10 +129,10 @@ class Booking(models.Model):
     bookingdate = models.DateField(auto_now_add=True)
     guestNumber = models.IntegerField(blank=True)
     eventStartDate= models.DateField(auto_now_add=False)
-    eventEndDate= models.DateField(auto_now_add=False)
+    # eventEndDate= models.DateField(auto_now_add=False)
     eventType= models.CharField(max_length=500, blank=True)
     venue= models.ForeignKey(Venue, on_delete=models.CASCADE)
-    # catering= models.ForeignKey(Catering, on_delete= models.CASCADE, null=True)                 #remove this field ig
+    # catering= models.ForeignKey(Catering, on_delete= models.CASCADE, null=True)                
     customer= models.ForeignKey(Profile,on_delete= models.CASCADE)
     extraService= models.ForeignKey(extraService, null = True, on_delete= models.CASCADE)
     foodpackage = models.ForeignKey(OrderedFoodPackage, on_delete=models.CASCADE, null=True)    #change null=False
@@ -147,9 +148,11 @@ class Payment(models.Model):
 
 #model for feedback 
 class Feedback(models.Model):
-    feedback=models.CharField(max_length=1000, blank=True)
-    feedbackDate= models.DateTimeField(default=datetime.now(), blank=True)
-    customer= models.ForeignKey(Profile, on_delete= models.CASCADE)
+    name=models.CharField(max_length=1000, blank=True)
+    email= models.CharField(max_length=1000, blank=True)
+    feedback= models.CharField(max_length=1000, blank=True)
+   
+   
 
   
 #     def __str__(self):
@@ -178,6 +181,7 @@ class VendorRequest(models.Model):
     venue_name = models.CharField(max_length = 100, null = True, blank = True)
     
     request_description = models.CharField(max_length = 500, null = True, blank = True)
-    phone_number = models.CharField(max_length = 20, blank = True, null = True)
+    email = models.CharField(max_length = 20, blank = True, null = True)
     req_from = models.ForeignKey(User, on_delete = models.SET_NULL, null = True, blank = True)
+    user_name= models.CharField(max_length=50, null= True, blank= True )
     is_accepted = models.BooleanField(default = False)

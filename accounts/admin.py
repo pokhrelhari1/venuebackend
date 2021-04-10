@@ -58,3 +58,4 @@ class food_PackageAdmin(admin.ModelAdmin):
 
 
 admin.site.register(OrderedFoodPackage)
+

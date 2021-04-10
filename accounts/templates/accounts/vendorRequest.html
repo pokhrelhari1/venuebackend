@@ -113,7 +113,7 @@ form {
   text-align: center;
 }
 
-input {
+input, textarea {
   background-color: #eee;
   border: none;
   padding: 12px 15px;
@@ -333,14 +333,18 @@ input {
 </style>
 <div class="container" id="container">
     <div class="form-container sign-in-container">
-      <form>
+      <form method="POST" action="">
+        {% csrf_token %}
         <h1>Join Us!</h1>
+        <input type="text" placeholder="Enter your Name" name = "user_name"/>
+        <input type="hidden" name = "req_from" value="{{ request.user.id }}"/>
+        <input type="text" placeholder="Email" name = "email"/>
+        <input type="text" placeholder="Name of your venue" name = "venue_name"/>
+        <textarea type="text" placeholder="Description of your service" name = "request_description"></textarea>
       
-     
-        <input type="text" placeholder="Venue Name" />
-        <input type="number" placeholder="Phone Number" />
-        <input type="text" placeholder="Request" />
-        <button onclick="return false;">Request</button>
+      
+      <br>
+        <button type="submit" value="Insert" onclick="return alert('Request Sent successfully')">Request</button>
        
       </form>
     </div>

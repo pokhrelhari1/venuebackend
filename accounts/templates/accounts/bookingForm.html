@@ -75,8 +75,7 @@ input[type=submit]:hover {
                   <label>Event On:</label>
                   <input type="date" id= "startDate" max ="" name ="eventStartDate" >
 
-                  <label>Event Until </label>
-                  <input type="date" id="endDate" min="" name="eventEndDate" >
+                </div>
 
                   
                   
@@ -121,7 +120,7 @@ input[type=submit]:hover {
 
                           {% for category in categories %}
                        
-                                  <input type="checkbox" id="myCheck" name="package"  value="{{ category.id }}" onclick="myFunction()">  
+                                  <input type="checkbox" id="myCheck" name="package"  value="{{ category.id }}" value= "1400" onclick="myFunction()">  
                                     <label style="font-size: large;" for="myCheck"></label>{{ category.name }} <br>
                                     <!-- <label style="font-style: italic; font-size: 15px;">Price:{{ catering.price }}/pax</label> -->
                                   <a href="{% url 'foodpackage' category.id %}" target="_blank" id="text" style="display:none">Click to customize your menu</a>
@@ -195,19 +194,7 @@ input[type=submit]:hover {
      
                    <label for="">Select Number of Guest </label>
                    <input type = "text" name ="guestNumber">
-                  <!-- <select name="quantity" id="quantity" onchange="calculateTotal()">
-                      <option value="0"> Number of guest</option>
-                      <option value="1">1</option>
-                      <option value="2">2</option>
-                      <option value="3">3</option>
-                      <option value="4">4</option>
-                      <option value="5">5</option>
-                      <option value="6">6</option>
-                      <option value="7">7</option>
-                      <option value="8">8</option>
-                      <option value="9">9</option>
-                      <option value="10">10</option>
-                  </select> -->
+                
                   <br> 
                   <br>
   
@@ -215,15 +202,24 @@ input[type=submit]:hover {
                   <div id="totalPrice" style="background:rgb(0, 162, 255);"></div>
               </fieldset>
           </div>
+
+           <label>
+        <br> Total
+        <label>
+        <br> Total
+        <input value="$0.00" readonly type="text" id="total" />
+        </label>
          
       </form>
   </div>
 </div>
+
+
 </div>
   
 
-        <input type="submit" id="submit" value="Submit" onclick="calculateTotal()" style="margin-top: 5px;">
-      </form>
+        <!-- <input type="submit" id="submit" value="Submit" onclick="calculateTotal()" style="margin-top: 5px;">
+      </form> -->
   </div>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>       
@@ -259,25 +255,25 @@ function myFunction() {
 
   })
 
-// catering datetime range
-  var startDate1;
-  $('#startDate1').on('change', function(){
-    startDate1 = $(this).val();
-    $('#endDate1').prop('min', function(){
-      return startDate1;
-    })
-  })
+// // catering datetime range
+//   var startDate1;
+//   $('#startDate1').on('change', function(){
+//     startDate1 = $(this).val();
+//     $('#endDate1').prop('min', function(){
+//       return startDate1;
+//     })
+//   })
 
-  var endDate1;
-  $('#endDate1').on('change', function(){
-    endDate1 = $(this).val();
-    $('#startDate1').prop('max', function(){
-      return endDate1;
-    })
+//   var endDate1;
+//   $('#endDate1').on('change', function(){
+//     endDate1 = $(this).val();
+//     $('#startDate1').prop('max', function(){
+//       return endDate1;
+//     })
 
 
 
-  })
+//   })
 
 
 
@@ -302,122 +298,15 @@ for(var i = 0; i < checkboxSwitch.length; i++) {
     }
 }
 
-// form switch function for catering food list
-$(document).ready(function(){
-    $('input[type="radio"]').click(function(){
-        var inputValue = $(this).attr("value");
-        var targetBox = $("." + inputValue);
-        $(".box").not(targetBox).hide();
-        $(targetBox).show();
-    });
-});
-
-var cake_prices = new Array();
-cake_prices["Round6"]=20;
-cake_prices["Round8"]=25;
-cake_prices["Round10"]=35;
-cake_prices["Round12"]=75;
-
-
-var tenAnchorPrice=2;
-var Anchor_Quantity=new Array();
-Anchor_Quantity["0"]=0;
-Anchor_Quantity["1"]=1;
-Anchor_Quantity["2"]=2;
-Anchor_Quantity["3"]=3;
-Anchor_Quantity["4"]=4;
-Anchor_Quantity["5"]=5;
-Anchor_Quantity["6"]=6;
-Anchor_Quantity["7"]=7;
-Anchor_Quantity["8"]=8;
-Anchor_Quantity["9"]=9;
-Anchor_Quantity["10"]=10;
-
-function getCakeSizePrice()
-{
-	var cakeSizePrice=0;
-	var theForm = document.forms["cakeform"];
-	var selectedCake = theForm.elements["selectedcake"] 
-	for (var i = 0; i < selectedCake.length; i++)
-	{
-		if (selectedCake[i].checked) 
-			{
-				cakeSizePrice = cake_prices[selectedCake[i].value];
-				break;
-			}
-	}
-	return cakeSizePrice;
+window.myFunction(){
+  var input = document.getElementById("package"):
+  var total=0;
+  for(var i = 0; i< input.length; i++){
+    total +=1;
+  }
 }
 
 
-//tttttttttttttttttttttttttt test tttttttttttttttttttttt
-/*
-function AnchorsPrice()
-{   
-	var AnchorPrice=0;
-	var theForm = document.forms["cakeform"];
-	var includeAnchorPrice= theForm.elements["tenAnchorPrice"];
-
-	if (includeAnchorPrice.checked==true) {
-		AnchorPrice=4.25;
-	};
-	return AnchorPrice;
-}*/
-
-function getAnchorQuantity()
-{   
-	var AnchorQuantity=0;
-	var theForm= document.forms["cakeform"];
-	var selectedAnchor= theForm.elements["quantity"];
-
-	AnchorQuantity = Anchor_Quantity[selectedAnchor.value];
-	return AnchorQuantity;
-}
-//tttttttttttttttttttttttttt test tttttttttttttttttttttt
-
-
-
-function candlesPrice()
-{   
-	var candlePrice=0;
-	var theForm = document.forms["cakeform"];
-	var includeCandles= theForm.elements["includecandles"];
-
-	if (includeCandles.checked==true) {
-		candlePrice=5;
-	};
-	return candlePrice;
-}
-
-
-function insciptionPrice()
-{
-	var inscriptionPrice= 0;
-	var theForm= document.forms["cakeform"];
-	var includeInscription= theForm.elements["includeinscription"];
-
-	if (includeInscription.checked==true) {
-		inscriptionPrice=20;
-	};
-	return inscriptionPrice;
-}
-
-
-function calculateTotal()
-{
-// var cakePrice= getCakeSizePrice() + getFillingPrice() + candlesPrice() + insciptionPrice() ;
-var cakePrice=getCakeSizePrice()  + candlesPrice() + insciptionPrice() + tenAnchorPrice * getAnchorQuantity() ;
-  
-    var divobj = document.getElementById('totalPrice');
-    divobj.style.display='block';
-    divobj.innerHTML = "Total Price for the Cake $"+ cakePrice;
-}
-
-function hideTotal()
-{
-	var divobj= document.getElementById('totalPrice');
-	divobj.style.display='none';
-}
 </script>
   
   </body>

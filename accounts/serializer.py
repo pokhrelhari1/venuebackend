@@ -67,7 +67,7 @@ class extraServiceSerializer(serializers.HyperlinkedModelSerializer):
 class BookingSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Booking
-        fields= ['bookingdate', 'eventStartDate', 'eventEndDate', 'eventType', 'venue', 'catering', 'customer']
+        fields= ['bookingdate', 'eventStartDate', 'eventType', 'venue', 'catering', 'customer']
 
 class VendorRequestSerializer(serializers.ModelSerializer):
     class Meta:

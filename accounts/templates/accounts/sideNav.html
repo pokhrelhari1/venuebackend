@@ -1,4 +1,6 @@
+{% load static%}
 
+{% block content %}
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
@@ -12,6 +14,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" />
   </head>
   <style>
   /* Toggle Styles */
@@ -56,6 +59,7 @@
 }
 .xyz{
     min-width: 360px;
+   
 }
 #wrapper.toggled #page-content-wrapper {
     position: relative;
@@ -184,6 +188,7 @@
 }
 .container-fluid {
   padding:40px 50px;
+  
 }
   </style>
 
@@ -195,7 +200,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>Simple Sidebar - Start Bootstrap Template</title>
+    <title>Dashboard</title>
     <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
@@ -220,109 +225,87 @@
     <div id="wrapper">
         <!-- Sidebar -->
         <div id="sidebar-wrapper">
-          <ul class="sidebar-nav nav-pills nav-stacked" id="menu">
-
-              <li class="active">
-                  <a href="#"><span class="fa-stack fa-lg pull-left"><i class="fa fa-dashboard fa-stack-1x "></i></span> Dashboard</a>
-                     <ul class="nav-pills nav-stacked" style="list-style-type:none;">
-                      <li><a href="#">link1</a></li>
-                      <li><a href="#">link2</a></li>
-                  </ul>
-              </li>
-              <li>
-                  <a href="#"><span class="fa-stack fa-lg pull-left"><i class="fa fa-flag fa-stack-1x "></i></span> Forms</a>
-                  <ul class="nav-pills nav-stacked" style="list-style-type:none;">
-                      <li><a href="{% url 'add_venue' %}"><span class="fa-stack fa-lg pull-left"><i class="fa fa-flag fa-stack-1x "></i></span>Add Venue</a></li>
-                      
-                  </ul>
-              </li>
-              <li>
-                  <a href="{% url 'tables' %}"><span class="fa-stack fa-lg pull-left"><i class="fa fa-cloud-download fa-stack-1x "></i></span>Tables</a>
-              </li>
-              <li>
-                  <a href="#"> <span class="fa-stack fa-lg pull-left"><i class="fa fa-cart-plus fa-stack-1x "></i></span>Calander</a>
-              </li>
-              <li>
-                  <a href="{% url 'userProfile' %}"><span class="fa-stack fa-lg pull-left"><i class="fa fa-youtube-play fa-stack-1x "></i></span>Profile</a>
-              </li>
-              <li>
-                  <a href="{% url 'logout' %}"><span class="fa-stack fa-lg pull-left"><i class="fa fa-wrench fa-stack-1x "></i></span>Logout</a>
-              </li>
-              
-          </ul>
-      </div><!-- /#sidebar-wrapper -->
-        <!-- Page Content -->
-        <div id="page-content-wrapper">
-            <div class="container-fluid xyz">
-              <form>
-                <div class="form-row">
-                  <div class="form-group col-md-6">
-                    <label for="venueName">venue Name</label>
-                    <input type="venueName" class="form-control" id="venueName" placeholder="Venue name">
-                  </div>
-                  <div class="form-group col-md-6">
-                    <label for="Address">Address</label>
-                    <input type="Address" class="form-control" id="Address" placeholder="Address">
-                  </div>
-                  <!-- added district -->
-                  <div class="form-group col-md-6">
-                    <label for="District">District</label>
-                    <input type="Address" class="form-control" id="District" placeholder="District">
-                  </div>
-                </div>
-                <div class="form-row">
-                  <div class="form-group col-md-6">
-                    <label for="min_guestCapacity">Min guest Capacity</label>
-                    <input type="number" class="form-control" id="venueName" placeholder="Venue name">
-                  </div>
-                  <div class="form-group col-md-6">
-                    <label for="max_guestCapacit">Max guestCapacit</label>
-                    <input type="number" class="form-control" id="max_guestCapacit" placeholder="Max guestCapacit">
-                  </div>
-                </div>
-               
-                <div class="form-row">
-                  <div class="form-group col-md-6">
-                    <label for="description">Description</label>
-                    <input type="text" class="form-control" id="description">
-                  </div>
-                  <div class="form-group col-md-2">
-                    <label for="price">Price</label>
-                    <input type="number" class="form-control" id="price">
-                  </div>
-               
-
-                <div class="form-group col-md-2">
-                  <label for="extra Service">Extra service</label>
-                  <input type="text" class="form-control" id="Extra service">
-                </div>
- </div>
-            <div class="form-row">
-                  <div class="form-group col-md-6">
-                    <label for="inputCity">openTime</label>
-                    <input type="time" class="form-control" id="openTime">
-                  </div>
-                  <div class="form-group col-md-6">
-                    <label for="closeTime">Closing Time</label>
-                    <input type="time" class="form-control" id="closeTime">
-                  </div>
-                </div>
-              </div>
-
-             
+            <ul class="sidebar-nav nav-pills nav-stacked" id="menu">
+ 
+                <li class>
+                    <a href="{% url 'adminDashboard' %}"><span class="fa-stack fa-lg pull-left"><i class="fa fa-dashboard fa-stack-1x "></i></span> Dashboard</a>
+                       <ul class="nav-pills nav-stacked" style="list-style-type:none;">
+                        <li><a href="{% url 'adminDashboard' %}">Dashboard</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#"><span class="fa-stack fa-lg pull-left"><i class="fa fa-flag fa-stack-1x "></i></span> Forms</a>
+                    <ul class="nav-pills nav-stacked" style="list-style-type:none;">
+                        <li><a href="{% url 'venue' %}"><span class="fa-stack fa-lg pull-left"><i class="fa fa-flag fa-stack-1x "></i></span>Add Venue</a></li>
+                        
+                    </ul>
+                </li>
                 
+                <li class>
+                    <a href="{% url 'tables' %}"><span class="fa-stack fa-lg pull-left"><i class="fa fa-dashboard fa-stack-1x "></i></span> Tables</a>
+                       <ul class="nav-pills nav-stacked" style="list-style-type:none;">
+                        
+                        <li><a href="{% url 'userTable' %}">User Table</a></li>
+                        <li><a href="{% url 'bookingTable' %}">Booking Table</a></li>
+                        <li><a href="{% url 'venueTable' %}">venue Table</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#"> <span class="fa-stack fa-lg pull-left"><i class="fa fa-cart-plus fa-stack-1x "></i></span>Calander</a>
+                </li>
+                <li>
+                    <a href="{% url 'userProfile' %}"><span class="fa-stack fa-lg pull-left"><i class="fa fa-youtube-play fa-stack-1x "></i></span>Profile</a>
+                </li>
+                <li>
+                    <a href="{% url 'logout' %}"><span class="fa-stack fa-lg pull-left"><i class="fa fa-wrench fa-stack-1x "></i></span>Logout</a>
+                </li>
+                
+            </ul>
+        </div><!-- /#sidebar-wrapper -->
+        <!-- Page Content -->
+        <!-- <div id="page-content-wrapper">
+            <div class="container-fluid xyz">
+                <div class="row">
+                    <div class="col-lg-12">
+                      {% if vendor_request %}
+                      <table class="table table-dark">
+                        <thead>
+                          <tr>
+                            <th>venue_name</tr>
+                            <th>Description</th>
+                            <th>Phone Number</th>
+                            <th>Request From</th>
+                            <th>Actions</th>
+                          </tr>
               
-              
-                <button type="submit" class="btn btn-primary" style="float: left;">Submit</button>
-              </form>
-
-                  
-                 
-
-    <!--  General -->
-    
+                       {% for req in vendor_request %}
+                          {% if req.is_accepted == False %}
+                        </thead>
+                        <tbody>   
+                          <tr>                       
+                            <td> {{ req.venue_name }}</td>
+                            <td> {{ req.request_description }}</td>
+                            <td>  {{ req.request_phone_number }}</td>
+                            <td> {{ req.request_req_from }}</td>
+                            <td> {{ req.request_is_accepted }}</td>
+                          </tr>
+                              <form method="POST" action="{% url 'adminDashboard' %}">
+                                {% csrf_token %}
+                                <input type="hidden" value="{{ req.id }}" name="hidden-id">
+                                <button name="approve-request">Approve request</button>
+                              </form>
+                            </td>
+                          </tr>
+                          {% endif %}
+                          {% endfor %}
+                        
+                        </tbody>
+                      </table>
+                      {% endif %}
+                    </div>
+                </div>
             </div>
-        </div>
+        </div> -->
         <!-- /#page-content-wrapper -->
     </div>
     <!-- /#wrapper -->
@@ -366,3 +349,6 @@
 </script>
 
 </html>
+
+
+{% endblock %}
