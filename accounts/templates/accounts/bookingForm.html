@@ -13,6 +13,7 @@
 <link href="{% static 'js/jquery-ui-1.12.1/jquery-ui.structure.min.css' %}" rel="stylesheet">
 <link href="{% static 'js/jquery-ui-1.12.1/jquery-ui.theme.min.css' %}" rel="stylesheet">
 
+
 <script src="https://khalti.s3.ap-south-1.amazonaws.com/KPG/dist/2020.12.17.0.0.0/khalti-checkout.iffe.js"></script>
          
 
@@ -206,7 +207,7 @@ input[type=submit]:hover {
           </div>
 
           <label>
-            <br> Total<input value="$0.00" readonly type="text" id="total" />
+            <br> Total<input value="NRP 0.00" readonly type="text" id="total" />
             <label>
               <input id="payment-button" class="btn btn-outline-success" value="Pay with Khalti">
             </label>
@@ -302,8 +303,8 @@ for(var i = 0; i < checkboxSwitch.length; i++) {
     }
 }
 
-window.myFunction(){
-  var input = document.getElementById("package"):
+window.myFunction() {
+  var input = document.getElementById("package");
   var total=0;
   for(var i = 0; i< input.length; i++){
     total +=1;
@@ -315,9 +316,21 @@ window.myFunction(){
 
 <!-- for khalti payment -->
 <script>
+
+function verifyPayment(payload) {
+        $.ajax({
+            url: "{% url 'khalti:verify' %}",
+            type: "POST",
+            data: payload,
+            dataType: 'json',
+            success: function (response) { console.log("Success") },
+            error: function (error) { console.log(error.responseJSON['message']) }
+        });
+    }
+
   var config = {
       // replace the publicKey with yours
-      "publicKey": "test_public_key_dc74e0fd57cb46cd93832aee0a390234",
+      "publicKey": "test_public_key_ebbea165fcae4b39abd20d3cbe491e82",
       "productIdentity": "1234567890",
       "productName": "Dragon",
       "productUrl": "http://gameofthrones.wikia.com/wiki/Dragons",
@@ -332,6 +345,7 @@ window.myFunction(){
           onSuccess (payload) {
               // hit merchant api for initiating verfication
               console.log(payload);
+              verifyPayment(payload);
           },
           onError (error) {
               console.log(error);

@@ -155,6 +155,10 @@ EMAIL_HOST_USER= ""
 EMAIL_HOST_PASSWORD=""
 
 
+KHALTI_SECRET_KEY = "test_secret_key_11027221639e4b42b72bd4a628462f5c"
+KHALTI_VERIFY_URL = "https://khalti.com/api/v2/payment/verify/"
+
+
 #Restful API
 
 
@@ -168,3 +172,4 @@ EMAIL_HOST_PASSWORD=""
 
 
 # }
+

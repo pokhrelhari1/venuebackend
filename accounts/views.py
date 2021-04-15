@@ -16,10 +16,9 @@ from django.forms import ModelForm
 from django.http import QueryDict
 
 from rest_framework import viewsets
-# ashutosh 
 from .serializer import InquirySerializer, VenueSerializer, CateringSerializer, PaymentSerializer, FeedbackSerializer, extraServiceSerializer, BookingSerializer, UserSerializer, food_PackageSerializer, Menu_ItemsSerializer, CatogerySerializer, venueImageSerializer, VendorRequestSerializer
 
-# import requests
+import requests
 import json
 
 @unauthenticated_user
@@ -682,6 +681,3 @@ class InquiryView(viewsets.ModelViewSet):
 class VendorRequestViewset(viewsets.ModelViewSet):
     queryset = VendorRequest.objects.all()
     serializer_class = VendorRequestSerializer
-
-
-
