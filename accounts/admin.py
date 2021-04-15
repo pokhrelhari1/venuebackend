@@ -1,8 +1,13 @@
 from django.contrib import admin
 from .models import Profile
-from .models import Venue, venueImage, extraService, Booking, Payment, Catering, Feedback, Menu_Items, Category, food_Package, OrderedFoodPackage
+
+# ashutosh 
+from .models import Inquiry, Venue, venueImage, extraService, Booking, Payment, Catering, Feedback, Menu_Items, Category, food_Package, OrderedFoodPackage
 
 admin.site.register(Profile)
+
+# ashutosh 
+admin.site.register(Inquiry) 
 
 #configuring single admin for different model
 class venueImageAdmin(admin.StackedInline):

@@ -112,6 +112,22 @@ class Venue(models.Model):
     def __str__(self):
         return self.venueName
 
+
+# ashutosh 
+class Inquiry(models.Model):
+    venueName= models.CharField(max_length= 100, blank=True )
+    address= models.CharField(max_length= 100, blank=True )
+    district = models.CharField(max_length = 50, blank = True, null = True)
+    contact = models.IntegerField(null= True, blank= True )
+    description = models.CharField(max_length= 1000, blank=True )
+    
+        
+    def descriptionSummery(self):
+        return self.description
+    
+    def __str__(self):
+        return self.venueName
+
 #model for multiple image 
 class venueImage(models.Model):
     venue = models.ForeignKey(Venue, default=None, on_delete=models.SET_NULL, null = True)

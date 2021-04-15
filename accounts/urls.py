@@ -8,7 +8,7 @@ from .import views
 from django.conf.urls import url
 
 
-
+# api route
 router = routers.DefaultRouter()
 router.register('accounts', views.VenueView)
 
@@ -22,12 +22,20 @@ router.register('food_package', views.food_PackageView)
 router.register('Menu_Items', views.Menu_ItemsView)
 router.register('Catogery', views.CategoryView)
 
+
+#  venue api created newly
+router.register('venues', views.VenueView)
+
+#inquriy api
+router.register('inquiry', views.InquiryView)
+
 router.register('vendor-request', views.VendorRequestViewset)
 
 
 urlpatterns = [
     path ('register/', views.registerPage, name='register'),
     path ('login/', views.loginPage, name='login'),
+    path ('inquirys/', views.inquiry, name='inquirys'),
     path ('logout/', views.logoutUser, name='logout'),
     path('',views.index, name='index'),
     
@@ -44,6 +52,8 @@ urlpatterns = [
     path('venueTable/',views.venueTable, name='venueTable'),
     path('bookingTable/',views.bookingTable, name='bookingTable'),
     # path('contact/', contact, name='contact'),
+    path('feedback/',views.feedback, name='feedback'),
+    
     path('venue/',views.venue, name='venue'),
     path('updateProfile',views.updateProfile, name='updateProfile'),
     path('searchbar',views.searchbar, name='searchbar'),

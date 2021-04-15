@@ -12,6 +12,14 @@ class VenueSerializer(serializers.ModelSerializer):
         lookup_fileds = ('price','max_guestCapacity')
         fields = ['id', 'url','venueName','image', 'address', 'district','min_guestCapacity','max_guestCapacity','price', 'contact','description', 'website', 'openTime','closingTime','addService' ]
 
+# ashutosh 
+class InquirySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Inquiry 
+    
+        fields = ['id', 'venueName', 'address', 'district', 'contact','description', ]
+
+
 class venueImageSerializer(serializers.ModelSerializer):
     class Meta:
         model = venueImage

@@ -26,7 +26,8 @@ SECRET_KEY = '(brdf0gdi7tw$9r!7qr^hc56en=r*j1f2ny-$!a02%0o%+0t-t'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+# ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['10.0.2.2','localhost','192.168.1.69','127.0.0.1']
 
 
 # Application definition
@@ -42,6 +43,7 @@ INSTALLED_APPS = [
     'django_filters',
     'rest_framework',
     'crispy_forms',
+    'khalti',
    
 
 ]
@@ -86,9 +88,9 @@ WSGI_APPLICATION = 'venueCate.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'testdatabase4',
+        'NAME': 'venue',
         'USER': 'root',
-        'PASSWORD': 'user',
+        'PASSWORD': '',
         'PORT': '3306',
         'HOST': 'localhost',
     }

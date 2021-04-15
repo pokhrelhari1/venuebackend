@@ -16,9 +16,10 @@ from django.forms import ModelForm
 from django.http import QueryDict
 
 from rest_framework import viewsets
-from .serializer import VenueSerializer, CateringSerializer, PaymentSerializer, FeedbackSerializer, extraServiceSerializer, BookingSerializer, UserSerializer, food_PackageSerializer, Menu_ItemsSerializer, CatogerySerializer, venueImageSerializer, VendorRequestSerializer
+# ashutosh 
+from .serializer import InquirySerializer, VenueSerializer, CateringSerializer, PaymentSerializer, FeedbackSerializer, extraServiceSerializer, BookingSerializer, UserSerializer, food_PackageSerializer, Menu_ItemsSerializer, CatogerySerializer, venueImageSerializer, VendorRequestSerializer
 
-import requests
+# import requests
 import json
 
 @unauthenticated_user
@@ -332,6 +333,38 @@ def booking(request, id):
         form = bookingForm()
     return render(request, 'accounts/bookingForm.html', {'form':form,'categories':categories})
 
+def inquiry(request):
+    if request.method == 'POST':
+        venueName = request.POST['venueName']
+        address = request.POST['address']
+        district = request.POST['district']
+        contact = request.POST['contact']
+        description = request.POST['description']
+        
+        inquiry = Inquiry(venueName=venueName, address=address, district=district, contact=contact, description=description )
+
+        inquiry.save()
+
+        # send send_mail
+        
+        # return HttpResponseRedirect('/admin')
+    return render(request, 'accounts/inquirys.html')
+        # return render(request,"contact/contact.html",{})
+
+def feedback(request):
+    if request.method == 'POST':
+        name = request.POST['name']
+        email = request.POST['email']
+        feedback = request.POST['feedback']
+        
+        feedback = Feedback(name=name, email=email, feedback=feedback)
+
+        feedback.save()
+
+        # send send_mail
+        
+        # return HttpResponseRedirect('/admin')
+    return render(request, 'accounts/index.html')
 
 # function to add venue
 # def add_venue(request):
@@ -631,6 +664,19 @@ class Menu_ItemsView(viewsets.ModelViewSet):
 class CategoryView(viewsets.ModelViewSet):
     queryset = Category.objects.all()
     serializer_class = CatogerySerializer
+
+
+# venue api created newly
+class VenueView(viewsets.ModelViewSet):
+    queryset = Venue.objects.all()
+    serializer_class = VenueSerializer
+
+
+# ashutosh 
+class InquiryView(viewsets.ModelViewSet):
+    queryset= Inquiry.objects.all()
+    serializer_class = InquirySerializer
+
 
 
 class VendorRequestViewset(viewsets.ModelViewSet):

@@ -294,7 +294,7 @@ footer a:hover {
                         <div class="row">
                             <div class="col-lg-12">
                                 <div class="row">
-                                  <form action="#" method="GET">
+                                  <form action="{% url 'feedback' %}"  method="GET">
                                     
                                     <div class="search" style="width: 40%;"> 
                                       {{ filter.form.as_p }}
@@ -412,25 +412,32 @@ footer a:hover {
             </div>
         </div>
      
-          <div class="contactForm">
-            <form method="POST" action="">
+          <div class="contactForm" id="contactForm">
+            <form method="POST" action="{% url 'feedback' %}" id="contact-form" name="contact-form">
+              {% csrf_token %}
               <h2>Send Us Your feedback</h2>
               <div class="inputBox">
-                <input type="text" name="" required="required">
-                <span>Full Name</span>
+                <input type="text" id="name" name="name" class="form-control1">
+              <label for="venueName" class="">Name</label>
+              <p id="namecheck"> </p>
               </div>
               <div class="inputBox">
-                <input type="text" name="" required="required">
-                <span>Email</span>
+                <input type="text" id="email" name="email" class="form-control1" required>
+                <label for="email" class="">Email</label>
+                <p id="emailcheck"> </p>
               </div>
               <div class="inputBox">
-                <textarea required="required" name="" id="" ></textarea>
-                <span>Type your review</span>
+                <textarea type="text" id="feedback" name="feedback" rows="2" class="form-control1 md-textarea"></textarea>
+                <label for="feedback">Feedback</label>
+                <p id="feedbackcheck"> </p>
               </div>
-              <div class="inputBox">
-                <input type="submit" name=" " value="Send">
+              <!-- <div class="inputBox">
+                <input type="submit" name="" onclick="document.getElementById('contactForm').submit();" value="Send">
 
-              </div>
+              </div> -->
+               <a><button class="btn4 mt-2 mx-3" type="submit" id="submitbtn" name="button">SEND</button></a>
+               <a><button class="btn5 mt-2 mx-3" type="button" name="button" onclick="document.getElementById('contact-form').reset();">CLEAR</button></a>
+               
             </form>
            
           </div>
@@ -443,8 +450,153 @@ footer a:hover {
 
   
   
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-      <script>window.jQuery || document.write('<script src="/docs/4.5/assets/js/vendor/jquery.slim.min.js"><\/script>')</script><script src="/docs/4.5/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script></body>
+      <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+      <script>window.jQuery || document.write('<script src="/docs/4.5/assets/js/vendor/jquery.slim.min.js"><\/script>')</script><script src="/docs/4.5/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+      <script type="text/javascript">
+        $(document).ready(function() {
+  
+          $('#namecheck').hide();
+          $('#emailcheck').hide();
+          $('#feedbackcheck').hide();
+  
+          var name_err = true;
+          var email_err = true;
+          var feedback_err = true;
+  
+          $('#name').keyup(function() {
+            name_check();
+          });
+  
+          function name_check() {
+  
+            var name_val = $('#name').val();
+  
+            if (name_val.length == '') {
+              $('#namecheck').show();
+              $('#namecheck').html("*Please Fill the username");
+              $('#namecheck').focus();
+              $('#namecheck').css("color", "red");
+              name_err = false;
+              return false;
+  
+            } else {
+              $('#namecheck').hide();
+            }
+  
+            if (name_val.length < 3) {
+              $('#namecheck').show();
+              $('#namecheck').html("*Name should be greater than 3");
+              $('#namecheck').focus();
+              $('#namecheck').css("color", "red");
+              name_err = false;
+              return false;
+  
+            } else {
+              $('#namecheck').hide();
+            }
+  
+          }
+  
+          // email check
+          $('#email').keyup(function() {
+            email_check();
+          });
+  
+          function email_check() {
+  
+            var email_val = $('#email').val();
+  
+            if (email_val.length == '') {
+              $('#emailcheck').show();
+              $('#emailcheck').html("*Please Enter Valid Email");
+              $('#emailcheck').focus();
+              $('#emailcheck').css("color", "red");
+              email_err = false;
+              return false;
+  
+            } else {
+              $('#emailcheck').hide();
+            }
+  
+              var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+              if (!re.test(email_val)) {
+              $('#emailcheck').show();
+              $('#emailcheck').html("*Invalid Email");
+              $('#emailcheck').focus();
+              $('#emailcheck').css("color", "red");
+              email_err = false;
+              return false;
+  
+            } else {
+              $('#emailcheck').hide();
+            }
+  
+          }
+  
+
+  
+  
+          //message
+          $('#feedback').keyup(function() {
+            feedback_check();
+          });
+  
+          function feedback_check() {
+  
+            var feedback_val = $('#feedback').val();
+  
+            if (feedback_val.length == '') {
+              $('#feedbackcheck').show();
+              $('#feedbackcheck').html("*Please Enter Message");
+              $('#feedbackcheck').focus();
+              $('#feedbackcheck').css("color", "red");
+              message_err = false;
+              return false;
+  
+            } else {
+              $('#feedbackcheck').hide();
+            }
+  
+  
+              if (feedback_val.length < 3) {
+              $('#feedbackcheck').show();
+              $('#feedbackcheck').html("*Message length must be greater than 3");
+              $('#feedbackcheck').focus();
+              $('#feedbackcheck').css("color", "red");
+              feedback_err = false;
+              return false;
+  
+            } else {
+              $('#feedbackcheck').hide();
+            }
+  
+          }
+  
+  
+  
+          $('#submitbtn').click(function() {
+  
+            name_err = true;
+            email_err = true;
+            feedback_err = true;
+  
+            name_check();
+            email_check();
+            feeedback_check();
+  
+            if ((name_err == true) && (email_err == true) && (feedback_err == true)) {
+              return document.getElementById('contact-form').submit();
+            } else {
+              return false;
+            }
+  
+          });
+  
+        });
+      </script>
+  
+  </body>
+
 </html>
 
 {% endblock %}
