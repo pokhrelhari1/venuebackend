@@ -185,12 +185,41 @@ def status(request):
 
 def editVenue(request,id):
     venue= Venue.objects.get(pk=id)
-    photos = venueImage.objects.filter(venue= venue)
+    form = venueForm(instance=venue)
+    
+    if request.method == "POST":
+        # form = venueForm(request.POST, request.FILES)
+        obj = get_object_or_404(Venue, id = id)
+        form = venueForm(request.POST or None, instance = obj)
+        # print(request.POST)
+        # print("Inside post")
+        print(form.errors)
+        # print("error")
+        if form.is_valid():
+            print("Valid form")
+            form.save()
+            return redirect('venueTable')
     context={
         'venue':venue,
-        'photos':photos 
+        'form':form,
         }
     return render(request,'accounts/editVenue.html',context)
+    
+
+
+# def updateVenue(request,id):
+
+#     context ={}
+#     obj = get_object_or_404(Venue, id = id)
+
+#     form = venueForm(request.POST or None, instance = obj)
+
+#     if form.is_valid():
+#         form.save()
+#         return HttpResponseRedirect("/"+id)
+#     context["form"] = form
+  
+#     return render(request, "venueTable.html", context)
 
 
 

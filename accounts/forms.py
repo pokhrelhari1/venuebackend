@@ -44,7 +44,8 @@ class cateringForm(forms.Form):
 class venueForm(forms.ModelForm):
     class Meta:
         model = Venue
-        fields=['venueName','image', 'address', 'district', 'min_guestCapacity', 'max_guestCapacity', 'price', 'contact', 'description', 'website', 'openTime', 'closingTime']
+        # fields=['venueName','image', 'address', 'district', 'min_guestCapacity', 'max_guestCapacity', 'price', 'contact', 'description', 'website', 'openTime', 'closingTime']
+        fields = '__all__'
 
 
 class extraServiceForm(forms.ModelForm):
