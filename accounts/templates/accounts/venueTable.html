@@ -79,6 +79,7 @@ table{
           <th>contact</th>
           <th>View Details</th>
           <th>Delete</th>
+          <th>Edit</th>
 
          
         </tr>
@@ -97,6 +98,12 @@ table{
             <td>
               <a href="{% url 'deleteVenue' venue.id %}" class="btn btn-danger" >Delete</a>
             </td>
+
+            <td>
+              <a href="{% url 'editVenue' venue.id %}" class="btn btn-warning" >Edit</a>
+            </td>
+
+
         </tr>
         {% endfor %}
        

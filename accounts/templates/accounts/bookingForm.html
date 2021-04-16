@@ -13,8 +13,6 @@
 <link href="{% static 'js/jquery-ui-1.12.1/jquery-ui.structure.min.css' %}" rel="stylesheet">
 <link href="{% static 'js/jquery-ui-1.12.1/jquery-ui.theme.min.css' %}" rel="stylesheet">
 
-
-<script src="https://khalti.s3.ap-south-1.amazonaws.com/KPG/dist/2020.12.17.0.0.0/khalti-checkout.iffe.js"></script>
          
 
 <style>
@@ -199,17 +197,14 @@ input[type=submit]:hover {
                    <input type = "text" name ="guestNumber">
                 
                   <br> 
-                  <!-- <br> -->
-  
-                  <!-- <input type="submit" id="submit" name="save" value="Submit" onclick="calculatetotal()" style="margin-top: 5px;">
-                  <div id="totalPrice" style="background:rgb(0, 162, 255);"></div> -->
               </fieldset>
           </div>
 
           <label>
             <br> Total<input value="NRP 0.00" readonly type="text" id="total" />
             <label>
-              <input id="payment-button" class="btn btn-outline-success" value="Pay with Khalti">
+              <input type="submit" id="submit" name="save" value="Submit & Pay" onclick="calculatetotal()" style="margin-top: 5px;">
+                  <div id="totalPrice" style="background:rgb(0, 162, 255);"></div>
             </label>
           </label>
 
@@ -312,56 +307,6 @@ window.myFunction() {
 }
 
 
-</script>
-
-<!-- for khalti payment -->
-<script>
-
-function verifyPayment(payload) {
-        $.ajax({
-            url: "{% url 'khalti:verify' %}",
-            type: "POST",
-            data: payload,
-            dataType: 'json',
-            success: function (response) { console.log("Success") },
-            error: function (error) { console.log(error.responseJSON['message']) }
-        });
-    }
-
-  var config = {
-      // replace the publicKey with yours
-      "publicKey": "test_public_key_ebbea165fcae4b39abd20d3cbe491e82",
-      "productIdentity": "1234567890",
-      "productName": "Dragon",
-      "productUrl": "http://gameofthrones.wikia.com/wiki/Dragons",
-      "paymentPreference": [
-          "KHALTI",
-          "EBANKING",
-          "MOBILE_BANKING",
-          "CONNECT_IPS",
-          "SCT",
-          ],
-      "eventHandler": {
-          onSuccess (payload) {
-              // hit merchant api for initiating verfication
-              console.log(payload);
-              verifyPayment(payload);
-          },
-          onError (error) {
-              console.log(error);
-          },
-          onClose () {
-              console.log('widget is closing');
-          }
-      }
-  };
-
-  var checkout = new KhaltiCheckout(config);
-  var btn = document.getElementById("payment-button");
-  btn.onclick = function () {
-      // minimum transaction amount must be 10, i.e 1000 in paisa.
-      checkout.show({amount: 1000});
-  }
 </script>
   
   </body>

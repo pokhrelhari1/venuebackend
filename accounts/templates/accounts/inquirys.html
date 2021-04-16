@@ -1,292 +1,394 @@
 <!DOCTYPE html>
 {%load static%}
 <html>
-<head>
-<meta charset="utf-8">
-<title>Inquiry Form</title>
+  <head>
+    <meta charset="utf-8" />
+    <title>Inquiry Form</title>
 
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1"
+    />
 
-<link rel="stylesheet" href="{% static 'css/inquiry.css' %}" />
-<link rel="stylesheet" href="{% static 'css/main.css' %}" />
-<link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-<link rel="stylesheet" type="text/css" href="https://colorlib.com/etc/cf/ContactFrom_v1/css/main.css">
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
- 
-  <!-- JS, Popper.js, and jQuery -->
-  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{% static 'css/inquiry.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/main.css' %}" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://colorlib.com/etc/cf/ContactFrom_v1/css/main.css"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
+      crossorigin="anonymous"
+    />
 
-</head>
-<body class="form-v9">
-{% include 'accounts/navbar.html' %}
-<div class="page-content">
-<div class="form-v9-content">
-<form class="form-detail" action="{% url 'inquirys' %}" method="post">
-{% csrf_token %}
-<h2>Inquiry Form</h2>
-<div class="form-row-total">
-<div class="form-row">
-<input type="text" name="venueName" id="venueName" class="input-text" placeholder="Venue Name" required>
-<p id="venuenamecheck"> </p>
-</div>
-<div class="form-row">
-<input type="text" name="address" id="address" class="input-text" placeholder="Address" required>
-<p id="addresscheck"> </p>
-</div>
-</div>
-<div class="form-row-total">
-<div class="form-row">
-<input type="text" name="district" id="district" class="input-text" placeholder="District" required>
-<p id="districtcheck"> </p>
-</div>
-<div class="form-row">
-<input type="text" name="contact" id="contact" class="input-text" placeholder="Contact No" required>
-<p id="contactcheck"> </p>
-</div>
-</div>
-<div class="form-row-total">
- <input type="textarea" name="description" id="description" class="textarea" placeholder="Description" required>
+    <!-- JS, Popper.js, and jQuery -->
+    <script
+      src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+      integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+      integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+      integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body class="form-v9">
+    <div class="fixed-top mt-sm-1 py-5">
+      {% if messages %} {% for message in messages %}
+      <div class="alert {{ message.tags }} m-2" id="msg" role="alert">
+        {{ message }}
+      </div>
+      {% endfor %} {% endif %}
+    </div>
+    {% include 'accounts/navbar.html' %}
+    <div class="page-content">
+      <div class="form-v9-content">
+        <form class="form-detail" action="{% url 'inquirys' %}" method="post">
+          {% csrf_token %}
+          <h2>Inquiry Form</h2>
+          <div class="form-row-total">
+            <div class="form-row">
+              <input
+                type="text"
+                name="venueName"
+                id="venueName"
+                class="input-text"
+                placeholder="Venue Name"
+                required
+              />
+              <p id="venuenamecheck"></p>
+            </div>
+            <div class="form-row">
+              <input
+                type="text"
+                name="address"
+                id="address"
+                class="input-text"
+                placeholder="Address"
+                required
+              />
+              <p id="addresscheck"></p>
+            </div>
+          </div>
+          <div class="form-row-total">
+            <div class="form-row">
+              <input
+                type="text"
+                name="district"
+                id="district"
+                class="input-text"
+                placeholder="District"
+                required
+              />
+              <p id="districtcheck"></p>
+            </div>
+            <div class="form-row">
+              <input
+                type="text"
+                name="email"
+                id="email"
+                class="input-text"
+                placeholder="Email"
+                required
+              />
+              <p id="emailcheck"></p>
+            </div>
+          </div>
+          <div class="form-row">
+            <input
+              type="text"
+              name="contact"
+              id="contact"
+              class="input-text"
+              placeholder="Contact No"
+              required
+            />
+            <p id="contactcheck"></p>
+            </div>
 
-				</div>
-<a><button class="btn4 mt-2 mx-3 btn btn-success btns" type="submit" id="submitbtn" name="button">SEND</button></a>
-<a><button type="reset" name="button" class="btn btn-danger btn5 mt-2 mx-3 btnd">CLEAR</button></a></div>
+            <div class="form-row-total">
+              <input
+                type="textarea"
+                name="description"
+                id="description"
+                class="textarea"
+                placeholder="Description"
+                required
+              />
+            </div>
+          <br>
+            <a
+              ><button
+                class="btn4 mt-2 mx-3 btn btn-success btns"
+                type="submit"
+                id="submitbtn"
+                name="button"
+                style="align-items: center;"
+              >
+                SEND
+              </button></a
+            >
+            <a
+              ><button
+                type="reset"
+                name="button"
+                class="btn btn-danger btn5 mt-2 mx-3 btnd"
+              >
+                CLEAR
+              </button></a
+            >
+          </div>
+        </form>
+      </div>
+    </div>
 
-
-</form>
-
-
-</div>
-</div>
-
-
-
-
-
-
-
-
-<script type="text/javascript">
-      $(document).ready(function() {
-
-        $('#venuenamecheck').hide();
-        $('#addresscheck').hide();
-        $('#districtcheck').hide();
-        $('#contactcheck').hide();
-        $('#descriptioncheck').hide();
+    <script type="text/javascript">
+      $(document).ready(function () {
+        $("#venuenamecheck").hide();
+        $("#addresscheck").hide();
+        $("#districtcheck").hide();
+        $("#emailcheck").hide();
+        $("#contactcheck").hide();
+        $("#descriptioncheck").hide();
 
         var venueName_err = true;
         var address_err = true;
         var district_err = true;
+        var email_err = true;
         var contact_err = true;
         var description_err = true;
 
-        $('#venueName').keyup(function() {
+        $("#venueName").keyup(function () {
           venuename_check();
         });
 
         function venuename_check() {
+          var venueName_val = $("#venueName").val();
 
-          var venueName_val = $('#venueName').val();
-
-          if (venueName_val.length == '') {
-            $('#venuenamecheck').show();
-            $('#venuenamecheck').html("*Please Fill the venuename");
-            $('#venuenamecheck').focus();
-            $('#venuenamecheck').css("color", "red");
+          if (venueName_val.length == "") {
+            $("#venuenamecheck").show();
+            $("#venuenamecheck").html("*Please Fill the venuename");
+            $("#venuenamecheck").focus();
+            $("#venuenamecheck").css("color", "red");
             venueName_err = false;
             return false;
-
           } else {
-            $('#venuenamecheck').hide();
+            $("#venuenamecheck").hide();
           }
 
           if (venueName_val.length < 3) {
-            $('#venuenamecheck').show();
-            $('#venuenamecheck').html("*Venue Name should be greater than 3");
-            $('#venuenamecheck').focus();
-            $('#venuenamecheck').css("color", "red");
+            $("#venuenamecheck").show();
+            $("#venuenamecheck").html("*Venue Name should be greater than 3");
+            $("#venuenamecheck").focus();
+            $("#venuenamecheck").css("color", "red");
             venueName_err = false;
             return false;
-
           } else {
-            $('#venuenamecheck').hide();
+            $("#venuenamecheck").hide();
           }
-
         }
 
         //address
-        $('#address').keyup(function() {
+        $("#address").keyup(function () {
           address_check();
         });
 
         function address_check() {
+          var address_val = $("#address").val();
 
-          var address_val = $('#address').val();
-
-          if (address_val.length == '') {
-            $('#addresscheck').show();
-            $('#addresscheck').html("*Please Enter address");
-            $('#addresscheck').focus();
-            $('addresscheck').css("color", "red");
+          if (address_val.length == "") {
+            $("#addresscheck").show();
+            $("#addresscheck").html("*Please Enter address");
+            $("#addresscheck").focus();
+            $("addresscheck").css("color", "red");
             address_err = false;
             return false;
-
           } else {
-            $('#addresscheck').hide();
+            $("#addresscheck").hide();
           }
 
-
-            if (address_val.length < 3){
-            $('#addresscheck').show();
-            $('#addresscheck').html("*Address length must be between 3");
-            $('#addresscheck').focus();
-            $('#addresscheck').css("color", "red");
+          if (address_val.length < 3) {
+            $("#addresscheck").show();
+            $("#addresscheck").html("*Address length must be between 3");
+            $("#addresscheck").focus();
+            $("#addresscheck").css("color", "red");
             address_err = false;
             return false;
-
           } else {
-            $('#addresscheck').hide();
+            $("#addresscheck").hide();
           }
-
         }
 
         //district
-        $('#district').keyup(function() {
+        $("#district").keyup(function () {
           district_check();
         });
 
         function district_check() {
+          var district_val = $("#district").val();
 
-          var district_val = $('#district').val();
-
-          if (district_val.length == '') {
-            $('#districtcheck').show();
-            $('#districtcheck').html("*Please Enter district");
-            $('#districtcheck').focus();
-            $('#districtcheck').css("color", "red");
+          if (district_val.length == "") {
+            $("#districtcheck").show();
+            $("#districtcheck").html("*Please Enter district");
+            $("#districtcheck").focus();
+            $("#districtcheck").css("color", "red");
             district_err = false;
             return false;
-
           } else {
-            $('#districtcheck').hide();
+            $("#districtcheck").hide();
           }
 
-
-            if (district_val.length < 3){
-            $('#districtcheck').show();
-            $('#districtcheck').html("*district length must be between 3");
-            $('#districtcheck').focus();
-            $('#districtcheck').css("color", "red");
+          if (district_val.length < 3) {
+            $("#districtcheck").show();
+            $("#districtcheck").html("*district length must be between 3");
+            $("#districtcheck").focus();
+            $("#districtcheck").css("color", "red");
             district_err = false;
             return false;
-
           } else {
-            $('#districtcheck').hide();
+            $("#districtcheck").hide();
+          }
+        }
+
+        // email check
+        $("#email").keyup(function () {
+          email_check();
+        });
+
+        function email_check() {
+          var email_val = $("#email").val();
+
+          if (email_val.length == "") {
+            $("#emailcheck").show();
+            $("#emailcheck").html("*Please Enter Valid Email");
+            $("#emailcheck").focus();
+            $("#emailcheck").css("color", "red");
+            email_err = false;
+            return false;
+          } else {
+            $("#emailcheck").hide();
           }
 
+          var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+          if (!re.test(email_val)) {
+            $("#emailcheck").show();
+            $("#emailcheck").html("*Invalid Email");
+            $("#emailcheck").focus();
+            $("#emailcheck").css("color", "red");
+            email_err = false;
+            return false;
+          } else {
+            $("#emailcheck").hide();
+          }
         }
 
         //contact
-        $('#contact').keyup(function() {
+        $("#contact").keyup(function () {
           contact_check();
         });
 
         function contact_check() {
+          var contact_val = $("#contact").val();
 
-          var contact_val = $('#contact').val();
-
-          if (contact_val.length == '') {
-            $('#contactcheck').show();
-            $('#contactcheck').html("*Please Enter contact");
-            $('#contactcheck').focus();
-            $('#contactcheck').css("color", "red");
+          if (contact_val.length == "") {
+            $("#contactcheck").show();
+            $("#contactcheck").html("*Please Enter contact");
+            $("#contactcheck").focus();
+            $("#contactcheck").css("color", "red");
             contact_err = false;
             return false;
-
           } else {
-            $('#contactcheck').hide();
+            $("#contactcheck").hide();
           }
 
-
-            if (contact_val.length < 10 && contact_val > 10){
-            $('#contactcheck').show();
-            $('#contactcheck').html("*contact length should be 10");
-            $('#contactcheck').focus();
-            $('#contactcheck').css("color", "red");
+          if (contact_val.length < 10 && contact_val > 10) {
+            $("#contactcheck").show();
+            $("#contactcheck").html("*contact length should be 10");
+            $("#contactcheck").focus();
+            $("#contactcheck").css("color", "red");
             contact_err = false;
             return false;
-
           } else {
-            $('#contactcheck').hide();
+            $("#contactcheck").hide();
           }
-
         }
 
-
-
         //description
-        $('#description').keyup(function() {
+        $("#description").keyup(function () {
           description_check();
         });
 
         function description_check() {
+          var description_val = $("#description").val();
 
-          var description_val = $('#description').val();
-
-          if (description_val.length == '') {
-            $('#descriptioncheck').show();
-            $('#descriptioncheck').html("*Please Enter description");
-            $('#descriptioncheck').focus();
-            $('#descriptioncheck').css("color", "red");
+          if (description_val.length == "") {
+            $("#descriptioncheck").show();
+            $("#descriptioncheck").html("*Please Enter description");
+            $("#descriptioncheck").focus();
+            $("#descriptioncheck").css("color", "red");
             description_err = false;
             return false;
-
           } else {
-            $('#descriptioncheck').hide();
+            $("#descriptioncheck").hide();
           }
 
-
-            if (description_val.length < 3) {
-            $('#descriptioncheck').show();
-            $('#descriptioncheck').html("*description length must be greater than 3");
-            $('#descriptioncheck').focus();
-            $('#descriptioncheck').css("color", "red");
+          if (description_val.length < 3) {
+            $("#descriptioncheck").show();
+            $("#descriptioncheck").html(
+              "*description length must be greater than 3"
+            );
+            $("#descriptioncheck").focus();
+            $("#descriptioncheck").css("color", "red");
             description_err = false;
             return false;
-
           } else {
-            $('#descriptioncheck').hide();
+            $("#descriptioncheck").hide();
           }
-
         }
 
-
-
-        $('#submitbtn').click(function() {
-
+        $("#submitbtn").click(function () {
           venueName_err = true;
           address_err = true;
           district_err = true;
-          contact_err= true;
-          description_err= true;
+          email_err = true;
+          contact_err = true;
+          description_err = true;
 
           venuename_check();
           address_check();
           district_check();
+          email_check();
           contact_check();
           description_check();
 
-          if ((venueName_err == true) && (address_err == true) && (district_err == true) && (contact_err == true) && (description_err == true)) {
-            return document.getElementById('contact-form').submit();
+          if (
+            venueName_err == true &&
+            address_err == true &&
+            district_err == true &&
+            email_err == true &&
+            contact_err == true &&
+            description_err == true
+          ) {
+            return document.getElementById("contact-form").submit();
           } else {
             return false;
           }
-
         });
-
       });
     </script>
-</body>
+  </body>
 </html>

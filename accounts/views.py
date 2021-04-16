@@ -12,6 +12,10 @@ from .filters import locationFilter
 from django.views import View
 from django.db import models
 from django.forms import ModelForm
+from django.contrib import messages
+from django.core.mail import send_mail
+from django.views.generic.edit import UpdateView
+
 
 from django.http import QueryDict
 
@@ -177,6 +181,18 @@ def status(request):
      })
 
    
+# finction for edit venue table
+
+def editVenue(request,id):
+    venue= Venue.objects.get(pk=id)
+    photos = venueImage.objects.filter(venue= venue)
+    context={
+        'venue':venue,
+        'photos':photos 
+        }
+    return render(request,'accounts/editVenue.html',context)
+
+
 
 
 #function for user profile
@@ -337,14 +353,24 @@ def inquiry(request):
         venueName = request.POST['venueName']
         address = request.POST['address']
         district = request.POST['district']
+        email = request.POST['email']
         contact = request.POST['contact']
         description = request.POST['description']
         
-        inquiry = Inquiry(venueName=venueName, address=address, district=district, contact=contact, description=description )
+        inquiry = Inquiry(venueName=venueName, address=address, district=district, email=email, contact=contact, description=description )
 
         inquiry.save()
 
         # send send_mail
+        send_mail(
+            'VenueCate',
+            'Hi' +email+ '\nThank you for contacting us, Our team will get back soon to your request on your request \n\nVenueName : ' + venueName + ' \nAddress : ' + address + '.' ,
+            'venuecate2211@gmail.com',
+            recipient_list=[email],
+            html_message ='''<div><div></div><div tabindex="-1"></div><div><div><u></u><div style="margin:0!important;padding:0!important"> <img style="display:none!important"><table border="0" cellpadding="0" cellspacing="0" width="100%"><tbody><tr><td width="100%" align="center" valign="top" bgcolor="#eeeeee" height="20"></td></tr><tr><td bgcolor="#eeeeee" align="center" style="padding:0px 15px 0px 15px"><table bgcolor="#ffffff" border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width:600px"><tbody><tr><td><table width="100%" border="0" cellspacing="0" cellpadding="0"><tbody><tr><td align="center" style="padding:40px 40px 0px 40px"> <a href="#" target="_blank" data-saferedirecturl="#"> <img src="https://Venue Cate.herokuapp.com/static/media/logo1.png" alt="Venue Cate logo" width="auto" border="0" style="vertical-align:middle"> </a></td></tr><tr><td align="center" style="font-size:18px;color:#0e0e0f;font-weight:700;font-family:Helvetica Neue;line-height:28px;vertical-align:top;text-align:center;padding:35px 40px 0px 40px"> </td></tr><tr><td align="center" bgcolor="#ffffff" height="1" style="padding:40px 40px 5px" valign="top" width="100%"><table cellpadding="0" cellspacing="0" width="100%"><tbody><tr><td style="border-top:1px solid #e4e4e4"> <br> <br>Hi, <br> <br>Thank you for contacting us, Our team will get back soon to your request. <br>Your preferred choices are: <br> <br>Address : ''' + address +''' <br>District : ''' + district + ''' <br> <br> <strong>Regards <br> Venue Cate </strong></td></tr></tbody></table></td></tr></tbody></table></td></tr><tr><td width="100%" align="center" valign="top" bgcolor="#ffffff" height="45"></td></tr></tbody></table></td></tr><tr><td bgcolor="#eeeeee" align="center" style="padding:20px 0px"><table width="100%" border="0" cellspacing="0" cellpadding="0" align="center" style="max-width:600px"><tbody><tr></tr><tr><td bgcolor="#eeeeee" align="center"><table width="100%" border="0" cellspacing="0" cellpadding="0" align="center" style="max-width:600px"><tbody><tr><td align="center" style="text-align:center;padding:10px 10px 10px 10px"><p>&#169;copyright @ 2020 Venue Cate</p></td></tr></tbody></table></td></tr></tbody></table></td></tr></tbody></table><div></div><div></div></div><div></div></div></div><div style="display:none"><div></div></div><div></div></div>''' ,
+            fail_silently=False
+        )
+        messages.success(request,'Your message has been sucessfully sent, Please check your E-mail.')
         
         # return HttpResponseRedirect('/admin')
     return render(request, 'accounts/inquirys.html')
@@ -361,6 +387,8 @@ def feedback(request):
         feedback.save()
 
         # send send_mail
+        # send send_mail
+        
         
         # return HttpResponseRedirect('/admin')
     return render(request, 'accounts/index.html')
@@ -612,7 +640,8 @@ class catering(View):
 
         return render(request,'accounts/bookingForm.html')
 
-
+def payment(request):
+    return render(request, "accounts/payment.html")
 
 
 
@@ -632,6 +661,10 @@ class venueImageView(viewsets.ModelViewSet):
 class PaymentView(viewsets.ModelViewSet):
     queryset= Payment.objects.all()
     serializer_class= PaymentSerializer
+
+# class paymentView(viewsets.ModelViewSet):
+#     queryset= payment.objects.all()
+#     serializer_class= paymentSerializer
 
 class FeedbackView(viewsets.ModelViewSet):
     queryset = Feedback.objects.all()

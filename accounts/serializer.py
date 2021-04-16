@@ -17,7 +17,7 @@ class InquirySerializer(serializers.ModelSerializer):
     class Meta:
         model = Inquiry 
     
-        fields = ['id', 'venueName', 'address', 'district', 'contact','description', ]
+        fields = ['id', 'venueName', 'address', 'district', 'email', 'contact','description', ]
 
 
 class venueImageSerializer(serializers.ModelSerializer):

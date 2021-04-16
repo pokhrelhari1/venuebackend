@@ -118,6 +118,7 @@ class Inquiry(models.Model):
     venueName= models.CharField(max_length= 100, blank=True )
     address= models.CharField(max_length= 100, blank=True )
     district = models.CharField(max_length = 50, blank = True, null = True)
+    email = models.CharField(max_length = 1000, blank = True, null = True)
     contact = models.IntegerField(null= True, blank= True )
     description = models.CharField(max_length= 1000, blank=True )
     
@@ -156,6 +157,11 @@ class Booking(models.Model):
     
      
 #model for payment 
+# class Payment(models.Model):
+#     paymentDate= models.DateTimeField(default=datetime.now(), blank=True)
+#     amount= models.IntegerField(null=True, blank=True)
+#     booking= models.ForeignKey(Booking, on_delete= models.CASCADE)
+
 class Payment(models.Model):
     paymentDate= models.DateTimeField(default=datetime.now(), blank=True)
     amount= models.IntegerField(null=True, blank=True)

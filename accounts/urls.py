@@ -17,6 +17,7 @@ router.register('feedback', views.FeedbackView)
 router.register('venueImage', views.venueImageView)
 router.register('profile', views.ProfileView, basename="profile")
 router.register('booking', views.BookingView)
+# router.register('payment', views.PaymentView)
 router.register('payment', views.PaymentView)
 router.register('food_package', views.food_PackageView)
 router.register('Menu_Items', views.Menu_ItemsView)
@@ -53,6 +54,7 @@ urlpatterns = [
     path('bookingTable/',views.bookingTable, name='bookingTable'),
     # path('contact/', contact, name='contact'),
     path('feedback/',views.feedback, name='feedback'),
+    path('payment/',views.payment, name='payment'),
     
     path('venue/',views.venue, name='venue'),
     path('updateProfile',views.updateProfile, name='updateProfile'),
@@ -78,11 +80,13 @@ urlpatterns = [
     path ('reset_password_sent/', auth_views.PasswordResetDoneView.as_view(), name="password_reset_done"),
     path ('reset/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(), name="password_reset_view"),
     path ('reset_password_complete/', auth_views.PasswordResetConfirmView.as_view(), name="password_reset_complete"),
+    path('editVenue/<int:id>/', views.editVenue, name="editVenue"),
 
     path('searchLocation', views.searchLocation),
     path('filter_venue/', views.filter_venue, name="filter_venue"),
 
      path('', include(router.urls)),
+
 
      path('viewBookingDetails/', views.viewBookingDetails, name="viewBookingDetails")
 
