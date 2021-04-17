@@ -17,6 +17,7 @@ from django.core.mail import send_mail
 from django.views.generic.edit import UpdateView
 
 
+
 from django.http import QueryDict
 
 from rest_framework import viewsets
@@ -146,13 +147,33 @@ def vendorRequest(request):
 
 @login_required(login_url = 'login')
 @admin_only #calling the decoratior  for page permission
+# def adminDashboard(request):
+    
+#     vendor_request_data = requests.get("http://127.0.0.1:8000/vendor-request/").content
+#     vendor_request_data = json.loads(vendor_request_data)
+#     if request.method == 'GET':
+#         print("vendor requests", type(vendor_request_data), vendor_request_data)
+#         return render(request, 'accounts/adminDashboard.html', context = {'inquiry': vendor_request_data})
+#     if request.method == 'POST':
+        
+#         # send email to user that your request has been accepted
+#         print("request approved", request.POST.get('hidden-id'))
+#         request_id = request.POST.get('hidden-id')
+#         vend_req = VendorRequest.objects.get(id = request_id)
+#         vend_req.is_accepted = True
+#         vend_req.save()
+#         vendor_request_data = requests.get("http://127.0.0.1:8000/vendor-request/").content
+#         vendor_request_data = json.loads(vendor_request_data)
+#         print("vendor req data", vendor_request_data)
+#         return render(request, 'accounts/adminDashboard.html', context = {'inquiry': vendor_request_data})
+
 def adminDashboard(request):
     
     vendor_request_data = requests.get("http://127.0.0.1:8000/vendor-request/").content
     vendor_request_data = json.loads(vendor_request_data)
     if request.method == 'GET':
         print("vendor requests", type(vendor_request_data), vendor_request_data)
-        return render(request, 'accounts/adminDashboard.html', context = {'vendor_request': vendor_request_data})
+        return render(request, 'accounts/adminDashboard.html', context = {'inquiry': vendor_request_data})
     if request.method == 'POST':
         
         # send email to user that your request has been accepted
@@ -164,7 +185,7 @@ def adminDashboard(request):
         vendor_request_data = requests.get("http://127.0.0.1:8000/vendor-request/").content
         vendor_request_data = json.loads(vendor_request_data)
         print("vendor req data", vendor_request_data)
-        return render(request, 'accounts/adminDashboard.html', context = {'vendor_request': vendor_request_data})
+        return render(request, 'accounts/adminDashboard.html', context = {'inquiry': vendor_request_data})
 
 def status(request):
     user_count= User.objects.count()
@@ -379,31 +400,40 @@ def booking(request, id):
 
 def inquiry(request):
     if request.method == 'POST':
-        venueName = request.POST['venueName']
-        address = request.POST['address']
-        district = request.POST['district']
-        email = request.POST['email']
-        contact = request.POST['contact']
-        description = request.POST['description']
+        user_name = request.POST.get('user_name')
+        email = request.POST.get('email')
+        contact = request.POST.get('contact')
+        venue_name = request.POST.get('venue_name')
+        request_description = request.POST.get('request_description')
         
-        inquiry = Inquiry(venueName=venueName, address=address, district=district, email=email, contact=contact, description=description )
+        # req_from= request.POST.get('req_from')
+        inquiry = Inquiry(user_name= user_name, email= email, contact=contact, venue_name=venue_name, request_description=request_description )
 
         inquiry.save()
 
-        # send send_mail
+# send send_mail
         send_mail(
-            'VenueCate',
-            'Hi' +email+ '\nThank you for contacting us, Our team will get back soon to your request on your request \n\nVenueName : ' + venueName + ' \nAddress : ' + address + '.' ,
+            'Venue Cate',
+            'Hi ' + user_name + ', \n\nThank you for contacting us, Our team will get back soon to your request on ' + user_name + ' with your preferred choice \n\nPACKAGE : ' + user_name + ' \nPLAN : ' + user_name + '.' ,
             'venuecate2211@gmail.com',
             recipient_list=[email],
-            html_message ='''<div><div></div><div tabindex="-1"></div><div><div><u></u><div style="margin:0!important;padding:0!important"> <img style="display:none!important"><table border="0" cellpadding="0" cellspacing="0" width="100%"><tbody><tr><td width="100%" align="center" valign="top" bgcolor="#eeeeee" height="20"></td></tr><tr><td bgcolor="#eeeeee" align="center" style="padding:0px 15px 0px 15px"><table bgcolor="#ffffff" border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width:600px"><tbody><tr><td><table width="100%" border="0" cellspacing="0" cellpadding="0"><tbody><tr><td align="center" style="padding:40px 40px 0px 40px"> <a href="#" target="_blank" data-saferedirecturl="#"> <img src="https://Venue Cate.herokuapp.com/static/media/logo1.png" alt="Venue Cate logo" width="auto" border="0" style="vertical-align:middle"> </a></td></tr><tr><td align="center" style="font-size:18px;color:#0e0e0f;font-weight:700;font-family:Helvetica Neue;line-height:28px;vertical-align:top;text-align:center;padding:35px 40px 0px 40px"> </td></tr><tr><td align="center" bgcolor="#ffffff" height="1" style="padding:40px 40px 5px" valign="top" width="100%"><table cellpadding="0" cellspacing="0" width="100%"><tbody><tr><td style="border-top:1px solid #e4e4e4"> <br> <br>Hi, <br> <br>Thank you for contacting us, Our team will get back soon to your request. <br>Your preferred choices are: <br> <br>Address : ''' + address +''' <br>District : ''' + district + ''' <br> <br> <strong>Regards <br> Venue Cate </strong></td></tr></tbody></table></td></tr></tbody></table></td></tr><tr><td width="100%" align="center" valign="top" bgcolor="#ffffff" height="45"></td></tr></tbody></table></td></tr><tr><td bgcolor="#eeeeee" align="center" style="padding:20px 0px"><table width="100%" border="0" cellspacing="0" cellpadding="0" align="center" style="max-width:600px"><tbody><tr></tr><tr><td bgcolor="#eeeeee" align="center"><table width="100%" border="0" cellspacing="0" cellpadding="0" align="center" style="max-width:600px"><tbody><tr><td align="center" style="text-align:center;padding:10px 10px 10px 10px"><p>&#169;copyright @ 2020 Venue Cate</p></td></tr></tbody></table></td></tr></tbody></table></td></tr></tbody></table><div></div><div></div></div><div></div></div></div><div style="display:none"><div></div></div><div></div></div>''' ,
+            html_message ='''<div><div></div><div tabindex="-1"></div><div><div><u></u><div style="margin:0!important;padding:0!important"> <img style="display:none!important"><table border="0" cellpadding="0" cellspacing="0" width="100%"><tbody><tr><td width="100%" align="center" valign="top" bgcolor="#eeeeee" height="20"></td></tr><tr><td bgcolor="#eeeeee" align="center" style="padding:0px 15px 0px 15px"><table bgcolor="#ffffff" border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width:600px"><tbody><tr><td><table width="100%" border="0" cellspacing="0" cellpadding="0"><tbody><tr><td align="center" style="padding:40px 40px 0px 40px"> <a href="#" target="_blank" data-saferedirecturl="#"> <img src="https://degndev.herokuapp.com/static/media/logo1.png" alt="DEGnDEV logo" width="auto" border="0" style="vertical-align:middle"> </a></td></tr><tr><td align="center" style="font-size:18px;color:#0e0e0f;font-weight:700;font-family:Helvetica Neue;line-height:28px;vertical-align:top;text-align:center;padding:35px 40px 0px 40px"> <strong>'''+ venue_name + ''' </strong></td></tr><tr><td align="center" bgcolor="#ffffff" height="1" style="padding:40px 40px 5px" valign="top" width="100%"><table cellpadding="0" cellspacing="0" width="100%"><tbody><tr><td style="border-top:1px solid #e4e4e4"> <br> <br>Hi ''' + user_name + ''', <br> <br>Thank you for contacting us, Our team will get back soon to your request. <br>Your preferred choices are: <br> <br>PACKAGE : ''' + venue_name +''' <br>PLAN : ''' + user_name + ''' <br> <br> <strong>Regards <br> DEGnDEV </strong></td></tr></tbody></table></td></tr></tbody></table></td></tr><tr><td width="100%" align="center" valign="top" bgcolor="#ffffff" height="45"></td></tr></tbody></table></td></tr><tr><td bgcolor="#eeeeee" align="center" style="padding:20px 0px"><table width="100%" border="0" cellspacing="0" cellpadding="0" align="center" style="max-width:600px"><tbody><tr></tr><tr><td bgcolor="#eeeeee" align="center"><table width="100%" border="0" cellspacing="0" cellpadding="0" align="center" style="max-width:600px"><tbody><tr><td align="center" style="text-align:center;padding:10px 10px 10px 10px"><p>&#169;copyright @ 2020 Degndev</p></td></tr></tbody></table></td></tr></tbody></table></td></tr></tbody></table><div></div><div></div></div><div></div></div></div><div style="display:none"><div></div></div><div></div></div>''' ,
             fail_silently=False
         )
+        
         messages.success(request,'Your message has been sucessfully sent, Please check your E-mail.')
         
-        # return HttpResponseRedirect('/admin')
-    return render(request, 'accounts/inquirys.html')
-        # return render(request,"contact/contact.html",{})
+        return render(request, 'accounts/vendorRequest.html')
+
+
+def inquiryinfo(request):
+    inq = Inquiry.objects.all()
+    print("Myoutput",inq)
+    return render(request,'accounts/adminDashboard.html',{'inqu': inq})
+
+
+
+
 
 def feedback(request):
     if request.method == 'POST':
@@ -690,10 +720,6 @@ class venueImageView(viewsets.ModelViewSet):
 class PaymentView(viewsets.ModelViewSet):
     queryset= Payment.objects.all()
     serializer_class= PaymentSerializer
-
-# class paymentView(viewsets.ModelViewSet):
-#     queryset= payment.objects.all()
-#     serializer_class= paymentSerializer
 
 class FeedbackView(viewsets.ModelViewSet):
     queryset = Feedback.objects.all()

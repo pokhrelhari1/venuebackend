@@ -1,203 +1,137 @@
-
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-{% include 'accounts/sideNav.html' %}
+  {% include 'accounts/sideNav.html' %}
 
-<head>
-
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="">
-  <meta name="author" content="">
-
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
   </head>
 
   <style>
     /* Toggle Styles */
-   
-   
 
-  .xyz{
+    .xyz {
       min-width: 360px;
       position: center;
       margin-left: 15%;
+    }
 
-  }
- 
-  .card-counter{
-    box-shadow: 2px 2px 10px #DADADA;
-    margin: 5px;
-    padding: 20px 10px;
-    background-color: #fff;
-    height: 100px;
-    border-radius: 5px;
-    transition: .3s linear all;
-  }
+    .card-counter {
+      box-shadow: 2px 2px 10px #dadada;
+      margin: 5px;
+      padding: 20px 10px;
+      background-color: #fff;
+      height: 100px;
+      border-radius: 5px;
+      transition: 0.3s linear all;
+    }
 
-  .card-counter:hover{
-    box-shadow: 4px 4px 20px #DADADA;
-    transition: .3s linear all;
-  }
+    .card-counter:hover {
+      box-shadow: 4px 4px 20px #dadada;
+      transition: 0.3s linear all;
+    }
 
-  .card-counter.primary{
-    background-color: #007bff;
-    color: #FFF;
-  }
+    .card-counter.primary {
+      background-color: #007bff;
+      color: #fff;
+    }
 
-  .card-counter.danger{
-    background-color: #ef5350;
-    color: #FFF;
-  }  
+    .card-counter.danger {
+      background-color: #ef5350;
+      color: #fff;
+    }
 
-  .card-counter.success{
-    background-color: #66bb6a;
-    color: #FFF;
-  }  
+    .card-counter.success {
+      background-color: #66bb6a;
+      color: #fff;
+    }
 
-  .card-counter.info{
-    background-color: #26c6da;
-    color: #FFF;
-  }  
+    .card-counter.info {
+      background-color: #26c6da;
+      color: #fff;
+    }
 
-  .card-counter i{
-    font-size: 5em;
-    opacity: 0.2;
-  }
+    .card-counter i {
+      font-size: 5em;
+      opacity: 0.2;
+    }
 
-  .card-counter .count-numbers{
-    position: absolute;
-    right: 35px;
-    top: 20px;
-    font-size: 32px;
-    display: block;
-  }
+    .card-counter .count-numbers {
+      position: absolute;
+      right: 35px;
+      top: 20px;
+      font-size: 32px;
+      display: block;
+    }
 
-  .card-counter .count-name{
-    position: absolute;
-    right: 35px;
-    top: 65px;
-    font-style: italic;
-    text-transform: capitalize;
-    opacity: 0.5;
-    display: block;
-    font-size: 18px;
-  }
-   
+    .card-counter .count-name {
+      position: absolute;
+      right: 35px;
+      top: 65px;
+      font-style: italic;
+      text-transform: capitalize;
+      opacity: 0.5;
+      display: block;
+      font-size: 18px;
+    }
+  </style>
 
-    </style>
-  
+  <html lang="en">
+    <head>
+      <meta charset="utf-8" />
+      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+      <meta name="viewport" content="width=device-width, initial-scale=1" />
+      <meta name="description" content="" />
+      <meta name="author" content="" />
+      <title>Simple Sidebar - Start Bootstrap Template</title>
+      <!-- Latest compiled and minified CSS -->
+      <link
+        rel="stylesheet"
+        href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+        integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+        crossorigin="anonymous"
+      />
 
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <title>Simple Sidebar - Start Bootstrap Template</title>
-    <!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-
-    <link href="http://fontawesome.io/assets/font-awesome/css/font-awesome.css" rel="stylesheet">
-</head>
-<body>
- <!-- /#sidebar-wrapper -->
-        <!-- Page Content -->
-        <div id="page-content-wrapper">
-            <div class="container-fluid xyz" style="margin-left: 15%;">
-
-
-              <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" />
-              <div class="container">
-                  <div class="row">
-                  <div class="col-md-3">
-                    <div class="card-counter primary">
-                      <i class="fa fa-users"></i>
-                
-                      <span class="count-numbers">{{ user_count }}</span>
-                      <span class="count-name">User</span>
-                    </div>
-                  </div>
-              
-                  <div class="col-md-3">
-                    <div class="card-counter danger">
-                      <i class="fa fa-ticket"></i>
-                      <span class="count-numbers">{{ status.venue_count }}</span>
-                      <span class="count-name">Number of venues</span>
-                    </div>
-                  </div>
-              
-                  <div class="col-md-3">
-                    <div class="card-counter success">
-                      <i class="fa fa-database"></i>
-                      <span class="count-numbers">{{status.vendorRequest_count }}</span>
-                      <span class="count-name">Vendor Request</span>
-                    </div>
-                  </div>
-              
-                  <div class="col-md-3">
-                    <div class="card-counter info">
-                      <i class="fa fa-check-square"></i>
-                      <span class="count-numbers">{{ status.booking_count }}</span>
-                      <span class="count-name">Bookings</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-                <div class="row">
-                    <div class="col-lg-12">
-                      {% if vendor_request %}
-                      <table class="table table-dark">
-                        <thead>
-                          <tr>
-                            <th scope="col">venue_name</th>
-                            <th scope="col">Description</th>
-                            <th scope="col">Email</th>
-                            <th scope="col">Request From</th>
-                          
-                            <th scope="col">Actions</th>
-                          </tr>
-              
-                       {% for req in vendor_request %}
-                          {% if req.is_accepted == False %}
-                        </thead>
-                        <tbody>   
-                          <tr>                       
-                            <td> {{ req.venue_name }}</td>
-                            <td> {{ req.request_description }}</td>
-                            <td>  {{ req.email }}</td>
-                            <td> {{ req.user_name }}</td>
-                            <!-- <td> {{ req.is_accepted }}</td> -->
-                            <td>
-                              <form method="POST" action="{% url 'adminDashboard' %}">
-                                {% csrf_token %}
-                                <input type="hidden" value="{{ req.id }}" name="hidden-id">
-                                <button class="btn btn-primary btn-sm m-0 py-1 px-2 name="approve-request">Approve request</button>
-                              </form>
-                            </td>
-                          </tr>
-                          {% endif %}
-                          {% endfor %}
-                        
-                        </tbody>
-                      </table>
-                      {% endif %}
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- /#page-content-wrapper -->
-
-    <!-- /#wrapper -->
-    <!-- jQuery -->
+      <link
+        href="http://fontawesome.io/assets/font-awesome/css/font-awesome.css"
+        rel="stylesheet"
+      />
+    </head>
+    <body>
+      <h1>Student Page</h1>
+      {% if inqu %}
+      <h1>Show Data</h1>
+      <h3>{{inqu}}</h3>
+      <table>
+        <tr>
+          <th>ID</th>
+          <th>StuID</th>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Password</th>
+        </tr>
+        <tr>
+          {% for st in inqu %}
+          <td>{{st.user_name}}</td>
+          <td>{{st.email}}</td>
+          <td>{{st.contact}}</td>
+          <td>{{st.venue_name}}</td>
+          <td>{{st.request_description}}</td>
+        </tr>
+        {% endfor %}
+      </table>
+      {% else %}
+      <h1>No Data</h1>
+      {% endif %}
     </body>
 
-
-<script>
- 
-</script>
-
+    <script></script>
+  </html>
 </html>

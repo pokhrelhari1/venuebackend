@@ -17,7 +17,6 @@ router.register('feedback', views.FeedbackView)
 router.register('venueImage', views.venueImageView)
 router.register('profile', views.ProfileView, basename="profile")
 router.register('booking', views.BookingView)
-# router.register('payment', views.PaymentView)
 router.register('payment', views.PaymentView)
 router.register('food_package', views.food_PackageView)
 router.register('Menu_Items', views.Menu_ItemsView)
@@ -71,6 +70,7 @@ urlpatterns = [
     path('adminDashboard/',views.adminDashboard, name= 'adminDashboard'),
     path('userDashboard/',views.userDashboard, name= 'userDashboard'),
     path('vendorRequest/',views.vendorRequest, name= 'vendorRequest'),
+    path('inquirys/',views.vendorRequest, name= 'inquirys'),
     path ('reset_password/', auth_views.PasswordResetView.as_view(), name="reset_password"),
     path ('reset_password_sent/', auth_views.PasswordResetDoneView.as_view(),  name="password_reset_done") ,    #render success message to  notify user to cheeck their email
     path ('reset/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(), name= "password_reset_confirm"),     

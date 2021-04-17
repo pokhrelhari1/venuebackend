@@ -113,14 +113,16 @@ class Venue(models.Model):
         return self.venueName
 
 
-# ashutosh 
+
 class Inquiry(models.Model):
-    venueName= models.CharField(max_length= 100, blank=True )
-    address= models.CharField(max_length= 100, blank=True )
-    district = models.CharField(max_length = 50, blank = True, null = True)
-    email = models.CharField(max_length = 1000, blank = True, null = True)
+    user_name= models.CharField(max_length=50, null= True, blank= True )
+    email = models.CharField(max_length = 20, blank = True, null = True)
     contact = models.IntegerField(null= True, blank= True )
-    description = models.CharField(max_length= 1000, blank=True )
+    venue_name = models.CharField(max_length = 100, null = True, blank = True)
+    request_description = models.CharField(max_length = 500, null = True, blank = True)
+    
+    
+    # req_from = models.ForeignKey(User, on_delete = models.SET_NULL, null = True, blank = True)
     
         
     def descriptionSummery(self):
@@ -128,6 +130,24 @@ class Inquiry(models.Model):
     
     def __str__(self):
         return self.venueName
+
+
+
+
+# class Inquiry(models.Model):
+#     venueName= models.CharField(max_length= 100, blank=True )
+#     address= models.CharField(max_length= 100, blank=True )
+#     district = models.CharField(max_length = 50, blank = True, null = True)
+#     email = models.CharField(max_length = 1000, blank = True, null = True)
+#     contact = models.IntegerField(null= True, blank= True )
+#     description = models.CharField(max_length= 1000, blank=True )
+    
+        
+#     def descriptionSummery(self):
+#         return self.description
+    
+#     def __str__(self):
+#         return self.venueName
 
 #model for multiple image 
 class venueImage(models.Model):
@@ -201,7 +221,6 @@ class Feedback(models.Model):
 
 class VendorRequest(models.Model):
     venue_name = models.CharField(max_length = 100, null = True, blank = True)
-    
     request_description = models.CharField(max_length = 500, null = True, blank = True)
     email = models.CharField(max_length = 20, blank = True, null = True)
     req_from = models.ForeignKey(User, on_delete = models.SET_NULL, null = True, blank = True)
