@@ -168,38 +168,30 @@ def vendorRequest(request):
 #         return render(request, 'accounts/adminDashboard.html', context = {'inquiry': vendor_request_data})
 
 def adminDashboard(request):
-    
-    vendor_request_data = requests.get("http://127.0.0.1:8000/vendor-request/").content
-    vendor_request_data = json.loads(vendor_request_data)
-    if request.method == 'GET':
-        print("vendor requests", type(vendor_request_data), vendor_request_data)
-        return render(request, 'accounts/adminDashboard.html', context = {'inquiry': vendor_request_data})
-    if request.method == 'POST':
-        
-        # send email to user that your request has been accepted
-        print("request approved", request.POST.get('hidden-id'))
-        request_id = request.POST.get('hidden-id')
-        vend_req = VendorRequest.objects.get(id = request_id)
-        vend_req.is_accepted = True
-        vend_req.save()
-        vendor_request_data = requests.get("http://127.0.0.1:8000/vendor-request/").content
-        vendor_request_data = json.loads(vendor_request_data)
-        print("vendor req data", vendor_request_data)
-        return render(request, 'accounts/adminDashboard.html', context = {'inquiry': vendor_request_data})
-
-def status(request):
-    user_count= User.objects.count()
-    venue_count= Venue.objects.count()
-    vendorRequest_count= VendorRequest.objects.count()
-    booking_count= Booking.objects.count()
-    
-    return render(request,'accounts/adminDashboard.html',{
+    user_count= User.objects.all().count()
+    venue_count= Venue.objects.all().count()
+    vendorRequest_count= Inquiry.objects.all().count()
+    booking_count= Booking.objects.all().count()
+    inquiry = Inquiry.objects.all()
+    return render(request,'accounts/adminDashboard.html', {'inquiry':inquiry,
          'user_count':user_count,
          'venue_count':venue_count,
          'vendorRequest_count':vendorRequest_count, 
-         'booking_count':booking_count, 
+         'booking_count':booking_count, } )
+
+# def status(request):
+#     user_count= User.objects.count()
+#     venue_count= Venue.objects.count()
+#     vendorRequest_count= VendorRequest.objects.count()
+#     booking_count= Booking.objects.count()
+    
+#     return render(request,'accounts/adminDashboard.html',{
+#          'user_count':user_count,
+#          'venue_count':venue_count,
+#          'vendorRequest_count':vendorRequest_count, 
+#          'booking_count':booking_count, 
          
-     })
+#      })
 
    
 # finction for edit venue table

@@ -9,7 +9,7 @@ from django.conf.urls.static import static
 
 
 urlpatterns = [
-    path('khalti/', include('khalti.urls', namespace="khalti")),
+    # path('khalti/', include('khalti.urls', namespace="khalti")),
     path('admin/', admin.site.urls),
     path ('', include('accounts.urls')),    
 ]
