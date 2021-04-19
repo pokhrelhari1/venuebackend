@@ -1,16 +1,16 @@
- {% load static %}
- {% include 'accounts/main.html' %}
+{% load static %}
+{% include 'accounts/main.html' %}
 <!-- 
 {% block content %}
-  <form method="get">
-    {{ filter.form.as_p }}
-    <button type="submit">Search</button>
-  </form>
-  <ul>
-  {% for venue in filter.qs %}
-    <li>{{ venue.venueName }}</li>
-  {% endfor %}
-  </ul>
+ <form method="get">
+   {{ filter.form.as_p }}
+   <button type="submit">Search</button>
+ </form>
+ <ul>
+ {% for venue in filter.qs %}
+   <li>{{ venue.venueName }}</li>
+ {% endfor %}
+ </ul>
 {% endblock %} --> 
 
 
@@ -29,144 +29,178 @@
 
 <style>
 body {
-  font-family: Arial;
-  color: white;
+ font-family: Arial;
+ color: white;
 }
 
 .split {
-  height: 100%;
-  width: 80%;
-  position: fixed;
+ height: 100%;
+ width: 80%;
+ position: fixed;
 
- 
-  overflow-x: hidden;
-  padding-top: 15px;
+
+ overflow-x: hidden;
+ padding-top: 15px;
 }
 
 .left {
-  left: 0;
+ left: 0;
 width: 20%;
-  background-color: #111;
-  padding: 2%;
+ background-color: #111;
+ padding: 2%;
 }
 
 .right {
-  right: 0;
-  background-color: rgb(236, 236, 236);
+ right: 0;
+ background-color: rgb(236, 236, 236);
 }
 
 
 
 .centered img {
-  width: 150px;
-  border-radius: 50%;
+ width: 150px;
+ border-radius: 50%;
 }
 
 /* Create two equal columns that floats next to each other */
 .column {
 
-  float: left;
-  width: 50%;
-  padding: 20px;
-  height: 300px; /* Should be removed. Only for demonstration */
+ float: left;
+ width: 50%;
+ padding: 20px;
+ height: 300px; /* Should be removed. Only for demonstration */
 }
 
 /* Clear floats after the columns */
 .row:after {
-  content: "";
-  display: table;
-  clear: both;
+ content: "";
+ display: table;
+ clear: both;
 }
 
 img{
-  width: 60%;
-  height: 60%;
+ width: 60%;
+ height: 60%;
 
 }
 /* Responsive layout - makes the two columns stack on top of each other instead of next to each other */
 @media screen and (max-width: 600px) {
-  .column {
-    width: 100%;
-  }
+ .column {
+   width: 100%;
+ }
 }
 </style>
 </head>
 <body>
 
 <div class="split left">
-  <br>
-  <br>
-  <h3 style="color: rgb(241, 241, 241);">Filters</h3> 
-  <br> <label>Filter by price:</label>
-  <br>
-  <input type="radio" id="price" name="price" value="1000-5000">
-  <label for="price1"> 1000-5000</label><br>
-  <input type="radio" id="price" name="price" value="5000-10000">
-  <label for="price2">5000-10000</label><br>
-  <input type="radio" id="price" name="price" value="10000-20000">
-  <label for="price3"> 10000-20000</label><br>
-  <br>
-  <button type="button" onclick="displayRadioValue()">Submit</button>
-  <br>
-  <div id="result"></div>
-  <br>
-  <br>
-  <label>Filter by Guest Number:</label>
-  <br>
-  <input type="checkbox" id="guest" name="guest1" value="guest1">
-  <label for="vehicle1"> 100-200</label><br>
-  <input type="checkbox" id="guest" name="guest2" value="guest2">
-  <label for="vehicle2">200-500</label><br>
-  <input type="checkbox" id="guest" name="guest3" value="guest3">
-  <label for="vehicle3"> 500-1000</label><br>
-  <input type="checkbox" id="guest" name="guest4" value="guest4">
-  <label for="vehicle3"> 1000-1500</label><br>
-  <input type="checkbox" id="gues" name="guest5" value="guest">
-  <label for="vehicle3"> 1500-2000</label><br>
-  <br>
-</div>
+ <br>
+ <br>
+<h3 style="color: rgb(241, 241, 241);">Filters</h3> 
+    
+  
+     <br> <label>Filter by price:</label>
+     <br>
+    
+     <input type="radio" id="price" name="price" value="1000-5000">
+     <label for="price1"> 1000-5000</label><br>
+     <input type="radio" id="price" name="price" value="5000-10000">
+     <label for="price2">5000-10000</label><br>
+     <input type="radio" id="price" name="price" value="10000-20000">
+     <label for="price3"> 10000-20000</label><br>
+     <br>
+     <button type="button" onclick="displayRadioValue1()">Submit</button>
+     <br>
+     <div id="result1"></div>
+     <br>
+       
+  
+   <br>
+     <label>Filter by Guest Number:</label>
+</br>
+     <input type="radio" id="guest" name="guest" value="100-200">
+     <label for="vehicle1"> 100-200</label><br>
+     <input type="radio" id="guest" name="guest" value="200-500">
+     <label for="vehicle2"> 200-500</label><br>
+     <input type="radio" id="guest" name="guest" value="500-1000">
+     <label for="vehicle3"> 500-1000</label><br>
+     <input type="radio" id="guest" name="guest" value="1000-1500">
+     <label for="vehicle4"> 1000-1500</label><br>
+     <input type="radio" id="guest" name="guest" value="1500-2000">
+     <label for="vehicle5"> 1500-2000</label><br>
+     <br>
+     <button type="button" onclick="displayRadioValue2()">Submit</button>
+     <br>
+     <div id="result2"></div>
+     <br>
+
+   <br>
+   
+     </div>
+   
+
 
 <div class="split right">
-  <div class="container-fluid" style="padding: 3%;">
-    <div>
-      <br>
-      <br>
-      <h3 style="color: black;">Search found</h3> 
-      {% for dt in  data %}
+ <div class="container-fluid" style="padding: 3%;">
+   <div>
+     <br>
+     <br>
 
-      <div class="row">
-        <div class="column" style="background-color:rgb(255, 255, 255); color: black;">
-          <h2 style="color: black;">{{dt.venueName}}</h2>
-          <i class="fas fa-map-marker-alt" style="font-size:18px; padding: 2%"> </i>  Address {{dt.address}}<br>
-          <img src="{{ dt.image.url }}"></img>
-          <br>
-        </div>
-        <div class="column" style="background-color:#bbb; color: black;">
-          <label style="color: black; font-size: 20px;"> Guest Capacity: </label> {{dt.min_guestCapacity}}-{{dt.max_guestCapacity}}
-          </i><br>
-          <label style="color: black; font-size: 20px;">  Price:</label> {{dt.price}}
-          <br>
-          <br>
-          <a href="{% url 'viewDetail' dt.id %}">   
-            <button type="button" class="btn btn-primary">view Details</button>
-          </a>
-        </div>
+     <h3 style="color: black;">Search found</h3> 
+{% for dt in  data %}
+
+<div class="row">
+ <div class="column" style="background-color:rgb(255, 255, 255); color: black;">
+   <h2 style="color: black;">{{dt.venueName}}</h2>
+   <i class="fas fa-map-marker-alt" style="font-size:18px; padding: 2%"> </i>  Address {{dt.address}}<br>
+   <img src="{{ dt.image.url }}"></img>
+   <br>
+   
+ 
+
+ </div>
+
+ <div class="column" style="background-color:#bbb; color: black;">
+   <label style="color: black; font-size: 20px;"> Guest Capacity: </label> {{dt.min_guestCapacity}}-{{dt.max_guestCapacity}}
+   </i><br>
+ 
+   <label style="color: black; font-size: 20px;">  Price:</label> {{dt.price}}
+    <br>
+ <br>
+
+
+ <a href="{% url 'viewDetail' dt.id %}">   <button type="button" class="btn btn-primary">view Details</button>
+  </a>
+
+ 
+ </div>
+</div>
+
+  <br>
+  {% endfor %}
       </div>
-      <br>
-      {% endfor %}
-    </div>
-  </div>
+ </div>
 </div>
 <script>
-  function displayRadioValue() {
-      var ele = document.getElementsByName('price');
-        
-      for(i = 0; i < ele.length; i++) {
-          if(ele[i].checked)
-          document.getElementById("result").innerHTML
-                  = "Price: "+ele[i].value;
-      }
-  }
+ function displayRadioValue1() {
+     var ele = document.getElementsByName('price');
+       
+     for(i = 0; i < ele.length; i++) {
+         if(ele[i].checked)
+         // document.getElementById("result1").innerHTML
+         //         = "Price: "+ele[i].value;
+     }
+ }
+ 
+ function displayRadioValue2() {
+     var ele = document.getElementsByName('guest');
+       
+     for(i = 0; i < ele.length; i++) {
+         if(ele[i].checked)
+         // document.getElementById("result2").innerHTML
+         //         = "Guest: "+ele[i].value;
+     }
+ }
 </script>
 </body>
 </html> 
