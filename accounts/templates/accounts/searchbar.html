@@ -102,12 +102,17 @@ img{
       <br> <label>Filter by price:</label>
       <br>
      
-        <input type="checkbox" id="price" name="price1" value="price1">
-        <label for="price1"> 1000-5000</label><br>
-        <input type="checkbox" id="price" name="price2" value="price2">
-        <label for="price2">5000-10000</label><br>
-        <input type="checkbox" id="price" name="price3" value="price3">
-        <label for="price3"> 10000-20000</label><br>
+      <input type="radio" id="price" name="price" value="1000-5000">
+      <label for="price1"> 1000-5000</label><br>
+      <input type="radio" id="price" name="price" value="5000-10000">
+      <label for="price2">5000-10000</label><br>
+      <input type="radio" id="price" name="price" value="10000-20000">
+      <label for="price3"> 10000-20000</label><br>
+      <br>
+      <button type="button" onclick="displayRadioValue()">Submit</button>
+      <br>
+      <div id="result"></div>
+      <br>
         
    
     <br>
@@ -171,7 +176,17 @@ img{
        </div>
   </div>
 </div>
-     
+<script>
+  function displayRadioValue() {
+      var ele = document.getElementsByName('price');
+        
+      for(i = 0; i < ele.length; i++) {
+          if(ele[i].checked)
+          document.getElementById("result").innerHTML
+                  = "Price: "+ele[i].value;
+      }
+  }
+</script>
 </body>
 </html> 
 

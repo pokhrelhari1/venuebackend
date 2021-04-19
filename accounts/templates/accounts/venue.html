@@ -98,8 +98,6 @@
                 <div class="form-group col-md-2">
                   {{ extraService_form.serviceName|as_crispy_field }}
                 </div>
-
-                
  </div>  
 
              <div class="form-row">
@@ -111,7 +109,7 @@
                   </div>
               </div>
             
-              <div class="form-row"> -->
+              <div class="form-row">
                <div class="form-group col-md-6">
                 {{ venue_form.image|as_crispy_field }}
                 </div>
@@ -155,7 +153,7 @@
      function initMenu() {
       $('#menu ul').hide();
       $('#menu ul').children('.current').parent().show();
-      //$('#menu ul:first').show();
+      // $('#menu ul:first').show();
       $('#menu li a').click(
         function() {
           var checkElement = $(this).next();
