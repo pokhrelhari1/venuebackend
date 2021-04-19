@@ -384,7 +384,7 @@ def booking(request, id):
             book.foodpackage = OrderedFoodPackage.objects.filter(packageName=str(request.user.id))[0]
             book.save()
            
-            redirect('/bookingForm/')
+            redirect('/payment/')
     else:
         
         form = bookingForm()
@@ -422,9 +422,6 @@ def inquiryinfo(request):
     inq = Inquiry.objects.all()
     print("Myoutput",inq)
     return render(request,'accounts/adminDashboard.html',{'inqu': inq})
-
-
-
 
 
 def feedback(request):

@@ -1,4 +1,4 @@
-#!c:\xampp\htdocs\venuecate\myvenv\scripts\python.exe
+#!c:\xampp\htdocs\venuecate1\myvire\scripts\python.exe
 # When the django-admin.py deprecation ends, remove this script.
 import warnings
 

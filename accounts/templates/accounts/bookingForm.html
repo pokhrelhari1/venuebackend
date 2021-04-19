@@ -120,12 +120,17 @@ input[type=submit]:hover {
                       <div class="col-sm-9 col-md-6 col-lg-8" style="background-color:rgb(248, 248, 248); padding: 2%;">
 
                           {% for category in categories %}
+                        
                        
-                                  <input type="checkbox" id="myCheck" name="package"  value="{{ category.id }}" value= "1400" onclick="myFunction()">  
-                                    <label style="font-size: large;" for="myCheck"></label>{{ category.name }} <br>
-                                    <!-- <label style="font-style: italic; font-size: 15px;">Price:{{ catering.price }}/pax</label> -->
-                                  <a href="{% url 'foodpackage' category.id %}" target="_blank" id="text" style="display:none">Click to customize your menu</a>
+                          <label for="myCheck">{{ category.name }}</label> 
+                          <input type="checkbox" id="myCheck" name="package" value="{{ category.id}}" onclick="myFunction()">
+
+                        <a href="{% url 'foodpackage' category.id %}" target="_blank"><p id="text" style="display:none">Click to customize menu</p></a>
                           {% endfor %}
+                          
+
+                          
+
 
                      </div>
                     </div>
@@ -223,7 +228,7 @@ input[type=submit]:hover {
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>       
  
-<script type="text/javascript">  
+<script>  
 
 
 function myFunction() {
@@ -235,6 +240,8 @@ function myFunction() {
      text.style.display = "none";
   }
 }
+
+
 
   var startDate;
   $('#startDate').on('change', function(){
@@ -298,13 +305,13 @@ for(var i = 0; i < checkboxSwitch.length; i++) {
     }
 }
 
-window.myFunction() {
-  var input = document.getElementById("package");
-  var total=0;
-  for(var i = 0; i< input.length; i++){
-    total +=1;
-  }
-}
+// window.myFunction() {
+//   var input = document.getElementById("package");
+//   var total=0;
+//   for(var i = 0; i< input.length; i++){
+//     total +=1;
+//   }
+// }
 
 
 </script>
