@@ -208,12 +208,10 @@ input[type=submit]:hover {
           <label>
             <br> Total<input value="NRP 0.00" readonly type="text" id="total" />
             <label>
-              <input type="submit" id="submit" name="save" value="Submit & Pay" onclick="calculatetotal()" style="margin-top: 5px;">
+              <input class="btn btn-success" type="submit" id="submit" name="save" value="Submit & Pay" onclick="pay()">
                   <div id="totalPrice" style="background:rgb(0, 162, 255);"></div>
             </label>
           </label>
-
-         
       </form>
   </div>
 </div>
@@ -229,6 +227,10 @@ input[type=submit]:hover {
 <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>       
  
 <script>  
+
+function pay() {
+  document.getElementById("myBtn").disabled = false;
+}
 
 
 function myFunction() {

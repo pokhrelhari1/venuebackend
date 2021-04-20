@@ -102,12 +102,20 @@ img{
      <br> <label>Filter by price:</label>
      <br>
     
-     <input type="radio" id="price" name="price" value="1000-5000">
+     <!-- <input type="radio" id="price" name="price" value="1000-5000">
      <label for="price1"> 1000-5000</label><br>
      <input type="radio" id="price" name="price" value="5000-10000">
      <label for="price2">5000-10000</label><br>
      <input type="radio" id="price" name="price" value="10000-20000">
-     <label for="price3"> 10000-20000</label><br>
+     <label for="price3"> 10000-20000</label><br> -->
+
+     <li class="list-grp-item">
+      <input type="range" id="rangeInput" min="30000" max="600000" oninput="maxPrice.value=this.value"/>
+    </li>
+    <li class="list-grp-item">
+      Max:<input type="number" onkeyup="rangeInput.value=this.value" 
+          id="maxPrice" name="price" min="30000" max="600000"/>
+    </li>
      <br>
      <button type="button" onclick="displayRadioValue1()">Submit</button>
      <br>

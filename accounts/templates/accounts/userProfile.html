@@ -1,5 +1,6 @@
 {%  extends 'accounts/main.html' %}
 {% include 'accounts/main.html' %}
+{% load static %}
 
 {% block content %}
 <html lang="en">
@@ -300,62 +301,14 @@ section{
             <td>{{book.guestNumber}}</td>
             <td>{{book.eventStartDate}}</td>
             <td>{{book.eventEndDate}}</tb>       
-            <td><a class="btn btn-sm btn-danger" href="{% url 'viewBookingDetails' %}">View Details</a></td> 
+            <td><a class="btn btn-sm btn-danger" href="{% url 'viewBookingDetails' book.id %}">View Details</a></td> 
             <td><a class="btn btn-sm btn-danger" href="{% url 'deleteBooking' book.id %}">Remove</a></td> 
           </tr>
-  
-  
-          
-          
   {% endfor %}
-   
-    
-       
-      
       </tbody>
     </table>
   </div>
 </section>
-<!-- 
-<div class="container-fluid">
-
-</div>
-<div class="container-fluid">
-<table class="table table-bordered">
-  <thead class="thead-dark">
- 
-    <tr>
-     
-      <th scope="col">Venue name</th>
-      <th scope="col"> Guest Number</th>
-      <th scope="col">Event Start</th>
-      <th scope="col">Event End</th>
-      <th scope="col">Food Type</th>
-      <th scope="col">Extra Service</th>
-      <th scope="col">Remove</th>
-    </tr>
-  </thead>
-  <tbody>
-    {% for book in booking_done %}
-			<tr>
-       
-				
-					<td>{{book.venue}}</td>
-          <td>{{book.guestNumber}}</td>
-					<td>{{book.eventStartDate}}</td>
-          <td>{{book.eventEndDate}}</tb>
-          <td>{{book.catering}}</td>
-          <td>{{book.extraService}}</td>
-       
-					<td><a class="btn btn-sm btn-danger" href="{% url 'deleteBooking' book.id %}">Remove</a></td> 
-				</tr> -->
-
-
-        
-        
-{% endfor %}
- 
-{% load static %}
 {% endblock %}
 
 
@@ -366,16 +319,16 @@ const createItem = (itemNumber, itemValue) => {
 	const item = document.createElement(`div`);
 	item.setAttribute("class", "input-group");
 	item.setAttribute("id", `item-${itemNumber}`);
-	item.innerHTML = `<input
-							type="text"
-							class="item-box"
-							id="box-item-${itemNumber}"
-							placeholder="Item name"
-							value="${itemValue}"
-							disabled
-						/>
-						<div class="item-btn" id="edit">Edit</div>
-						<div class="item-btn del-btn" id="delete">Done</div>`;
+	// item.innerHTML = `<input
+	// 						type="text"
+	// 						class="item-box"
+	// 						id="box-item-${itemNumber}"
+	// 						placeholder="Item name"
+	// 						value="${itemValue}"
+	// 						disabled
+	// 					/>
+	// 					<div class="item-btn" id="edit">Edit</div>
+	// 					<div class="item-btn del-btn" id="delete">Done</div>`;
 
 	document.querySelector(".list").appendChild(item);
 };

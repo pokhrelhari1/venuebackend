@@ -85,10 +85,8 @@ urlpatterns = [
     path('searchLocation', views.searchLocation),
     path('filter_venue/', views.filter_venue, name="filter_venue"),
 
-     path('', include(router.urls)),
-
-
-     path('viewBookingDetails/', views.viewBookingDetails, name="viewBookingDetails")
+    path('', include(router.urls)),
+    path('<int:id>/viewBookingDetails/', views.viewBookingDetails, name="viewBookingDetails")
 
 
 

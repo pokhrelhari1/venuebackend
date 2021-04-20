@@ -260,12 +260,12 @@ def userDashboard(request):
     return render(request,'accounts/userDashboard.html',context)
 
 @login_required(login_url='login')
-def viewBookingDetails(request):
+def viewBookingDetails(request, id):
     user = request.user
     profile = Profile.objects.get(user = user)
     form = CustomerForm(instance= profile)
     # booking = user.book_set.all()
-    booking_done = Booking.objects.filter(customer= request.user.profile)
+    booking_done = Booking.objects.filter(customer= request.user.profile, id=id)
     context= {'form':form, 'booking_done': booking_done}
     return render(request,'accounts/viewBookingDetails.html',context)
 
@@ -384,7 +384,7 @@ def booking(request, id):
             book.foodpackage = OrderedFoodPackage.objects.filter(packageName=str(request.user.id))[0]
             book.save()
            
-            redirect('/payment/')
+            return redirect('/payment/')
     else:
         
         form = bookingForm()
@@ -409,7 +409,7 @@ def inquiry(request):
             'Hi ' + user_name + ', \n\nThank you for contacting us, Our team will get back soon to your request on ' + user_name + ' with your preferred choice \n\nPACKAGE : ' + user_name + ' \nPLAN : ' + user_name + '.' ,
             'venuecate2211@gmail.com',
             recipient_list=[email],
-            html_message ='''<div><div></div><div tabindex="-1"></div><div><div><u></u><div style="margin:0!important;padding:0!important"> <img style="display:none!important"><table border="0" cellpadding="0" cellspacing="0" width="100%"><tbody><tr><td width="100%" align="center" valign="top" bgcolor="#eeeeee" height="20"></td></tr><tr><td bgcolor="#eeeeee" align="center" style="padding:0px 15px 0px 15px"><table bgcolor="#ffffff" border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width:600px"><tbody><tr><td><table width="100%" border="0" cellspacing="0" cellpadding="0"><tbody><tr><td align="center" style="padding:40px 40px 0px 40px"> <a href="#" target="_blank" data-saferedirecturl="#"> <img src="https://degndev.herokuapp.com/static/media/logo1.png" alt="DEGnDEV logo" width="auto" border="0" style="vertical-align:middle"> </a></td></tr><tr><td align="center" style="font-size:18px;color:#0e0e0f;font-weight:700;font-family:Helvetica Neue;line-height:28px;vertical-align:top;text-align:center;padding:35px 40px 0px 40px"> <strong>'''+ venue_name + ''' </strong></td></tr><tr><td align="center" bgcolor="#ffffff" height="1" style="padding:40px 40px 5px" valign="top" width="100%"><table cellpadding="0" cellspacing="0" width="100%"><tbody><tr><td style="border-top:1px solid #e4e4e4"> <br> <br>Hi ''' + user_name + ''', <br> <br>Thank you for contacting us, Our team will get back soon to your request. <br>Your preferred choices are: <br> <br>PACKAGE : ''' + venue_name +''' <br>PLAN : ''' + user_name + ''' <br> <br> <strong>Regards <br> DEGnDEV </strong></td></tr></tbody></table></td></tr></tbody></table></td></tr><tr><td width="100%" align="center" valign="top" bgcolor="#ffffff" height="45"></td></tr></tbody></table></td></tr><tr><td bgcolor="#eeeeee" align="center" style="padding:20px 0px"><table width="100%" border="0" cellspacing="0" cellpadding="0" align="center" style="max-width:600px"><tbody><tr></tr><tr><td bgcolor="#eeeeee" align="center"><table width="100%" border="0" cellspacing="0" cellpadding="0" align="center" style="max-width:600px"><tbody><tr><td align="center" style="text-align:center;padding:10px 10px 10px 10px"><p>&#169;copyright @ 2020 Degndev</p></td></tr></tbody></table></td></tr></tbody></table></td></tr></tbody></table><div></div><div></div></div><div></div></div></div><div style="display:none"><div></div></div><div></div></div>''' ,
+            html_message ='''<div><div></div><div tabindex="-1"></div><div><div><u></u><div style="margin:0!important;padding:0!important"> <img style="display:none!important"><table border="0" cellpadding="0" cellspacing="0" width="100%"><tbody><tr><td width="100%" align="center" valign="top" bgcolor="#eeeeee" height="20"></td></tr><tr><td bgcolor="#eeeeee" align="center" style="padding:0px 15px 0px 15px"><table bgcolor="#ffffff" border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width:600px"><tbody><tr><td><table width="100%" border="0" cellspacing="0" cellpadding="0"><tbody><tr><td align="center" style="padding:40px 40px 0px 40px"> <a href="#" target="_blank" data-saferedirecturl="#"> <img src="https://Venue Cate.herokuapp.com/static/media/logo1.png" alt="Venue Cate logo" width="auto" border="0" style="vertical-align:middle"> </a></td></tr><tr><td align="center" style="font-size:18px;color:#0e0e0f;font-weight:700;font-family:Helvetica Neue;line-height:28px;vertical-align:top;text-align:center;padding:35px 40px 0px 40px"> <strong>'''+ venue_name + ''' </strong></td></tr><tr><td align="center" bgcolor="#ffffff" height="1" style="padding:40px 40px 5px" valign="top" width="100%"><table cellpadding="0" cellspacing="0" width="100%"><tbody><tr><td style="border-top:1px solid #e4e4e4"> <br> <br>Hi ''' + user_name + ''', <br> <br>Thank you for contacting us, Our team will get back soon to your request. <br>Your preferred choices are: <br> <br>PACKAGE : ''' + venue_name +''' <br>PLAN : ''' + user_name + ''' <br> <br> <strong>Regards <br> Venue Cate </strong></td></tr></tbody></table></td></tr></tbody></table></td></tr><tr><td width="100%" align="center" valign="top" bgcolor="#ffffff" height="45"></td></tr></tbody></table></td></tr><tr><td bgcolor="#eeeeee" align="center" style="padding:20px 0px"><table width="100%" border="0" cellspacing="0" cellpadding="0" align="center" style="max-width:600px"><tbody><tr></tr><tr><td bgcolor="#eeeeee" align="center"><table width="100%" border="0" cellspacing="0" cellpadding="0" align="center" style="max-width:600px"><tbody><tr><td align="center" style="text-align:center;padding:10px 10px 10px 10px"><p>&#169;copyright @ 2020 Venue Cate</p></td></tr></tbody></table></td></tr></tbody></table></td></tr></tbody></table><div></div><div></div></div><div></div></div></div><div style="display:none"><div></div></div><div></div></div>''' ,
             fail_silently=False
         )
         
