@@ -322,16 +322,17 @@ def searchbar(request):
 
 #use dropdown for district and filter the place with autocomplete
 def searchLocation(request):
-   
+
     if request.method == 'POST':
         input_data = request.POST
         print("Input data", input_data)
         input_address = input_data['search-address']
         input_district = input_data['search-district']
-        print("input", input_address, input_district)
+        input_guestno = input_data['search-guestno']
+        print("input", input_address, input_district, input_guestno)
 
-        data = Venue.objects.filter(address = input_address).filter(district = input_district)
-        if Venue.objects.filter(address = input_address).filter(district = input_district).exists():
+        data = Venue.objects.filter(address = input_address).filter(district = input_district).filter(min_guestCapacity= input_guestno)
+        if Venue.objects.filter(address = input_address).filter(district = input_district).filter(min_guestCapacity= input_guestno).exists():
             print("location filter", input_data)
 
     return render(request, 'accounts/searchbar.html', context = {'data': data, 'venue':venue})

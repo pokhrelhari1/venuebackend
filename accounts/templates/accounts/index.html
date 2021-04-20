@@ -296,7 +296,7 @@ footer a:hover {
                                 <div class="row">
                                   <form action="{% url 'feedback' %}"  method="GET">
                                     
-                                    <div class="search" style="width: 40%;"> 
+                                    <div class="search" style="width: 28%;"> 
                                       {{ filter.form.as_p }}
                                      
                                       {% csrf_token %}
@@ -307,6 +307,10 @@ footer a:hover {
                                      <div class="col-lg-3 col-md-3 col-sm-12 p-0"> 
                                       <input type="text" id="district" class="form-control"placeholder="District" name="search-district">                            
                                   </div>
+                                  <div class="col-lg-3 col-md-3 col-sm-12 p-0"> 
+                                    <input type="text" id="guestno" class="form-control"placeholder="Guest No" name="search-guestno">
+
+                                </div>
                                     <!-- <div class="col-lg-3 col-md-3 col-sm-12 p-0">
                                         <select class="form-control search-slt" id="eventType">
                                             <option>Select Event Type</option>
