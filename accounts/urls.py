@@ -87,9 +87,5 @@ urlpatterns = [
 
     path('', include(router.urls)),
     path('<int:id>/viewBookingDetails/', views.viewBookingDetails, name="viewBookingDetails")
-
-
-
-
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root= settings.MEDIA_ROOT)

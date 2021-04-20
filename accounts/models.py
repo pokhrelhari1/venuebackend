@@ -174,6 +174,8 @@ class Booking(models.Model):
     extraService= models.ForeignKey(extraService, null = True, on_delete= models.CASCADE)
     foodpackage = models.ForeignKey(OrderedFoodPackage, on_delete=models.CASCADE, null=True)    #change null=False
 
+    def __str__(self):
+        return str(self.customer) + " - " + str(self.eventStartDate)
     
      
 #model for payment 

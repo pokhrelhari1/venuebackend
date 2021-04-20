@@ -120,13 +120,23 @@ input[type=submit]:hover {
                       <div class="col-sm-9 col-md-6 col-lg-8" style="background-color:rgb(248, 248, 248); padding: 2%;">
 
                           {% for category in categories %}
-                        
-                       
-                          <label for="myCheck">{{ category.name }}</label> 
-                          <input type="checkbox" id="myCheck" name="package" value="{{ category.id}}" onclick="myFunction()">
 
-                        <a href="{% url 'foodpackage' category.id %}" ><p id="text" style="display:none">Click to customize menu</p></a>
-                          {% endfor %}
+                          <input type="checkbox" id="myCheck{{ category.id }}" name="package_checkbox"  value="{{ category.name }}" onclick="myFunction(this, {{ category.id }})">  
+                                    <label style="font-size: large;" for="myCheck"></label>{{ category.name }} <br>
+                                    <!-- <label style="font-style: italic; font-size: 15px;">Price:{{ catering.price }}/pax</label> -->
+                                  <a href="#" id="category_name{{ category.id }}" name="package_link" style="display:none" onclick="showMenu({{ category.id }});return false;">Click to customize your menu</a>
+                                  
+                                    <div id="menuItems{{ category.id }}" style="display:none">
+                                      <hr>
+                                      {% for item in all_items %}
+                                        {% if item.category.get|lower == category.name|lower %}
+                                          <input type="checkbox" id="{{item.name}}" name="item_checkbox"  value="{{ item.id }}">  
+                                          <label style="font-size: large;" for="itemCheck"></label>{{ item.name }} <br>
+                                        {% endif %}
+                                      {% endfor %}
+                                      <hr>
+                                    </div>
+                         {% endfor %}
                           
 
                           
@@ -233,14 +243,25 @@ function pay() {
 }
 
 
-function myFunction() {
-  var checkBox = document.getElementById("myCheck");
-  var text = document.getElementById("text");
-  if (checkBox.checked == true){
+function myFunction(element, category_id) {
+  var checkBox = document.getElementById("myCheck"+category_id);
+  var text = document.getElementById("category_name"+category_id);
+  var myCheckbox = document.getElementsByName("package_checkbox");
+  Array.prototype.forEach.call(myCheckbox,function(el){
+      el.checked = false;
     text.style.display = "block";
-  } else {
-     text.style.display = "none";
-  }
+  });
+  var links = document.getElementsByName("package_link");
+  Array.prototype.forEach.call(links,function(el){
+    el.style.display= "none";
+  });
+  element.checked = true;
+  text.style.display = "block";
+}
+
+function showMenu(category_id){
+  var div = document.getElementById("menuItems"+category_id);
+  div.style.display="block";
 }
 
 

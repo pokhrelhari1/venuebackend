@@ -15,6 +15,7 @@ from django.forms import ModelForm
 from django.contrib import messages
 from django.core.mail import send_mail
 from django.views.generic.edit import UpdateView
+from django.db import transaction
 
 
 
@@ -368,27 +369,43 @@ def tables(request):
 #     return render(request,'accounts/vendorRequest.html')
 
     
+@transaction.atomic    
 def booking(request, id):
 
     # caterings = Catering.objects.all()
     # food_packages = food_Package.objects.all()
     categories = Category.objects.all()
+    all_items = Menu_Items.objects.all()
 
     if request.method== 'POST':
         form  =  bookingForm(request.POST)
-        print(form.errors)
+        items = request.POST.getlist('item_checkbox')
+        package = request.POST.getlist('package_checkbox')[0]
+        if not items:
+            items = Menu_Items.objects.filter(category__name=package)
         if form.is_valid():
             book = form.save(commit=False)
             book.customer = request.user.profile
             book.venue = Venue.objects.get(id=id)
-            book.foodpackage = OrderedFoodPackage.objects.filter(packageName=str(request.user.id))[0]
+            orderedpackage = OrderedFoodPackage()
+            orderedpackage.packageName=package + "-" +str(request.user.profile)
+            orderedpackage.price=100          #adding price to menu_list table 
+            orderedpackage.save()
+            orderedpackage.Menu_Items.set(items)
+            book.foodpackage = orderedpackage
             book.save()
            
             return redirect('/payment/')
+            # return HttpResponse("Success")
     else:
         
         form = bookingForm()
-    return render(request, 'accounts/bookingForm.html', {'form':form,'categories':categories})
+    context = {
+        'form':form,
+        'categories':categories,
+        'all_items':all_items,
+    }
+    return render(request, 'accounts/bookingForm.html', context)
 
 def inquiry(request):
     if request.method == 'POST':
