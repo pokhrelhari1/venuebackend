@@ -158,7 +158,18 @@ input[type=submit]:hover {
                     1. Extra Service
                    </label>
 
-                   {{ form.extraService }}
+                   <!-- {{ form.extraService }} -->
+                   
+
+
+                    <select name="extraService" required="" id="id_extraService">
+                      <option value="" selected="">------</option>
+                      {% for extra_service in services  %}
+                      <option value="{{ extra_service.id }}" id="servicePrice{{ extra_service.id }}" data-price="{{ extra_service.servicePrice }}">{{ extra_service.serviceName }}</option>
+                      {% endfor %}
+                    </select>
+
+
                  <!-- <div class="collapse" id="collapseExample">
                    <div class="container-fluid" >
                     <div class="row">
@@ -209,7 +220,7 @@ input[type=submit]:hover {
               </div> -->
      
                    <label for="">Select Number of Guest </label>
-                   <input type = "text" name ="guestNumber">
+                   <input type = "text" name ="guestNumber" id="guestNumbers" onkeyup="autoCalculate()">
                 
                   <br> 
               </fieldset>
@@ -237,6 +248,17 @@ input[type=submit]:hover {
 <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>       
  
 <script>  
+
+function autoCalculate(){
+  var guest_no = document.getElementById('guestNumbers').value;
+  var ext_price = document.getElementById('id_extraService').value;
+  console.log(ext_price);
+  var price = document.getElementById('servicePrice'+ext_price).dataset.price;
+  //alert("guest no:" + ext_price);
+  document.getElementById('total').value = guest_no * price;
+  //alert("Total:" + guest_no*ext_price);
+}
+
 
 function pay() {
   document.getElementById("myBtn").disabled = false;

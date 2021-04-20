@@ -171,7 +171,7 @@ class Booking(models.Model):
     venue= models.ForeignKey(Venue, on_delete=models.CASCADE)
     # catering= models.ForeignKey(Catering, on_delete= models.CASCADE, null=True)                
     customer= models.ForeignKey(Profile,on_delete= models.CASCADE)
-    extraService= models.ForeignKey(extraService, null = True, on_delete= models.CASCADE)
+    extraService = models.ForeignKey(extraService, null = True, on_delete= models.CASCADE)
     foodpackage = models.ForeignKey(OrderedFoodPackage, on_delete=models.CASCADE, null=True)    #change null=False
 
     def __str__(self):

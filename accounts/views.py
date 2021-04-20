@@ -377,10 +377,11 @@ def booking(request, id):
     # food_packages = food_Package.objects.all()
     categories = Category.objects.all()
     all_items = Menu_Items.objects.all()
-
+    services = extraService.objects.all()
     if request.method== 'POST':
         form  =  bookingForm(request.POST)
         items = request.POST.getlist('item_checkbox')
+        # extraService = request.POST.GET("extprice")
         package = request.POST.getlist('package_checkbox')[0]
         if not items:
             items = Menu_Items.objects.filter(category__name=package)
@@ -397,7 +398,6 @@ def booking(request, id):
             book.save()
            
             return redirect('/payment/')
-            # return HttpResponse("Success")
     else:
         
         form = bookingForm()
@@ -405,6 +405,7 @@ def booking(request, id):
         'form':form,
         'categories':categories,
         'all_items':all_items,
+        'services':services,
     }
     return render(request, 'accounts/bookingForm.html', context)
 
