@@ -35,7 +35,7 @@ router.register('vendor-request', views.VendorRequestViewset)
 urlpatterns = [
     path ('register/', views.registerPage, name='register'),
     path ('login/', views.loginPage, name='login'),
-    path ('inquirys/', views.inquiry, name='inquirys'),
+    path ('vendorRequest/', views.inquiry, name='vendorRequest'),
     path ('logout/', views.logoutUser, name='logout'),
     path('',views.index, name='index'),
     
@@ -69,8 +69,8 @@ urlpatterns = [
     
     path('adminDashboard/',views.adminDashboard, name= 'adminDashboard'),
     path('userDashboard/',views.userDashboard, name= 'userDashboard'),
-    path('vendorRequest/',views.vendorRequest, name= 'vendorRequest'),
-    path('inquirys/',views.vendorRequest, name= 'inquirys'),
+    # path('vendorRequest/',views.vendorRequest, name= 'vendorRequest'),
+    # path('inquirys/',views.vendorRequest, name= 'inquirys'),
     path ('reset_password/', auth_views.PasswordResetView.as_view(), name="reset_password"),
     path ('reset_password_sent/', auth_views.PasswordResetDoneView.as_view(),  name="password_reset_done") ,    #render success message to  notify user to cheeck their email
     path ('reset/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(), name= "password_reset_confirm"),     

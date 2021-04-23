@@ -435,6 +435,7 @@ def inquiry(request):
         messages.success(request,'Your message has been sucessfully sent, Please check your E-mail.')
         
         return render(request, 'accounts/vendorRequest.html')
+    return render(request, 'accounts/vendorRequest.html')
 
 
 def inquiryinfo(request):
