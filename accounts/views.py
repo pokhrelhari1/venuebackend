@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.contrib.auth.forms import UserCreationForm
 from .forms import CreateUserFrom, CustomerForm, bookingForm,cateringForm, venueForm, venueImageForm, extraServiceForm
 from django.contrib.auth.models import Group
@@ -391,13 +391,16 @@ def booking(request, id):
             book.venue = Venue.objects.get(id=id)
             orderedpackage = OrderedFoodPackage()
             orderedpackage.packageName=package + "-" +str(request.user.profile)
-            orderedpackage.price=100          #adding price to menu_list table 
+            orderedpackage.price=form.cleaned_data.get("totalPrice")
             orderedpackage.save()
             orderedpackage.Menu_Items.set(items)
             book.foodpackage = orderedpackage
             book.save()
-           
-            return redirect('/payment/')
+
+            return JsonResponse({"price":form.cleaned_data.get("totalPrice")}, status=200)
+        else:
+            
+            return JsonResponse({"error": form.errors}, status=400)
     else:
         
         form = bookingForm()
@@ -406,6 +409,7 @@ def booking(request, id):
         'categories':categories,
         'all_items':all_items,
         'services':services,
+        'venue_id':id,
     }
     return render(request, 'accounts/bookingForm.html', context)
 

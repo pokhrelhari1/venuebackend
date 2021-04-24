@@ -173,7 +173,7 @@ class Booking(models.Model):
     customer= models.ForeignKey(Profile,on_delete= models.CASCADE)
     extraService = models.ForeignKey(extraService, null = True, on_delete= models.CASCADE)
     foodpackage = models.ForeignKey(OrderedFoodPackage, on_delete=models.CASCADE, null=True)    #change null=False
-    totalPrice= models.CharField(max_length=500, blank=True, null=True)
+    totalPrice= models.FloatField(blank=True, null=True)
 
     def __str__(self):
         return str(self.customer) + " - " + str(self.eventStartDate)

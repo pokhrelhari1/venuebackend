@@ -12,8 +12,7 @@
 <link href="{% static 'js/jquery-ui-1.12.1/jquery-ui.min.css' %}" rel="stylesheet">
 <link href="{% static 'js/jquery-ui-1.12.1/jquery-ui.structure.min.css' %}" rel="stylesheet">
 <link href="{% static 'js/jquery-ui-1.12.1/jquery-ui.theme.min.css' %}" rel="stylesheet">
-
-         
+<script src="{% static 'js/payment.js' %}"></script>
 
 <style>
   
@@ -61,7 +60,7 @@ input[type=submit]:hover {
 <body >
 <br>
 <br>
-<form method="POST">
+<form id="booking-form" method="POST">
   {% csrf_token %}
   <div class="container"><h3>Book your services </h3>
         
@@ -137,11 +136,6 @@ input[type=submit]:hover {
                                       <hr>
                                     </div>
                          {% endfor %}
-                          
-
-                          
-
-
                      </div>
                     </div>
                   </div>
@@ -229,7 +223,7 @@ input[type=submit]:hover {
           <label>
             <br> Total<input name='totalPrice' value="NRP 0.00" readonly type="text" id="total" />
             <label>
-              <input class="btn btn-success" type="submit" id="submit" name="save" value="Submit & Pay" onclick="pay()">
+              <input class="btn btn-success" type="submit" id="submit" name="save" value="Submit & Pay" onclick="subPay()">
                   <div id="totalPrice" style="background:rgb(0, 162, 255);"></div>
             </label>
           </label>
@@ -244,7 +238,7 @@ input[type=submit]:hover {
         <!-- <input type="submit" id="submit" value="Submit" onclick="calculateTotal()" style="margin-top: 5px;">
       </form> -->
   </div>
-
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>       
  
 <script>  
@@ -260,10 +254,94 @@ function autoCalculate(){
 }
 
 
+//khalti script
+
+  function verifyPayment(payload) {
+    $.ajax({
+      url: "{% url 'khalti:verify' %}",
+      type: "POST",
+      data: {
+        payload: payload,
+        csrfmiddlewaretoken: "{{ csrf_token }}",
+      },
+      dataType: "json",
+      success: function (response) {
+        alert("Success");
+      },
+      error: function (error) {
+        console.log(error.responseJSON["message"]);
+      },
+    });
+  }
+
+  var config = {
+    // replace the publicKey with yours
+    publicKey: "test_public_key_ebbea165fcae4b39abd20d3cbe491e82",
+    productIdentity: "1234567890",
+    productName: "Dragon",
+    productUrl: "http://gameofthrones.wikia.com/wiki/Dragons",
+    // price:document.getElementById('total').value,
+    paymentPreference: [
+      "KHALTI",
+      "EBANKING",
+      "MOBILE_BANKING",
+      "CONNECT_IPS",
+      "SCT",
+    ],
+    eventHandler: {
+      onSuccess(payload) {
+        // hit merchant api for initiating verfication
+        console.log(payload);
+        verifyPayment(payload);
+      },
+      onError(error) {
+        console.log(error);
+      },
+      onClose() {
+        console.log("widget is closing");
+      },
+    },
+  };
+
+  var checkout = new KhaltiCheckout(config);
+  $("#booking-form").submit(function (e) {
+  // preventing from page reload and default actions
+  e.preventDefault();
+  // serialize the data for sending the form data.
+  var serializedData = $(this).serialize();
+  // make POST ajax call
+  $.ajax({
+      type: 'POST',
+      url: "{% url 'bookingForm' venue_id %}",
+      data: serializedData,
+      success: function (response) {
+          // on successfull creating object
+          console.log(response)
+          checkout.show({amount: response.price*100});
+      },
+      error: function (response) {
+          // alert the error if any error occured
+          alert(response["responseJSON"]["error"]);
+      }
+  })
+})
+
+
+  // var btn = document.getElementById("payment-button");
+  // btn.onclick = function () {
+  //   // minimum transaction amount must be 10, i.e 1000 in paisa.
+  //   checkout.show({ amount: (document.getElementById('total').value)*100 }); 
+  // };
+  
+
+
+
+
 function pay() {
+  // event.preventDefault();
   document.getElementById("myBtn").disabled = false;
 }
-
+                   
 
 function myFunction(element, category_id) {
   var checkBox = document.getElementById("myCheck"+category_id);
